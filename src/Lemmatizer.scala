@@ -45,6 +45,17 @@ class Lemmatizer {
     else return false
   }
 
+  //---------normalize
+  def normalize(char: Char):Char={
+    char match {
+      case 'á' => 'a'
+      case 'é' => 'e'
+      case 'í'=> 'i'
+      case 'ó' => 'o'
+      case 'ú' => 'u'
+    }
+  }
+
   //---------------predicative method
 
   def predicative(word:String):String={
