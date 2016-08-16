@@ -10,8 +10,8 @@ class Lemmatizer {
     val w=word.toLowerCase()
     //los gatos=> el gato
     if (pos=="DT"){
-      if(w.compareTo("la")==0 || w.compareTo("las")==0 || w.compareTo("los")==0)  "el"
-      if(w.compareTo("una")==0 || w.compareTo("unas")==0 || w.compareTo("unos")==0) "un"
+      if(w.compareTo("la")==0 || w.compareTo("las")==0 || w.compareTo("los")==0) return "el"
+      if(w.compareTo("una")==0 || w.compareTo("unas")==0 || w.compareTo("unos")==0) return "un"
     }
     //hombres=>hombre
     if (w.endsWith("es") && (w.substring(0,w.length-2).endsWith("br") || (w.substring(0,w.length-2).endsWith("i")) ||
@@ -34,21 +34,23 @@ class Lemmatizer {
     //gatos=>gato
     if (w.endsWith("s")) return w.substring(0,w.length-1)
 
-    return w
+   else return w
   }
 
-  def get_lemmas(l: List[(String,String)]): List[(String, String)] = {
+  def get_lemmas(l: List[(String,String)]): List[(String, String,String)] = {
     var word :String=""
     var lemma:String=""
     var pos:String=""
+    var lemmalist: List[(String, String, String)] = List()
+
   l.foreach( i => {word=i._1;pos=i._2;lemma=i._1;
   if (pos.startsWith("DT")) lemma=singularize(word,"DT")
 //  else if (pos.startsWith("JJ")) lemma=predicative(word)
 //  else if (pos.startsWith("NNS")) lemma=singularize(word)
 //  else if (pos.startsWith("VB") || pos.startsWith("MD")) lemma= conjugate(word,INFINITIVE)
-   i.+(lemma)
+    lemmalist= (word,pos,lemma)::lemmalist
  })
-    return l
+    return lemmalist.reverse
   }
 
 
@@ -62,7 +64,8 @@ object ScalaApp {
   def  main(args: Array[String]) {
  val lemmatizr=new Lemmatizer
     print(lemmatizr.lista(1)._1)
-    print(lemmatizr.get_lemmas(lemmatizr.lista))
+    val lemas=lemmatizr.get_lemmas(lemmatizr.lista)
+    lemas.foreach(i=>print(i))
 
   }
 }
