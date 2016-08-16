@@ -46,7 +46,7 @@ class Lemmatizer {
   l.foreach( i => {word=i._1;pos=i._2;lemma=i._1;
   if (pos.startsWith("DT")) lemma=singularize(word,"DT")
 //  else if (pos.startsWith("JJ")) lemma=predicative(word)
-//  else if (pos.startsWith("NNS")) lemma=singularize(word)
+  if (pos.startsWith("NNS")) lemma=singularize(word,"NNS")
 //  else if (pos.startsWith("VB") || pos.startsWith("MD")) lemma= conjugate(word,INFINITIVE)
     lemmalist= (word,pos,lemma)::lemmalist
  })
