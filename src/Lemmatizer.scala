@@ -61,15 +61,16 @@ class Lemmatizer {
   def predicative(word:String):String={
   var w=word.toLowerCase()
     //histéricos=>histérico
-  if (w.endsWith("os") || w.endsWith("as")) w=w.substring(0,w.length-1)
+  if (w.endsWith("os") || w.endsWith("as")) return w.substring(0,w.length-1)
     // histérico=>histérico
     if (w.endsWith("o")) return w
     //histérica=>histérico
     if(w.endsWith("a")) return w.substring(0,w.length-1).concat("o")
     //horribles=>horrible, humorales=>humoral
-    if(w.endsWith("es")){
-      if(w.length >=4 &&  "b".matches("a"|"e"|"i"|"o"|"u"))
-    }
+    if(w.endsWith("es")) {
+      if (w.length >= 4 && !(isVowel(normalize(w.charAt(w.length - 3)))) && !isVowel(normalize(w.charAt(w.length - 4)))) return w.substring(0, w.length - 1)
+    }else return w.substring(0,w.length-2)
+    return w
   }
 
   def get_lemmas(l: List[(String,String)]): List[(String, String,String)] = {
