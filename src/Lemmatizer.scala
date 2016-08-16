@@ -4,7 +4,7 @@
 class Lemmatizer {
 
 
-  var lista = List(("Los", "DT"), ("gatos", "NNS"),("negros", "JJ"),("son", "VB"),("bonitos", "JJ"))
+  var lista = List(("Los", "DT"), ("gatos", "NNS"),("negros", "JJ"),("son", "VB"),("horribles", "JJ"))
 
   //----------singularize method
   def singularize(word: String, pos:String ):String={
@@ -53,6 +53,7 @@ class Lemmatizer {
       case 'í'=> 'i'
       case 'ó' => 'o'
       case 'ú' => 'u'
+      case _ => char
     }
   }
 
@@ -81,7 +82,7 @@ class Lemmatizer {
 
   l.foreach( i => {word=i._1;pos=i._2;lemma=i._1;
   if (pos.startsWith("DT")) lemma=singularize(word,"DT")
-  //if (pos.startsWith("JJ")) lemma=predicative(word)
+  if (pos.startsWith("JJ")) lemma=predicative(word)
   if (pos.startsWith("NNS")) lemma=singularize(word,"NNS")
 //  else if (pos.startsWith("VB") || pos.startsWith("MD")) lemma= conjugate(word,INFINITIVE)
     lemmalist= (word,pos,lemma)::lemmalist
