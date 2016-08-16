@@ -2,10 +2,11 @@
   * Created by cris on 15/08/16.
   */
 class Lemmatizer {
-  //val ttokenandtag = List[List[String]]
+
 
   var lista = List(("Los", "DT"), ("gatos", "NNS"),("negros", "JJ"),("son", "VB"),("bonitos", "JJ"))
 
+  //----------singularize method
   def singularize(word: String, pos:String ):String={
     val w=word.toLowerCase()
     //los gatos=> el gato
@@ -37,6 +38,29 @@ class Lemmatizer {
    else return w
   }
 
+  //--------isVowel
+  def isVowel(char: Char):Boolean={
+   if (char.equals("a","e","i","o","u"))
+    return true
+    else return false
+  }
+
+  //---------------predicative method
+
+  def predicative(word:String):String={
+  var w=word.toLowerCase()
+    //histéricos=>histérico
+  if (w.endsWith("os") || w.endsWith("as")) w=w.substring(0,w.length-1)
+    // histérico=>histérico
+    if (w.endsWith("o")) return w
+    //histérica=>histérico
+    if(w.endsWith("a")) return w.substring(0,w.length-1).concat("o")
+    //horribles=>horrible, humorales=>humoral
+    if(w.endsWith("es")){
+      if(w.length >=4 &&  "b".matches("a"|"e"|"i"|"o"|"u"))
+    }
+  }
+
   def get_lemmas(l: List[(String,String)]): List[(String, String,String)] = {
     var word :String=""
     var lemma:String=""
@@ -45,7 +69,7 @@ class Lemmatizer {
 
   l.foreach( i => {word=i._1;pos=i._2;lemma=i._1;
   if (pos.startsWith("DT")) lemma=singularize(word,"DT")
-//  else if (pos.startsWith("JJ")) lemma=predicative(word)
+  //if (pos.startsWith("JJ")) lemma=predicative(word)
   if (pos.startsWith("NNS")) lemma=singularize(word,"NNS")
 //  else if (pos.startsWith("VB") || pos.startsWith("MD")) lemma= conjugate(word,INFINITIVE)
     lemmalist= (word,pos,lemma)::lemmalist
