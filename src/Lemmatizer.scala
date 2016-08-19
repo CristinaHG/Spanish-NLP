@@ -17,11 +17,15 @@ class Lemmatizer {
       val a=line.split(",")
       //dict+=("comíamos"->"comer")
       a.foreach(u=>dict+=(u->a{0}))
-//      print(line)
-//      print("\n")
     }
     return dict
   }
+
+  //-----returns the infinitive form of the given verb or none
+  def lemma(verb:String,dictionary:Map[String,String]):String={
+
+  }
+
 
   //create dictionary method
 //def toDictionaryPair():Map[String, String]={
