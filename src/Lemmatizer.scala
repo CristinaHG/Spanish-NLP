@@ -23,7 +23,8 @@ class Lemmatizer {
 
   //-----returns the infinitive form of the given verb or none
   def lemma(verb:String,dictionary:Map[String,String]):String={
-
+  if(dictionary.getOrElse(verb," ")!="") return dictionary(verb).toLowerCase
+  else return find_lemma(verb)
   }
 
 
