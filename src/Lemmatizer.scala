@@ -1,10 +1,25 @@
 /**
   * Created by cris on 15/08/16.
   */
+import scala.io.Source
+
 class Lemmatizer {
 
 
   var lista = List(("Los", "DT"), ("gatos", "NNS"),("negros", "JJ"),("son", "VB"),("horribles", "JJ"))
+  val verbsDict="/home/cris/mrcrstnherediagmez@gmail.com/Spanish_Lematizer/src/es-verbs.txt"
+
+  //-----------load file method
+
+  def load(file: String)={
+    for (line<-Source.fromFile(file).getLines().filterNot(_.startsWith(";"))){
+      print(line)
+      print("\n")
+    }
+  }
+
+
+
 
   //----------singularize method
   def singularize(word: String, pos:String ):String={
@@ -74,6 +89,11 @@ class Lemmatizer {
     return w
   }
 
+  //----------conjugate verb to infinitive form
+//  def toInfinitive(verb:String):String={
+//
+//  }
+
   def get_lemmas(l: List[(String,String)]): List[(String, String,String)] = {
     var word :String=""
     var lemma:String=""
@@ -84,11 +104,12 @@ class Lemmatizer {
   if (pos.startsWith("DT")) lemma=singularize(word,"DT")
   if (pos.startsWith("JJ")) lemma=predicative(word)
   if (pos.startsWith("NNS")) lemma=singularize(word,"NNS")
-//  else if (pos.startsWith("VB") || pos.startsWith("MD")) lemma= conjugate(word,INFINITIVE)
+    if (pos.startsWith("VB") || pos.startsWith("MD")) //lemma= toInfinitive(word)
     lemmalist= (word,pos,lemma)::lemmalist
  })
     return lemmalist.reverse
   }
+
 
 
 
@@ -103,7 +124,7 @@ object ScalaApp {
     print(lemmatizr.lista(1)._1)
     val lemas=lemmatizr.get_lemmas(lemmatizr.lista)
     lemas.foreach(i=>print(i))
-
+    lemmatizr.load(lemmatizr.verbsDict)
   }
 }
 
