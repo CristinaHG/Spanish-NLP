@@ -9,16 +9,25 @@ class Lemmatizer {
   var lista = List(("Los", "DT"), ("gatos", "NNS"),("negros", "JJ"),("son", "VB"),("horribles", "JJ"))
   val verbsDict="/home/cris/mrcrstnherediagmez@gmail.com/Spanish_Lematizer/src/es-verbs.txt"
 
-  //-----------load file method
+  //-----------load file and make a dictionary pair[verb form, infinitive] method
 
-  def load(file: String)={
-    for (line<-Source.fromFile(file).getLines().filterNot(_.startsWith(";"))){
-      print(line)
-      print("\n")
+  def verbsToDictionaryPair(file: String):Map[String,String]={
+    var dict:Map[String,String]=Map()
+    for (line<-Source.fromFile(file).getLines().filterNot(_.startsWith(";"))){ //not filter comments
+      val a=line.split(",")
+      //dict+=("comíamos"->"comer")
+      a.foreach(u=>dict+=(u->a{0}))
+//      print(line)
+//      print("\n")
     }
+    return dict
   }
 
-
+  //create dictionary method
+//def toDictionaryPair():Map[String, String]={
+//  var dict:Map[String,String]=Map()
+//
+//}
 
 
   //----------singularize method
@@ -121,10 +130,11 @@ class Lemmatizer {
 object ScalaApp {
   def  main(args: Array[String]) {
  val lemmatizr=new Lemmatizer
-    print(lemmatizr.lista(1)._1)
-    val lemas=lemmatizr.get_lemmas(lemmatizr.lista)
-    lemas.foreach(i=>print(i))
-    lemmatizr.load(lemmatizr.verbsDict)
+//    print(lemmatizr.lista(1)._1)
+//    val lemas=lemmatizr.get_lemmas(lemmatizr.lista)
+//    lemas.foreach(i=>print(i))
+    val mappedVerbs=lemmatizr.verbsToDictionaryPair(lemmatizr.verbsDict)
+    print(mappedVerbs)
   }
 }
 
