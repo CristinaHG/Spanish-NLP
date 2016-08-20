@@ -8,7 +8,52 @@ class Lemmatizer {
 
   var lista = List(("Los", "DT"), ("gatos", "NNS"),("negros", "JJ"),("son", "VB"),("horribles", "JJ"))
   val verbsDict="/home/cris/mrcrstnherediagmez@gmail.com/Spanish_Lematizer/src/es-verbs.txt"
-
+  val irregular_inflections=List(
+    ("yéramos", "ir"   ), ( "cisteis", "cer"   ), ( "tuviera", "tener"), ( "ndieron", "nder" ),
+    ( "ndiendo", "nder" ), ("tándose", "tarse" ), ( "ndieran", "nder" ), ( "ndieras", "nder" ),
+    ("izaréis", "izar" ), ( "disteis", "der"   ), ( "irtiera", "ertir"), ( "pusiera", "poner"),
+    ( "endiste", "ender"), ( "laremos", "lar"   ), ("ndíamos", "nder" ), ("icaréis", "icar" ),
+    ("dábamos", "dar"  ), ( "intiera", "entir" ), ( "iquemos", "icar" ), ("jéramos", "cir"  ),
+    ( "dierais", "der"  ), ( "endiera", "ender" ), ("iéndose", "erse" ), ( "jisteis", "cir"  ),
+    ( "cierais", "cer"  ), ("ecíamos", "ecer"  ), ( "áramos", "ar"   ), ( "ríamos", "r"    ),
+    ( "éramos", "r"    ), ( "iríais", "ir"    ), (   "temos", "tar"  ), (   "steis", "r"    ),
+    (   "ciera", "cer"  ), (   "erais", "r"     ), (   "timos", "tir"  ), (   "uemos", "ar"   ),
+    (   "tiera", "tir"  ), (   "bimos", "bir"   ), (  "ciéis", "ciar" ), (   "gimos", "gir"  ),
+    (   "jiste", "cir"  ), (   "mimos", "mir"   ), (  "guéis", "gar"  ), (  "stéis", "star" ),
+    (   "jimos", "cir"  ), (  "inéis", "inar"  ), (   "jemos", "jar"  ), (   "tenga", "tener"),
+    (  "quéis", "car"  ), (  "bíais", "bir"   ), (   "jeron", "cir"  ), (  "uíais", "uir"  ),
+    (  "ntéis", "ntar" ), (   "jeras", "cir"   ), (   "jeran", "cir"  ), (  "ducía", "ducir"),
+    (   "yendo", "ir"   ), (   "eemos", "ear"   ), (   "ierta", "ertir"), (   "ierte", "ertir"),
+    (   "nemos", "nar"  ), (  "ngáis", "ner"   ), (   "liera", "ler"  ), (  "endió", "ender"),
+    (  "uyáis", "uir"  ), (   "memos", "mar"   ), (   "ciste", "cer"  ), (   "ujera", "ucir" ),
+    (   "uimos", "uir"  ), (   "ienda", "ender" ), (  "lléis", "llar" ), (   "iemos", "iar"  ),
+    (   "iende", "ender"), (   "rimos", "rir"   ), (   "semos", "sar"  ), (  "itéis", "itar" ),
+    (  "gíais", "gir"  ), (  "ndáis", "nder"  ), (  "tíais", "tir"  ), (   "demos", "dar"  ),
+    (   "lemos", "lar"  ), (   "ponga", "poner" ), (   "yamos", "ir"   ), (  "icéis", "izar" ),
+    (    "bais", "r"    ), (   "rías", "r"     ), (   "rían", "r"    ), (   "iría", "ir"   ),
+    (    "eran", "r"    ), (    "eras", "r"     ), (   "irán", "ir"   ), (   "irás", "ir"   ),
+    (    "ongo", "oner" ), (    "aiga", "aer"   ), (   "ímos", "ir"   ), (   "ibía", "ibir" ),
+    (    "diga", "decir"), (   "edía", "edir"  ), (    "orte", "ortar"), (   "guió", "guir" ),
+    (    "iega", "egar" ), (    "oren", "orar"  ), (    "ores", "orar" ), (   "léis", "lar"  ),
+    (    "irme", "irmar"), (    "siga", "seguir"), (   "séis", "sar"  ), (   "stré", "strar"),
+    (    "cien", "ciar" ), (    "cies", "ciar"  ), (    "dujo", "ducir"), (    "eses", "esar" ),
+    (    "esen", "esar" ), (    "coja", "coger" ), (    "lice", "lizar"), (   "tías", "tir"  ),
+    (   "tían", "tir"  ), (    "pare", "parar" ), (    "gres", "grar" ), (    "gren", "grar" ),
+    (    "tuvo", "tener"), (   "uían", "uir"   ), (   "uías", "uir"  ), (    "quen", "car"  ),
+    (    "ques", "car"  ), (   "téis", "tar"   ), (    "iero", "erir" ), (    "iere", "erir" ),
+    (    "uche", "uchar"), (    "tuve", "tener" ), (    "inen", "inar" ), (    "pire", "pirar"),
+    (   "reía", "reir" ), (    "uste", "ustar" ), (   "ibió", "ibir" ), (    "duce", "ducir"),
+    (    "icen", "izar" ), (    "ices", "izar"  ), (    "ines", "inar" ), (    "ires", "irar" ),
+    (    "iren", "irar" ), (    "duje", "ducir" ), (    "ille", "illar"), (    "urre", "urrir"),
+    (    "tido", "tir"  ), (   "ndió", "nder"  ), (    "uido", "uir"  ), (    "uces", "ucir" ),
+    (    "ucen", "ucir" ), (   "iéis", "iar"   ), (   "eció", "ecer" ), (   "jéis", "jar"  ),
+    (    "erve", "ervar"), (    "uyas", "uir"   ), (    "uyan", "uir"  ), (    "tía", "tir"  ),
+    (    "uía", "uir"  ), (     "aos", "arse"  ), (     "gue", "gar"  ), (    "qué", "car"  ),
+    (     "que", "car"  ), (     "rse", "rse"   ), (     "ste", "r"    ), (     "era", "r"    ),
+    (    "tió", "tir"  ), (     "ine", "inar"  ), (     "ré", "r"    ), (      "ya", "ir"   ),
+    (      "ye", "ir"   ), (     "tí", "tir"   ), (     "cé", "zar"  ), (      "ie", "iar"  ),
+    (      "id", "ir"   ), (     "ué", "ar"    )
+    )
   //-----------load file and make a dictionary pair[verb form, infinitive] method
 
   def verbsToDictionaryPair(file: String):Map[String,String]={
@@ -27,12 +72,24 @@ class Lemmatizer {
   else return find_lemma(verb)
   }
 
+  //-------return the base form of verb using a rule-based aproach when verb is unknow
+def find_lemma(verb:String):String={
+  // Spanish has 12,000+ verbs, ending in -ar (85%), -er (8%), -ir (7%).
+  // Over 65% of -ar verbs (6500+) have a regular inflection.
+  var v = verb.toLowerCase
+  if(verb.endsWith("ar") || verb.endsWith("er") || verb.endsWith("ir")) return verb //verb is infinitive
+  //set of rules for irregular inflections +10%
 
-  //create dictionary method
-//def toDictionaryPair():Map[String, String]={
-//  var dict:Map[String,String]=Map()
-//
-//}
+  irregular_inflections.foreach(a=> if(v.endsWith(a._1)) return v.substring(0,v.length-a._1.length).concat(a._2))
+  //reconozco=>reconocer
+  v=v.replace("zco","ce")
+  //reconozcamos=>reconocer
+  v=v.replace("zca","ce")
+  //reconozcáis=>reconocer
+  v=v.replace("zcá","ce")
+  
+
+}
 
 
   //----------singularize method
