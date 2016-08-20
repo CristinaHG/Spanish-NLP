@@ -87,8 +87,8 @@ def find_lemma(verb:String):String={
   v=v.replace("zca","ce")
   //reconozcáis=>reconocer
   v=v.replace("zcá","ce")
-  
-
+  //saldrár => saler
+if(v.contains("ldr")) return v.
 }
 
 
