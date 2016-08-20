@@ -91,6 +91,15 @@ def find_lemma(verb:String):String={
 if(v.contains("ldr")) return v.substring(0,v.indexOf("ldr")+1).concat("er")
   if(v.contains("ndr")) return v.substring(0,v.indexOf("ndr")+1).concat("er")
 //many verbs end in -ar and have a regular inflection
+val regular_inflection_ar=List (
+  "ando", "ado", "ad",                                // participle
+  "aré", "arás", "ará", "aremos", "aréis", "arán", // future
+  "aría", "arías", "aríamos", "aríais", "arían",    // conditional
+  "aba", "abas", "ábamos", "abais", "aban",         // past imperfective
+    "é", "aste", "ó", "asteis", "aron",               // past perfective
+    "ara", "aras", "áramos", "arais", "aran")       // past subjunctive
+
+regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.length-u.length).concat("ar"))
 
 }
 
