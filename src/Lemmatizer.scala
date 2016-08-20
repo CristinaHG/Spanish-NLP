@@ -88,7 +88,10 @@ def find_lemma(verb:String):String={
   //reconozcáis=>reconocer
   v=v.replace("zcá","ce")
   //saldrár => saler
-if(v.contains("ldr")) return v.
+if(v.contains("ldr")) return v.substring(0,v.indexOf("ldr")+1).concat("er")
+  if(v.contains("ndr")) return v.substring(0,v.indexOf("ndr")+1).concat("er")
+//many verbs end in -ar and have a regular inflection
+
 }
 
 
