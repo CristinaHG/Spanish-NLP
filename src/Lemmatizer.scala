@@ -108,7 +108,7 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
   "ía", "ías", "íamos", "íais", "ían",              // past imperfective
     "í", "iste", "ió", "imos", "isteis", "ieron",        // past perfective
     "era", "eras", "éramos", "erais", "eran")       //past subjunctive
-  regular_inflection_er.foreach(u=>if(v.endsWith(u)){if(v.substring(0,v.length-u.length).length>2 && v.charAt(v.length-2)=="i")
+  regular_inflection_er.foreach(u=>if(v.endsWith(u)){if(v.substring(0,v.length-u.length).length>2 && v.substring(0,v.length-u.length).charAt(v.length-2)=="i")
   return v.substring(0,v.length-u.length).concat("ir") else return v.substring(0,v.length-u.length).concat("er")} )
 
   //Many verbs end in -ir and have a regular inflection
@@ -124,10 +124,25 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
   if(v.endsWith("as") || v.endsWith("an")) return v.substring(0,v.length-1).concat("ar")
   // Present 2sg, 3sg and 3pl: tú comes, tú vives.
   if(v.endsWith("e")){
-    if(v.substring(0,v.length-1).length>2 && v.charAt(v.length-2)=="i") return v.substring(0,v.length-1).concat("ir")
+    if(v.substring(0,v.length-1).length>2 && v.substring(0,v.length-1).charAt(v.length-2)=="i") return v.substring(0,v.length-1).concat("ir")
     else return v.substring(0,v.length-1).concat("er")
   }
-  
+  if (v.endsWith("es") || v.endsWith("en")){
+    if(v.substring(0,v.length-2).length>2 && v.substring(0,v.length-2).charAt(v.length-2)=="i") return v.substring(0,v.length-2).concat("ir")
+    else return v.substring(0,v.length-2).concat("er")
+  }
+  // Present 1pl and 2pl: nosotros hablamos.
+
+  val present_plural_inflection_o=List(
+    ("amos", "áis"),
+    ("emos", "éis"),
+    ("imos", "ís")
+  )
+  val terminations=Array("ar","er","ir")
+  terminations{1}
+  present_plural_inflection_o.foreach(u=> if(v.endsWith(u._2)) return v.substring(0,v.length-u._2.length).concat(terminations{present_plural_inflection_o.indexOf(u)}) )
+
+  return v
 }
 
 
