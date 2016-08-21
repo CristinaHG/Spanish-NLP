@@ -100,7 +100,25 @@ val regular_inflection_ar=List (
     "ara", "aras", "áramos", "arais", "aran")       // past subjunctive
 
 regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.length-u.length).concat("ar"))
+//Many verbs end in -er and have a regular inflection
+  val regular_inflection_er=List(
+      "iendo", "ido", "ed",                               // participle
+  "eré", "erás", "erá", "eremos", "eréis", "erán", // future
+  "ería", "erías", "eríamos", "eríais", "erían",    // conditional
+  "ía", "ías", "íamos", "íais", "ían",              // past imperfective
+    "í", "iste", "ió", "imos", "isteis", "ieron",        // past perfective
+    "era", "eras", "éramos", "erais", "eran")       //past subjunctive
+  regular_inflection_er.foreach(u=>if(v.endsWith(u)){if(v.substring(0,v.length-u.length).length>2 && v.charAt(v.length-2)=="i")
+  return v.substring(0,v.length-u.length).concat("ir") else return v.substring(0,v.length-u.length).concat("er")} )
 
+  //Many verbs end in -ir and have a regular inflection
+  val regular_inflection_ir=List(
+    "iré", "irás", "irá", "iremos", "iréis", "irán", //future
+  "iría", "irías", "iríamos", "iríais", "irían")  //past subjunctive
+
+  regular_inflection_ir.foreach(u=>if(v.endsWith(u)) return v.substring(0,v.length-u.length).concat("ir"))
+  //Present 1sg -o: yo hablo, como, vivo => hablar, comer, vivir.
+  if(v.endsWith("o")) return v.substring(0,v.length-1).concat("ar")
 }
 
 
