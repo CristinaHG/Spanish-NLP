@@ -6,7 +6,14 @@ import scala.io.Source
 class Lemmatizer {
 
 
-  var lista = List(("Los", "DT"), ("gatos", "NNS"),("negros", "JJ"),("son", "VB"),("horribles", "JJ"))
+  var lista1 = List(("Los", "DT"), ("gatos", "NNS"),("negros", "JJ"),("son", "VB"),("horribles", "JJ"))
+  var lista2=List(("no","RB"),("podrás","VB"),("vivir","VB"),("eternamente","RB"))
+  var lista3=List(("Los","DT"),("ingenieros","NNS"),("informáticos","JJ"),("son","VB"),("muy","RB"),("inteligentes","JJ"))
+  var lista4=List(("Las","DT"),("atletas","NNS"),("españolas","JJ"),("son","VB"),("muy","RB"),("buenas","JJ"),("deportistas","NNS"))
+  var lista5=List(("Alejandro","NNP"),("quiere","VB"),("a","IN"),("Cristina","NNP"),("más","RB"),("que","IN"),("a","IN"),("nada","DT"),
+    (",",","),("como","IN"),("nunca","RB"),("antes","IN"),("quiso","VB"),("a","IN"),("nadie","DT"),(".","."))
+
+
   val verbsDict="/home/cris/mrcrstnherediagmez@gmail.com/Spanish_Lematizer/src/es-verbs.txt"
   val irregular_inflections=List(
     ("yéramos", "ir"   ), ( "cisteis", "cer"   ), ( "tuviera", "tener"), ( "ndieron", "nder" ),
@@ -214,10 +221,6 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
     return w
   }
 
-  //----------conjugate verb to infinitive form
-//  def toInfinitive(verb:String):String={
-//
-//  }
 
   def get_lemmas(l: List[(String,String)],dict:Map[String,String]): List[(String, String,String)] = {
     var word :String=""
@@ -241,11 +244,12 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
 object ScalaApp {
   def  main(args: Array[String]) {
  val lemmatizr=new Lemmatizer
-//    print(lemmatizr.lista(1)._1)
-//    val lemas=lemmatizr.get_lemmas(lemmatizr.lista)
-//    lemas.foreach(i=>print(i))
     val mappedVerbs=lemmatizr.verbsToDictionaryPair(lemmatizr.verbsDict)
-    print(mappedVerbs)
+   // print(mappedVerbs)
+//    print(lemmatizr.lista(1)._1)
+    val lemas=lemmatizr.get_lemmas(lemmatizr.lista1,mappedVerbs)
+    lemas.foreach(i=>print(i))
+
   }
 }
 
