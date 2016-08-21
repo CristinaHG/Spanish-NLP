@@ -67,7 +67,7 @@ class Lemmatizer {
   }
 
   //-----returns the infinitive form of the given verb or none
-  def lemma(verb:String,dictionary:Map[String,String]):String={
+  def verb_lemma(verb:String,dictionary:Map[String,String]):String={
   if(dictionary.getOrElse(verb," ")!="") return dictionary(verb).toLowerCase
   else return find_lemma(verb)
   }
@@ -139,7 +139,7 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
     ("imos", "ís")
   )
   val terminations=Array("ar","er","ir")
-  terminations{1}
+  //terminations{1}
   present_plural_inflection_o.foreach(u=> if(v.endsWith(u._2)) return v.substring(0,v.length-u._2.length).concat(terminations{present_plural_inflection_o.indexOf(u)}) )
 
   return v
@@ -219,7 +219,7 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
 //
 //  }
 
-  def get_lemmas(l: List[(String,String)]): List[(String, String,String)] = {
+  def get_lemmas(l: List[(String,String)],dict:Map[String,String]): List[(String, String,String)] = {
     var word :String=""
     var lemma:String=""
     var pos:String=""
@@ -229,16 +229,11 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
   if (pos.startsWith("DT")) lemma=singularize(word,"DT")
   if (pos.startsWith("JJ")) lemma=predicative(word)
   if (pos.startsWith("NNS")) lemma=singularize(word,"NNS")
-    if (pos.startsWith("VB") || pos.startsWith("MD")) //lemma= toInfinitive(word)
+    if (pos.startsWith("VB") || pos.startsWith("MD")) lemma= verb_lemma(word,dict)
     lemmalist= (word,pos,lemma)::lemmalist
  })
     return lemmalist.reverse
   }
-
-
-
-
-
 
 
 }
