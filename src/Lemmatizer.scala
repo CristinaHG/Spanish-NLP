@@ -119,6 +119,11 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
   regular_inflection_ir.foreach(u=>if(v.endsWith(u)) return v.substring(0,v.length-u.length).concat("ir"))
   //Present 1sg -o: yo hablo, como, vivo => hablar, comer, vivir.
   if(v.endsWith("o")) return v.substring(0,v.length-1).concat("ar")
+  //Present 2sg, 3sg and 3pl: tú hablas.
+  if(v.endsWith("a")) return v.substring(0,v.length-2).concat("ar")
+  if(v.endsWith("as") || v.endsWith("an")) return v.substring(0,v.length-1).concat("ar")
+  // Present 2sg, 3sg and 3pl: tú comes, tú vives.
+  
 }
 
 
