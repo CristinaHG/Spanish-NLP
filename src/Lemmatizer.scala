@@ -75,8 +75,9 @@ class Lemmatizer {
 
   //-----returns the infinitive form of the given verb or none
   def verb_lemma(verb:String,dictionary:Map[String,String]):String={
-  if(dictionary.getOrElse(verb," ")!="") return dictionary(verb).toLowerCase
-  else return find_lemma(verb)
+  //if(dictionary.getOrElse(verb," ")!="") return dictionary(verb).toLowerCase
+    if(dictionary.keySet.exists(_==verb)!=0) return dictionary(verb).toLowerCase
+    else return find_lemma(verb)
   }
 
   //-------return the base form of verb using a rule-based aproach when verb is unknow
