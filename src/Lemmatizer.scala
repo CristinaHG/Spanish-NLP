@@ -209,7 +209,7 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
   def predicative(word:String):String={
   var w=word.toLowerCase()
     //histéricos=>histérico
-  if (w.endsWith("os") || w.endsWith("as")) return w.substring(0,w.length-1)
+  if (w.endsWith("os") || w.endsWith("as")) w=w.substring(0,w.length-1)
     // histérico=>histérico
     if (w.endsWith("o")) return w
     //histérica=>histérico
@@ -247,7 +247,7 @@ object ScalaApp {
     val mappedVerbs=lemmatizr.verbsToDictionaryPair(lemmatizr.verbsDict)
    // print(mappedVerbs)
 //    print(lemmatizr.lista(1)._1)
-    val lemas=lemmatizr.get_lemmas(lemmatizr.lista1,mappedVerbs)
+    val lemas=lemmatizr.get_lemmas(lemmatizr.lista4,mappedVerbs)
     lemas.foreach(i=>print(i))
 
   }
