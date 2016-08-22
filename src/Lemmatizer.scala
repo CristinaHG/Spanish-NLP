@@ -14,6 +14,11 @@ class Lemmatizer {
     (",",","),("como","IN"),("nunca","RB"),("antes","IN"),("quiso","VB"),("a","IN"),("nadie","DT"),(".","."))
   var lista6=List(("Los","DT"),("lobos","NNS"),("aullaban","VB"),("desesperadamente","NN"))
   var lista7=List(("Dijo","VB"),("que","IN"),("lo","DT"),("esperáramos","VB"),("aquí","IN"),("mientras","IN"),("compraba","VB"),("galletas","NNS"))
+  var lista8=List(("Te","PRP"),("advertimos","VB"),("que","WP"),("serían","VB"),("duros","JJ"))
+  var lista9=List(("reconozco","VB"),("que","WP"),("me","PRP"),("comporté","VB"),("mal","RB"))
+  var lista10=List(("todo","DT"),("esfuerzo","NN"),("valdrá","VB"),("la","DT"),("pena","NN"))
+  var lista11=List(("dejaron","VB"),("que","IN"),("murieran","VB"),("de","IN"),("hambre","NN"))
+  var lista12=List(("nos","PRP"),("atracaron","VB"),("a","IN"),("mano","NN"),("armada","VBN"))
 
 
   val verbsDict="/home/cris/mrcrstnherediagmez@gmail.com/Spanish_Lematizer/src/es-verbs.txt"
@@ -88,7 +93,7 @@ class Lemmatizer {
 def find_lemma(verb:String):String={
   // Spanish has 12,000+ verbs, ending in -ar (85%), -er (8%), -ir (7%).
   // Over 65% of -ar verbs (6500+) have a regular inflection.
-//  var v = verb.toLowerCase
+  var v = verb
   if(verb.endsWith("ar") || verb.endsWith("er") || verb.endsWith("ir")) return verb //verb is infinitive
   //set of rules for irregular inflections +10%
 
@@ -99,8 +104,9 @@ def find_lemma(verb:String):String={
   v=v.replace("zca","ce")
   //reconozcáis=>reconocer
   v=v.replace("zcá","ce")
-  //saldrár => saler
+  //valdrá => valer
 if(v.contains("ldr")) return v.substring(0,v.indexOf("ldr")+1).concat("er")
+  //contendrá=>contener
   if(v.contains("ndr")) return v.substring(0,v.indexOf("ndr")+1).concat("er")
 //many verbs end in -ar and have a regular inflection
 val regular_inflection_ar=List (
@@ -132,8 +138,8 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
   //Present 1sg -o: yo hablo, como, vivo => hablar, comer, vivir.
   if(v.endsWith("o")) return v.substring(0,v.length-1).concat("ar")
   //Present 2sg, 3sg and 3pl: tú hablas.
-  if(v.endsWith("a")) return v.substring(0,v.length-2).concat("ar")
-  if(v.endsWith("as") || v.endsWith("an")) return v.substring(0,v.length-1).concat("ar")
+  if(v.endsWith("a")) return v.substring(0,v.length-1).concat("ar")
+  if(v.endsWith("as") || v.endsWith("an")) return v.substring(0,v.length-2).concat("ar")
   // Present 2sg, 3sg and 3pl: tú comes, tú vives.
   if(v.endsWith("e")){
     if(v.substring(0,v.length-1).length>2 && v.substring(0,v.length-1).charAt(v.length-2)=="i") return v.substring(0,v.length-1).concat("ir")
@@ -252,7 +258,7 @@ object ScalaApp {
     val mappedVerbs=lemmatizr.verbsToDictionaryPair(lemmatizr.verbsDict)
    // print(mappedVerbs)
 //    print(lemmatizr.lista(1)._1)
-    val lemas=lemmatizr.get_lemmas(lemmatizr.lista7,mappedVerbs)
+    val lemas=lemmatizr.get_lemmas(lemmatizr.lista12,mappedVerbs)
     lemas.foreach(i=>print(i))
 
   }
