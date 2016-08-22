@@ -12,6 +12,8 @@ class Lemmatizer {
   var lista4=List(("Las","DT"),("atletas","NNS"),("españolas","JJ"),("son","VB"),("muy","RB"),("buenas","JJ"),("deportistas","NNS"))
   var lista5=List(("Alejandro","NNP"),("quiere","VB"),("a","IN"),("Cristina","NNP"),("más","RB"),("que","IN"),("a","IN"),("nada","DT"),
     (",",","),("como","IN"),("nunca","RB"),("antes","IN"),("quiso","VB"),("a","IN"),("nadie","DT"),(".","."))
+  var lista6=List(("Los","DT"),("lobos","NNS"),("aullaban","VB"),("desesperadamente","NN"))
+  var lista7=List(("Dijo","VB"),("que","IN"),("lo","DT"),("esperáramos","VB"),("aquí","IN"),("mientras","IN"),("compraba","VB"),("galletas","NNS"))
 
 
   val verbsDict="/home/cris/mrcrstnherediagmez@gmail.com/Spanish_Lematizer/src/es-verbs.txt"
@@ -76,15 +78,17 @@ class Lemmatizer {
   //-----returns the infinitive form of the given verb or none
   def verb_lemma(verb:String,dictionary:Map[String,String]):String={
   //if(dictionary.getOrElse(verb," ")!="") return dictionary(verb).toLowerCase
-    if(dictionary.keySet.exists(_==verb)!=0) return dictionary(verb).toLowerCase
-    else return find_lemma(verb)
+  val v=verb.toLowerCase
+    if(dictionary.keySet.exists(_==v)){
+      return dictionary(v)
+    }else return find_lemma(v)
   }
 
   //-------return the base form of verb using a rule-based aproach when verb is unknow
 def find_lemma(verb:String):String={
   // Spanish has 12,000+ verbs, ending in -ar (85%), -er (8%), -ir (7%).
   // Over 65% of -ar verbs (6500+) have a regular inflection.
-  var v = verb.toLowerCase
+//  var v = verb.toLowerCase
   if(verb.endsWith("ar") || verb.endsWith("er") || verb.endsWith("ir")) return verb //verb is infinitive
   //set of rules for irregular inflections +10%
 
@@ -248,7 +252,7 @@ object ScalaApp {
     val mappedVerbs=lemmatizr.verbsToDictionaryPair(lemmatizr.verbsDict)
    // print(mappedVerbs)
 //    print(lemmatizr.lista(1)._1)
-    val lemas=lemmatizr.get_lemmas(lemmatizr.lista4,mappedVerbs)
+    val lemas=lemmatizr.get_lemmas(lemmatizr.lista7,mappedVerbs)
     lemas.foreach(i=>print(i))
 
   }
