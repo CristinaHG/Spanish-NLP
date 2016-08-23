@@ -20,7 +20,7 @@ class Lemmatizer {
   var lista11=List(("dejaron","VB"),("que","IN"),("murieran","VB"),("de","IN"),("hambre","NN"))
   var lista12=List(("nos","PRP"),("atracaron","VB"),("a","IN"),("mano","NN"),("armada","VBN"))
   var lista13=List(("cuando","IN"),("éramos","VB"),("niños","NNS"),("repelíamos","VB"),("muchos","RB"),("bichos","NNS"))
-
+  var lista14=List(("con","IN"),("tanto","RB"),("calor","NN"),("se","PRP"),("funde","VB"),("el","DT"),("hielo","NN"))
 
   val verbsDict="/home/cris/mrcrstnherediagmez@gmail.com/Spanish_Lematizer/src/es-verbs.txt"
   val irregular_inflections=List(
@@ -127,6 +127,7 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
   "ía", "ías", "íamos", "íais", "ían",              // past imperfective
     "í", "iste", "ió", "imos", "isteis", "ieron",        // past perfective
     "era", "eras", "éramos", "erais", "eran")       //past subjunctive
+
   regular_inflection_er.foreach(u=>if(v.endsWith(u)){
     val difLength=v.length-u.length
     if(v.substring(0,difLength).length>2 && v.substring(0,difLength).charAt(difLength-2)=="i")
@@ -145,11 +146,11 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
   if(v.endsWith("as") || v.endsWith("an")) return v.substring(0,v.length-2).concat("ar")
   // Present 2sg, 3sg and 3pl: tú comes, tú vives.
   if(v.endsWith("e")){
-    if(v.substring(0,v.length-1).length>2 && v.substring(0,v.length-1).charAt(v.length-2)=="i") return v.substring(0,v.length-1).concat("ir")
+    if(v.substring(0,v.length-1).length>2 && v.substring(0,v.length-1).charAt(v.length-3)=='i') return v.substring(0,v.length-1).concat("ir")
     else return v.substring(0,v.length-1).concat("er")
   }
   if (v.endsWith("es") || v.endsWith("en")){
-    if(v.substring(0,v.length-2).length>2 && v.substring(0,v.length-2).charAt(v.length-2)=="i") return v.substring(0,v.length-2).concat("ir")
+    if(v.substring(0,v.length-2).length>2 && v.substring(0,v.length-2).charAt(v.length-3)=='i') return v.substring(0,v.length-2).concat("ir")
     else return v.substring(0,v.length-2).concat("er")
   }
   // Present 1pl and 2pl: nosotros hablamos.
@@ -261,7 +262,7 @@ object ScalaApp {
     val mappedVerbs=lemmatizr.verbsToDictionaryPair(lemmatizr.verbsDict)
    // print(mappedVerbs)
 //    print(lemmatizr.lista(1)._1)
-    val lemas=lemmatizr.get_lemmas(lemmatizr.lista13,mappedVerbs)
+    val lemas=lemmatizr.get_lemmas(lemmatizr.lista14,mappedVerbs)
     lemas.foreach(i=>print(i))
 
   }
