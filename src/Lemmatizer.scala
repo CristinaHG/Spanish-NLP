@@ -127,8 +127,10 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
   "ía", "ías", "íamos", "íais", "ían",              // past imperfective
     "í", "iste", "ió", "imos", "isteis", "ieron",        // past perfective
     "era", "eras", "éramos", "erais", "eran")       //past subjunctive
-  regular_inflection_er.foreach(u=>if(v.endsWith(u)){if(v.substring(0,v.length-u.length).length>2 && v.substring(0,v.length-u.length).charAt(v.length-u.length-2)=="i")
-  return v.substring(0,v.length-u.length).concat("ir") else return v.substring(0,v.length-u.length).concat("er")} )
+  regular_inflection_er.foreach(u=>if(v.endsWith(u)){
+    val difLength=v.length-u.length
+    if(v.substring(0,difLength).length>2 && v.substring(0,difLength).charAt(difLength-2)=="i")
+  return v.substring(0,difLength).concat("ir") else return v.substring(0,difLength).concat("er")} )
 
   //Many verbs end in -ir and have a regular inflection
   val regular_inflection_ir=List(
