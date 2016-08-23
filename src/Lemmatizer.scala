@@ -21,6 +21,8 @@ class Lemmatizer {
   var lista12=List(("nos","PRP"),("atracaron","VB"),("a","IN"),("mano","NN"),("armada","VBN"))
   var lista13=List(("cuando","IN"),("éramos","VB"),("niños","NNS"),("repelíamos","VB"),("muchos","RB"),("bichos","NNS"))
   var lista14=List(("con","IN"),("tanto","RB"),("calor","NN"),("se","PRP"),("funde","VB"),("el","DT"),("hielo","NN"))
+  var lista15=List(("lo","DT"),("que","WP"),("no","RB"),("queremos","VB"),("es","VB"),("que","IN"),("lo","DT"),("acaparéis","VB"),
+    ("todo","DT"))
 
   val verbsDict="/home/cris/mrcrstnherediagmez@gmail.com/Spanish_Lematizer/src/es-verbs.txt"
   val irregular_inflections=List(
@@ -262,7 +264,7 @@ object ScalaApp {
     val mappedVerbs=lemmatizr.verbsToDictionaryPair(lemmatizr.verbsDict)
    // print(mappedVerbs)
 //    print(lemmatizr.lista(1)._1)
-    val lemas=lemmatizr.get_lemmas(lemmatizr.lista14,mappedVerbs)
+    val lemas=lemmatizr.get_lemmas(lemmatizr.lista15,mappedVerbs)
     lemas.foreach(i=>print(i))
 
   }
