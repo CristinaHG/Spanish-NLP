@@ -13,4 +13,21 @@ class Tokenizer {
   val re_abbr2="""^([A-Za-z]+\.)+$""".r //alternating letters, "U.S. , apdo."
   val re_abbr3=
     """^[A-Z][ + "|".concat("bcdfghjklmnpqrstvwxz") + "]+.$ """.r //# capital followed by consonants, "Mr."
+
+  //return a list of sentences. Each sentence is a space-separated string of tokens.
+  //handles common abreviations.Punctuation marks are split fron other words. Periods or ?! mark the end of a sentence.
+  //Headings without ending period are inferred by line breaks.
+  def find_tokens(string:String):String={
+    val punc=punctuation.replace(".","")
+    var lista:List[Char]=Nil
+    punc.foreach(p=>(p)::lista)
+    lista=lista.reverse
+//handle unicode quotes
+    if(string.contains("“")) string.replace("“"," “ ")
+    if(string.contains("”")) string.replace("”"," ” ")
+    if(string.contains("‘")) string.replace("‘"," ‘ ")
+    if(string.contains("’")) string.replace("’"," ’ ")
+
+
+  }
 }
