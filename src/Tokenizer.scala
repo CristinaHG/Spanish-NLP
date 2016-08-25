@@ -9,7 +9,7 @@ class Tokenizer {
     "S.L.", "Sr.", "Sra.", "Srta.", "s.s.s.", "tel.", "Ud.", "Vd.", "Uds.", "Vds.",
     "v.", "vol.", "W.C.")
 
-  val re_abbr1="""^[A-Za-z]\.$""".r // single letter , "T. De Smedt"
-  val re_abbr2="""^([A-Za-z]\.)+$""".r //alternating letters, "U.S"
+  val re_abbr1="""^[A-Za-z]\.$""".r // single letter , "D."
+  val re_abbr2="""^([A-Za-z]+\.)+$""".r //alternating letters, "U.S. , apdo."
   val re_abbr3="""^[A-Z][" + "|".join("bcdfghjklmnpqrstvwxz") + "]+.$ """.r //# capital followed by consonants, "Mr."
 }
