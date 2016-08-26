@@ -17,7 +17,7 @@ class Tokenizer {
 
   // Handle paragraph line breaks (\n\n marks end of sentence).
   val EOS = "END-OF-SENTENCE"
-
+  var TOKEN="""(\S+)\s""".r
   //return a list of sentences. Each sentence is a space-separated string of tokens.
   //handles common abreviations.Punctuation marks are split fron other words. Periods or ?! mark the end of a sentence.
   //Headings without ending period are inferred by line breaks.
@@ -36,6 +36,23 @@ class Tokenizer {
     s="\r\n".r.replaceAllIn(s,"\n")
     s="\n{2,}".r.replaceAllIn(s,EOS)
     s="""\s+""".r.replaceAllIn(s," ")
+
+    //find words
+    var tokens=Nil
+
+    //handle punctuation marks
+    TOKEN.findAllIn(s).foreach(t => if(t.length>0){
+                        var tail=Nil
+                        var t2=t
+                        while (t2.startsWith(punc)){
+                         t2.head::tokens
+                          t2=t2.tail
+                        }
+                        while (t2.endsWith(punc) || t2.endsWith(".")){
+
+                        }
+
+    })
 
   }
 }
