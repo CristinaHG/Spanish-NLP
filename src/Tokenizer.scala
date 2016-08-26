@@ -70,9 +70,18 @@ class Tokenizer {
                           tokens.+(t2)
                         }
                         tokens.++(tail.reverse)
-                        //handle sentence breaks (periods,quotes,parenthesis)
-
     })
+    //handle sentence breaks (periods,quotes,parenthesis)
+    var j=0
+    var i=0
+    while (j < tokens.length){
+      if(tokens[j]=="..." || tokens[j]=="." || tokens[j]=="!" || tokens[j]=="?" || tokens[j]==EOS){
+          while(j < tokens.length && (tokens[j]=="'" || tokens[j]=="\"" || tokens[j]=="”" || tokens[j]=="’" || tokens[j]=="..."
+            || tokens[j]== "." || tokens[j]=="!" || tokens[j]=="?" || tokens[j]==")" || tokens[j]==EOS)  ){
+
+          }
+      }
+    }
 
   }
 }
