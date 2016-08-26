@@ -25,7 +25,7 @@ class Tokenizer {
     var s=string
     val punc=punctuation.replace(".","")
     var lista:List[Char]=Nil
-    punc.foreach(p=>(p)::lista)
+    punc.foreach(p=>p::lista)
     lista=lista.reverse
   //handle unicode quotes
     if(s.contains("“")) s.replace("“"," “ ")
@@ -38,14 +38,14 @@ class Tokenizer {
     s="""\s+""".r.replaceAllIn(s," ")
 
     //find words
-    var tokens=Nil
+    var tokens=List()
 
     //handle punctuation marks
     TOKEN.findAllIn(s).foreach(t => if(t.length>0){
                         var tail=Nil
                         var t2=t
                         while (t2.startsWith(punc)){
-                         t2.head::tokens
+                          tokens::=t2.head
                           t2=t2.tail
                         }
                         while (t2.endsWith(punc) || t2.endsWith(".")){
@@ -65,8 +65,12 @@ class Tokenizer {
                             tail.+(t2.substring(t2.length))
                             t2=t2.tail
                           }
-
                         }
+                        if( t2.compareTo("")!=0){
+                          tokens.+(t2)
+                        }
+                        tokens.++(tail.reverse)
+                        //handle sentence breaks (periods,quotes,parenthesis)
 
     })
 
