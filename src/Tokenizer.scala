@@ -46,7 +46,7 @@ class Tokenizer {
     TOKEN.findAllIn(s).foreach(t => if(t.length>0){
                         var tail=Nil
                         var t2=t
-                        while (t2.startsWith(punc)){
+                        while (punc.contains(t2.head)){
                          t2.head:: tokens
                           tokens=tokens.reverse
                           t2=t2.tail
