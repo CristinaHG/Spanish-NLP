@@ -51,8 +51,8 @@ class Tokenizer {
                           tokens=tokens.reverse
                           t2=t2.tail
                         }
-                        while (t2.endsWith(punc) || t2.endsWith(".")){
-                          if(t2.endsWith(punc)){
+                        while (punc.contains(t2.last) || t2.endsWith(".")){
+                          if(punc.contains(t2.last)){
                             tail.+(t2.substring(0,t2.length-1))
                             t2=t2.tail
                         }//split elipsis (...) before splitting period
