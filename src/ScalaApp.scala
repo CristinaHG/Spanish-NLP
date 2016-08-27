@@ -18,22 +18,19 @@ object ScalaApp {
     val string2="no podrás vivir eternamente"
     val string3="Los ingenieros informáticos son muy inteligentes"
     val string4="Las atletas españolas son muy buenas deportistas"
+    val string5="Alejandro quiere a Cristina más que a nada, como nunca antes quiso a nadie."
+    val string6="Los lobos aullaban desesperadamente"
+    val string7="Dijo que lo esperáramos aquí mientras compraba galletas"
+    val string8="Te advertimos que serían duros"
+    val string9="reconozco que me comporté mal"
+    val string10="todo esfuerzo valdrá la pena"
+    val string11="dejaron que murieran de hambre"
+    val string12="nos atracaron a mano armada"
+    val string13="cuando éramos niños repelíamos muchos bichos"
+    val string14="con tanto calor se funde el hielo"
+    val string15="lo que no queremos es que lo acaparéis todo"
     val toknzr=new Tokenizer
     toknzr.find_tokens(string1).foreach(t => print(t))
   }
 }
 
-
-var lista5=List(("Alejandro","NNP"),("quiere","VB"),("a","IN"),("Cristina","NNP"),("más","RB"),("que","IN"),("a","IN"),("nada","DT"),
-  (",",","),("como","IN"),("nunca","RB"),("antes","IN"),("quiso","VB"),("a","IN"),("nadie","DT"),(".","."))
-var lista6=List(("Los","DT"),("lobos","NNS"),("aullaban","VB"),("desesperadamente","NN"))
-var lista7=List(("Dijo","VB"),("que","IN"),("lo","DT"),("esperáramos","VB"),("aquí","IN"),("mientras","IN"),("compraba","VB"),("galletas","NNS"))
-var lista8=List(("Te","PRP"),("advertimos","VB"),("que","WP"),("serían","VB"),("duros","JJ"))
-var lista9=List(("reconozco","VB"),("que","WP"),("me","PRP"),("comporté","VB"),("mal","RB"))
-var lista10=List(("todo","DT"),("esfuerzo","NN"),("valdrá","VB"),("la","DT"),("pena","NN"))
-var lista11=List(("dejaron","VB"),("que","IN"),("murieran","VB"),("de","IN"),("hambre","NN"))
-var lista12=List(("nos","PRP"),("atracaron","VB"),("a","IN"),("mano","NN"),("armada","VBN"))
-var lista13=List(("cuando","IN"),("éramos","VB"),("niños","NNS"),("repelíamos","VB"),("muchos","RB"),("bichos","NNS"))
-var lista14=List(("con","IN"),("tanto","RB"),("calor","NN"),("se","PRP"),("funde","VB"),("el","DT"),("hielo","NN"))
-var lista15=List(("lo","DT"),("que","WP"),("no","RB"),("queremos","VB"),("es","VB"),("que","IN"),("lo","DT"),("acaparéis","VB"),
-  ("todo","DT"))
