@@ -25,10 +25,10 @@ class Tokenizer {
   //Headings without ending period are inferred by line breaks.
   def find_tokens(string:String):List[String]={
     var s=string
-    val punc=punctuation.replace(".","")
-    var lista:List[Char]=Nil
-    punc.foreach(p=>p::lista)
-    lista=lista.reverse
+    val punc=punctuation.replace(".","").toCharArray
+//    var lista=Nil
+//    punc.foreach(p=>(p)::lista)
+//    //lista=lista.reverse
   //handle unicode quotes
     if(s.contains("“")) s.replace("“"," “ ")
     if(s.contains("”")) s.replace("”"," ” ")
@@ -47,7 +47,8 @@ class Tokenizer {
                         var tail=Nil
                         var t2=t
                         while (t2.startsWith(punc)){
-                          tokens::=t2.head
+                         t2.head:: tokens
+                          tokens=tokens.reverse
                           t2=t2.tail
                         }
                         while (t2.endsWith(punc) || t2.endsWith(".")){
