@@ -1,8 +1,10 @@
 import scala.util.matching.Regex
-
+import scala.util.control.Breaks._
 /**
   * Created by cris on 24/08/16.
   */
+
+
 class Tokenizer {
   val punctuation = ".,;:!?()[]{}`'\"@#$^&*+-|=~_"
   val abbreviations=List("a.C.", "a.m.", "apdo.", "aprox.", "Av.", "Avda.", "c.c.", "D.", "Da.", "d.C.",
@@ -60,7 +62,7 @@ class Tokenizer {
                           //split period(if not an abbreviation)
                           if(t2.endsWith(".")){
                             if(abbreviations.contains(t2) || re_abbr1.findAllMatchIn(t2).length>0 || re_abbr2.findAllMatchIn(t2).length>0 ||
-                              re_abbr3.findAllMatchIn(t2).length>0) return
+                              re_abbr3.findAllMatchIn(t2).length>0) break()
                           }else{
                             tail.+(t2.substring(t2.length))
                             t2=t2.tail
@@ -75,12 +77,12 @@ class Tokenizer {
     var j=0
     var i=0
     var sentences:List[String]=Nil
-    while (j < tokens.length){
+    breakable{ while (j < tokens.length){
 
       if(tokens(j)=="..." || tokens(j)=="." || tokens(j)=="!" || tokens(j)=="?" || tokens(j)==EOS){
           while(j < tokens.length && (tokens(j)=="'" || tokens(j)=="\"" || tokens(j)=="”" || tokens(j)=="’" || tokens(j)=="..."
             || tokens(j)== "." || tokens(j)=="!" || tokens(j)=="?" || tokens(j)==")" || tokens(j)==EOS)  ){
-            if( (tokens(j)=="'" || tokens(j)=="\"") && sentences(sentences.length-1).count(tokens(j))%2==0 ) return
+            if( (tokens(j)=="'" || tokens(j)=="\"") && sentences(sentences.length-1).count(tokens(j))%2==0 ) break()
             j+=1
             sentences(sentences.length-1).++( tokens.slice(i,j).filter(t=>t!=EOS))
             sentences.++(List())
@@ -88,7 +90,7 @@ class Tokenizer {
           }
         j+=1
       }
-    }
+    }}
     //handle emoticons
     return sentences
   }
