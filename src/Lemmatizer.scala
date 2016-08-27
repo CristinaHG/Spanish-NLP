@@ -4,8 +4,6 @@
 import scala.io.Source
 
 class Lemmatizer {
-
-
   var lista1 = List(("Los", "DT"), ("gatos", "NNS"),("negros", "JJ"),("son", "VB"),("horribles", "JJ"))
   var lista2=List(("no","RB"),("podrás","VB"),("vivir","VB"),("eternamente","RB"))
   var lista3=List(("Los","DT"),("ingenieros","NNS"),("informáticos","JJ"),("son","VB"),("muy","RB"),("inteligentes","JJ"))
@@ -258,17 +256,7 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
 
 }
 
-object ScalaApp {
-  def  main(args: Array[String]) {
- val lemmatizr=new Lemmatizer
-    val mappedVerbs=lemmatizr.verbsToDictionaryPair(lemmatizr.verbsDict)
-   // print(mappedVerbs)
-//    print(lemmatizr.lista(1)._1)
-    val lemas=lemmatizr.get_lemmas(lemmatizr.lista15,mappedVerbs)
-    lemas.foreach(i=>print(i))
 
-  }
-}
 
 
 
