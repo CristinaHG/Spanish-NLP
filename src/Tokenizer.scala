@@ -1,3 +1,4 @@
+import scala.collection.mutable
 import scala.util.matching.Regex
 import scala.util.control.Breaks._
 /**
@@ -40,14 +41,14 @@ class Tokenizer {
     s="""\s+""".r.replaceAllIn(s," ")
 
     //find words
-    var tokens=List()
+    var tokens=mutable.MutableList[String]()
 
     //handle punctuation marks
     TOKEN.findAllIn(s).foreach(t => if(t.length>0){
                         var tail=Nil
                         var t2=t
                         while (punc.contains(t2.head)){
-                         t2.head:: tokens
+                         tokens+=t2.head.toString
                           tokens=tokens.reverse
                           t2=t2.tail
                         }
@@ -70,28 +71,28 @@ class Tokenizer {
                           }
                         }
                         if( t2.compareTo("")!=0){
-                          tokens.+(t2)
+                          tokens+=t2
                         }
-                        tokens.++(tail.reverse)
+                        tokens+=tail.reverse.toString()
     })
     //handle sentence breaks (periods,quotes,parenthesis)
     var j=0
     var i=0
     var sentences:List[String]=Nil
-    breakable{ while (j < tokens.length){
-
-      if(tokens(j)=="..." || tokens(j)=="." || tokens(j)=="!" || tokens(j)=="?" || tokens(j)==EOS){
-          while(j < tokens.length && (tokens(j)=="'" || tokens(j)=="\"" || tokens(j)=="”" || tokens(j)=="’" || tokens(j)=="..."
-            || tokens(j)== "." || tokens(j)=="!" || tokens(j)=="?" || tokens(j)==")" || tokens(j)==EOS)  ){
-            if( (tokens(j)=="'" || tokens(j)=="\"") && sentences(sentences.length-1).count(tokens(j))%2==0 ) break()
-            j+=1
-            sentences(sentences.length-1).++( tokens.slice(i,j).filter(t=>t!=EOS))
-            sentences.++(List())
-            i=j
-          }
-        j+=1
-      }
-    }}
+//    breakable{ while (j < tokens.length){
+//
+//      if(tokens(j)=="..." || tokens(j)=="." || tokens(j)=="!" || tokens(j)=="?" || tokens(j)==EOS){
+//          while(j < tokens.length && (tokens(j)=="'" || tokens(j)=="\"" || tokens(j)=="”" || tokens(j)=="’" || tokens(j)=="..."
+//            || tokens(j)== "." || tokens(j)=="!" || tokens(j)=="?" || tokens(j)==")" || tokens(j)==EOS)  ){
+//            if( (tokens(j)=="'" || tokens(j)=="\"") && sentences(sentences.length-1).count(tokens(j))%2==0 ) break()
+//            j+=1
+//            sentences(sentences.length-1).++( tokens.slice(i,j).filter(t=>t!=EOS))
+//            sentences.++(List())
+//            i=j
+//          }
+//        j+=1
+//      }
+//    }}
     //handle emoticons
     return sentences
   }
