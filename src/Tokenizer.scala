@@ -73,7 +73,7 @@ class Tokenizer {
                         if( t2.compareTo("")!=0){
                           tokens+=t2
                         }
-                        tokens+=tail.reverse.toString()
+                        //tokens+=tail.reverse.toString()
     })
     //handle sentence breaks (periods,quotes,parenthesis)
     var j=0
