@@ -44,7 +44,7 @@ class Tokenizer {
     var tokens=mutable.MutableList[String]()
 
     //handle punctuation marks
-    TOKEN.findAllIn(s).foreach(t => if(t.length>0){
+    TOKEN.findAllIn(s+" ").foreach(t => if(t.length>0){
                         var tail=Nil
                         var t2=t
                         while (punc.contains(t2.head)){
@@ -83,13 +83,15 @@ class Tokenizer {
 
       if(tokens(j)=="..." || tokens(j)=="." || tokens(j)=="!" || tokens(j)=="?" || tokens(j)==EOS){
           while(j < tokens.length && (tokens(j)=="'" || tokens(j)=="\"" || tokens(j)=="”" || tokens(j)=="’" || tokens(j)=="..."
-            || tokens(j)== "." || tokens(j)=="!" || tokens(j)=="?" || tokens(j)==")" || tokens(j)==EOS)  ){
-            if((tokens(j)=="'" || tokens(j)=="\"") && (sentences.last.count(_==tokens(j)) %2==0 )){ break()}
-            j+=1
-            sentences(sentences.length-1).++( tokens.slice(i,j).filter(t=>t!=EOS))
-            sentences.++(List())
+            || tokens(j)== "." || tokens(j)=="!" || tokens(j)=="?" || tokens(j)==")" || tokens(j)==EOS)  ) {
+            if ((tokens(j) == "'" || tokens(j) == "\"") && (sentences.last.count(_ == tokens(j)) % 2 == 0)) {
+              break()
+            }
+            j += 1
           }
-        i=j
+            sentences.++( tokens.slice(i,j).filter(t=>t!=EOS))
+            sentences.++(List())
+            i=j
       }
       j+=1
     }}
