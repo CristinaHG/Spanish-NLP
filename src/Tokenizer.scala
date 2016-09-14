@@ -66,7 +66,7 @@ class Tokenizer {
                             if ((abbreviations.contains(t2) || re_abbr1.findAllMatchIn(t2).length > 0 || re_abbr2.findAllMatchIn(t2).length > 0 ||
                               re_abbr3.findAllMatchIn(t2).length > 0)!=true) {
 
-                              tail.+(t2.substring(t2.length))
+                              tail.+(t2.substring(t2.length-1))
                               t2 = t2.tail
                             }
                           }
