@@ -46,7 +46,7 @@ class Tokenizer {
     //handle punctuation marks
     TOKEN.findAllIn(s+" ").foreach(t => if(t.length>0){
                         var tail=Nil
-                        var t2=t
+                        var t2=t.stripSuffix(" ")
                         while (punc.contains(t2.head)){
                          tokens+=t2.head.toString
                          //tokens=tokens.reverse
