@@ -84,14 +84,14 @@ class Tokenizer {
       if(tokens(j)=="..." || tokens(j)=="." || tokens(j)=="!" || tokens(j)=="?" || tokens(j)==EOS){
           while(j < tokens.length && (tokens(j)=="'" || tokens(j)=="\"" || tokens(j)=="”" || tokens(j)=="’" || tokens(j)=="..."
             || tokens(j)== "." || tokens(j)=="!" || tokens(j)=="?" || tokens(j)==")" || tokens(j)==EOS)  ){
-            if( (tokens(j)=="'" || tokens(j)=="\"") && (sentences.last.count(_==tokens(j)) %2==0 )) break()
+            if((tokens(j)=="'" || tokens(j)=="\"") && (sentences.last.count(_==tokens(j)) %2==0 )){ break()}
             j+=1
             sentences(sentences.length-1).++( tokens.slice(i,j).filter(t=>t!=EOS))
             sentences.++(List())
-            i=j
           }
-        j+=1
+        i=j
       }
+      j+=1
     }}
     //handle emoticons
     return sentences
