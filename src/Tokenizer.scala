@@ -53,14 +53,15 @@ class Tokenizer {
                           t2=t2.tail
                         }
                         while (punc.contains(t2.last) || t2.endsWith(".")) {
-                          if (punc.contains(t2.last)) {
-                            tail+=(t2.substring(t2.length - 1))
-                            t2 = t2.substring(0,t2.length-1)
-                          } //split elipsis (...) before splitting period
                           if (t2.endsWith("...")) {
                             tail+=("...")
                             t2 = t2.substring(0, t2.length - 3)
                           }
+                          else if (punc.contains(t2.last)) {
+                            tail+=(t2.substring(t2.length - 1))
+                            t2 = t2.substring(0,t2.length-1)
+                          } //split elipsis (...) before splitting period
+
                           //split period(if not an abbreviation)
                           if (t2.endsWith(".")) {
                             if ((abbreviations.contains(t2) || re_abbr1.findAllMatchIn(t2).length > 0 || re_abbr2.findAllMatchIn(t2).length > 0 ||
