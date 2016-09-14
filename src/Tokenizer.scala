@@ -67,7 +67,7 @@ class Tokenizer {
                               re_abbr3.findAllMatchIn(t2).length > 0)!=true) {
 
                               tail.+(t2.substring(t2.length-1))
-                              t2 = t2.tail
+                              t2 = t2.substring(0,t2.length-2)
                             }
                           }
                         }
