@@ -15,7 +15,7 @@ class Tokenizer {
     "v.", "vol.", "W.C.")
 
   val re_abbr1="""^[A-Za-z]\.$""".r // single letter , "D."
-  val re_abbr2="""^([A-Za-z]+\.)+$""".r //alternating letters, "U.S. , apdo."
+  val re_abbr2="""^([A-Za-z]\.)+$""".r //alternating letters, "U.S. , apdo."
   val re_abbr3="""^[A-Z][ + "|".concat("bcdfghjklmnpqrstvwxz") + "]+.$ """.r //# capital followed by consonants, "Mr."
 
   // Handle paragraph line breaks (\n\n marks end of sentence).
@@ -52,22 +52,23 @@ class Tokenizer {
                          //tokens=tokens.reverse
                           t2=t2.tail
                         }
-                        while (punc.contains(t2.last) || t2.endsWith(".")){
-                          if(punc.contains(t2.last)){
-                            tail.+(t2.substring(0,t2.length-1))
-                            t2=t2.tail
-                        }//split elipsis (...) before splitting period
-                          if(t2.endsWith("...")){
+                        while (punc.contains(t2.last) || t2.endsWith(".")) {
+                          if (punc.contains(t2.last)) {
+                            tail.+(t2.substring(0, t2.length - 1))
+                            t2 = t2.tail
+                          } //split elipsis (...) before splitting period
+                          if (t2.endsWith("...")) {
                             tail.+("...")
-                            t2=t2.substring(0,t2.length-3)
+                            t2 = t2.substring(0, t2.length - 3)
                           }
                           //split period(if not an abbreviation)
-                          if(t2.endsWith(".")){
-                            if(abbreviations.contains(t2) || re_abbr1.findAllMatchIn(t2).length>0 || re_abbr2.findAllMatchIn(t2).length>0 ||
-                              re_abbr3.findAllMatchIn(t2).length>0) break()
-                          }else{
-                            tail.+(t2.substring(t2.length))
-                            t2=t2.tail
+                          if (t2.endsWith(".")) {
+                            if ((abbreviations.contains(t2) || re_abbr1.findAllMatchIn(t2).length > 0 || re_abbr2.findAllMatchIn(t2).length > 0 ||
+                              re_abbr3.findAllMatchIn(t2).length > 0)!=true) {
+
+                              tail.+(t2.substring(t2.length))
+                              t2 = t2.tail
+                            }
                           }
                         }
                         if( t2.compareTo("")!=0){
