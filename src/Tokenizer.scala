@@ -54,8 +54,8 @@ class Tokenizer {
                         }
                         while (punc.contains(t2.last) || t2.endsWith(".")) {
                           if (punc.contains(t2.last)) {
-                            tail+=(t2.substring(0, t2.length - 1))
-                            t2 = t2.tail
+                            tail+=(t2.substring(t2.length - 1))
+                            t2 = t2.substring(0,t2.length-1)
                           } //split elipsis (...) before splitting period
                           if (t2.endsWith("...")) {
                             tail+=("...")
