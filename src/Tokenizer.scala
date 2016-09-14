@@ -45,7 +45,7 @@ class Tokenizer {
 
     //handle punctuation marks
     TOKEN.findAllIn(s+" ").foreach(t => if(t.length>0){
-                        var tail=Nil
+                        var tail=mutable.MutableList[String]()
                         var t2=t.stripSuffix(" ")
                         while (punc.contains(t2.head)){
                          tokens+=t2.head.toString
@@ -58,7 +58,7 @@ class Tokenizer {
                             t2 = t2.tail
                           } //split elipsis (...) before splitting period
                           if (t2.endsWith("...")) {
-                            tail.+("...")
+                            tail+=("...")
                             t2 = t2.substring(0, t2.length - 3)
                           }
                           //split period(if not an abbreviation)
@@ -66,8 +66,8 @@ class Tokenizer {
                             if ((abbreviations.contains(t2) || re_abbr1.findAllMatchIn(t2).length > 0 || re_abbr2.findAllMatchIn(t2).length > 0 ||
                               re_abbr3.findAllMatchIn(t2).length > 0)!=true) {
 
-                              tail.+(t2.substring(t2.length-1))
-                              t2 = t2.substring(0,t2.length-2)
+                              tail+=(t2.substring(t2.length-1))
+                              t2 = t2.substring(0,t2.length-1)
                             }
                           }
                         }
