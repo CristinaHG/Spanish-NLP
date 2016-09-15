@@ -83,6 +83,7 @@ class Tokenizer {
     var j=0
     var i=0
     var sentences=mutable.MutableList[String]()
+
     breakable{ while (j < tokens.length){
 
       if(tokens(j)=="..." || tokens(j)=="." || tokens(j)=="!" || tokens(j)=="?" || tokens(j)==EOS){
@@ -94,14 +95,15 @@ class Tokenizer {
             j += 1
           }
 
-            //sentences+=tokens.slice(i,j).filter(t=>t!=EOS).toString()
-            tokens.slice(i,j).filter(t=>t!=EOS).foreach(t=>sentences+=t)
+            sentences+=tokens.slice(i,j).filter(t=>t!=EOS).mkString(" ")
+            //tokens.slice(i,j).filter(t=>t!=EOS).forall(t=>sentences+=t)
             sentences+=" "
             i=j
       }
       j+=1
     }
-      tokens.slice(i,j).filter(t=>t!=EOS).foreach(t=>sentences+=t)
+      //tokens.slice(i,j).filter(t=>t!=EOS).foreach(t=>sentences+=t)
+      sentences+=tokens.slice(i,j).filter(t=>t!=EOS).mkString(" ")
       //handle emoticons
     }
     return sentences
