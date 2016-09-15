@@ -100,8 +100,10 @@ class Tokenizer {
             i=j
       }
       j+=1
-    }}
-    //handle emoticons
+    }
+      tokens.slice(i,j).filter(t=>t!=EOS).foreach(t=>sentences+=t)
+      //handle emoticons
+    }
     return sentences
   }
 }
