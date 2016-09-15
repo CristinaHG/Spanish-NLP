@@ -24,7 +24,7 @@ class Tokenizer {
   //return a list of sentences. Each sentence is a space-separated string of tokens.
   //handles common abreviations.Punctuation marks are split fron other words. Periods or ?! mark the end of a sentence.
   //Headings without ending period are inferred by line breaks.
-  def find_tokens(string:String):List[String]={
+  def find_tokens(string:String):mutable.MutableList[String]={
     var s=string
     val punc=punctuation.replace(".","").toCharArray
 //    var lista=Nil
@@ -82,7 +82,7 @@ class Tokenizer {
     //handle sentence breaks (periods,quotes,parenthesis)
     var j=0
     var i=0
-    var sentences:List[String]=Nil
+    var sentences=mutable.MutableList[String]()
     breakable{ while (j < tokens.length){
 
       if(tokens(j)=="..." || tokens(j)=="." || tokens(j)=="!" || tokens(j)=="?" || tokens(j)==EOS){
@@ -93,8 +93,10 @@ class Tokenizer {
             }
             j += 1
           }
-            sentences.++( tokens.slice(i,j).filter(t=>t!=EOS))
-            sentences.++(List())
+
+            //sentences+=tokens.slice(i,j).filter(t=>t!=EOS).toString()
+            tokens.slice(i,j).filter(t=>t!=EOS).foreach(t=>sentences+=t)
+            sentences+=" "
             i=j
       }
       j+=1

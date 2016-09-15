@@ -30,7 +30,8 @@ object ScalaApp {
     val string14="con tanto calor se funde el hielo"
     val string15="lo que no queremos es que lo acaparéis todo"
     val toknzr=new Tokenizer
-    toknzr.find_tokens("La verdad... es que no me parece normal.").foreach(t => print(t))
+    //toknzr.find_tokens("La verdad... es que no me parece normal.").foreach(t => print(t))
+    toknzr.find_tokens(string2).foreach(t => print(t))
   }
 }
 
