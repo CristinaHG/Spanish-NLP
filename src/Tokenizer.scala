@@ -108,4 +108,9 @@ class Tokenizer {
     }
     return sentences
   }
+
+  def get_sentences(sentences:List[String]): Unit ={
+      sentences.foreach(p=>print(p+"\n"))
+  }
+  
 }
