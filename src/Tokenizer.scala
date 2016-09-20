@@ -112,5 +112,10 @@ class Tokenizer {
   def get_sentences(sentences:List[String]): Unit ={
       sentences.foreach(p=>print(p+"\n"))
   }
-  
+
+  def count_sentences(sentences:List[String]): Unit ={
+    return sentences.length
+  }
+
+
 }
