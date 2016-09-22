@@ -20,7 +20,14 @@ class Tokenizer {
   val re_sarcasm="""\( ?\! ?\)""".r //handle sarcasm punctuation (!)
   val emoticons:Map[Tuple2[String,Double],List[String]]
   emoticons+=(("love" , 1.00) ->List("<3","♥"))
-
+  emoticons+=(("grin" , 1.00)->List(">:D", ":-D", ":D", "=-D", "=D", "X-D", "x-D", "XD", "xD", "8-D"))
+  emoticons+=(("taunt", +0.75)->List(">:P", ":-P", ":P", ":-p", ":p", ":-b", ":b", ":c)", ":o)", ":^)"))
+  emoticons+=(("smile", +0.50)->List(">:)", ":-)", ":)", "=)", "=]", ":]", ":}", ":>", ":3", "8)", "8-)"))
+  emoticons+=(("wink" , +0.25)->List(">;]", ";-)", ";)", ";-]", ";]", ";D", ";^)", "*-)", "*)"))
+  emoticons+=(("gasp" , +0.05)->List(">:o", ":-O", ":O", ":o", ":-o", "o_O", "o.O", "°O°", "°o°"))
+  emoticons+=(("worry", -0.25)->List(">:/",  ":-/", ":/", ":\\", ">:\\", ":-.", ":-s", ":s", ":S", ":-S", ">.>"))
+  emoticons+=(("frown", -0.75)->List(">:[", ":-(", ":(", "=(", ":-[", ":[", ":{", ":-<", ":c", ":-c", "=/"))
+  emoticons+=(("cry"  , -1.00)->List(":'(", ":'''(", ";'("))
 
   // Handle paragraph line breaks (\n\n marks end of sentence).
   val EOS = "END-OF-SENTENCE"
