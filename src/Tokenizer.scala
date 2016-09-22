@@ -29,7 +29,8 @@ class Tokenizer {
   emoticons+=(("frown", -0.75)->List(">:[", ":-(", ":(", "=(", ":-[", ":[", ":{", ":-<", ":c", ":-c", "=/"))
   emoticons+=(("cry"  , -1.00)->List(":'(", ":'''(", ";'("))
 
-  // Handle paragraph line breaks (\n\n marks end of sentence).
+val re_emoticons=emoticons.values.foreach(list=>list.foreach(elem=>elem.split("|").foreach(icon=>icon.split("?\'")))).toString.r// Handle paragraph line breaks (\n\n marks end of sentence).
+
   val EOS = "END-OF-SENTENCE"
   var TOKEN="""(\S+)\s""".r
   //return a list of sentences. Each sentence is a space-separated string of tokens.
