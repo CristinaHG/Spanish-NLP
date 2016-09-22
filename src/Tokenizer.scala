@@ -17,6 +17,10 @@ class Tokenizer {
   val re_abbr1="""^[A-Za-z]\.$""".r // single letter , "D."
   val re_abbr2="""^([A-Za-z]\.)+$""".r //alternating letters, "U.S. , apdo."
   val re_abbr3="""^[A-Z][ + "|".concat("bcdfghjklmnpqrstvwxz") + "]+.$ """.r //# capital followed by consonants, "Mr."
+  val re_sarcasm="""\( ?\! ?\)""".r //handle sarcasm punctuation (!)
+  val emoticons:Map[Tuple2[String,Double],List[String]]
+  emoticons+=(("love" , 1.00) ->List("<3","♥"))
+
 
   // Handle paragraph line breaks (\n\n marks end of sentence).
   val EOS = "END-OF-SENTENCE"
@@ -105,6 +109,8 @@ class Tokenizer {
       //tokens.slice(i,j).filter(t=>t!=EOS).foreach(t=>sentences+=t)
       sentences+=tokens.slice(i,j).filter(t=>t!=EOS).mkString(" ")
       //handle emoticons
+
+
     }
     return sentences
   }
