@@ -29,8 +29,8 @@ import scala.util.control.Breaks._
   emoticons+=(("frown", -0.75)->List(">:[", ":-(", ":(", "=(", ":-[", ":[", ":{", ":-<", ":c", ":-c", "=/"))
   emoticons+=(("cry"  , -1.00)->List(":'(", ":'''(", ";'("))
 
-var re_emoticons=""
-  emoticons.values.foreach(list=>re_emoticons+=list.flatMap(elem=>"|"::elem::Nil).tail)
+var re_emoticons=""::Nil
+  emoticons.values.foreach(list=>re_emoticons:::=list.flatMap(elem=>"|"::elem::Nil).tail)
   //re_emoticons.foreach(icon=>icon.split("'?'\'")))).toString.r// Handle paragraph line breaks (\n\n marks end of sentence).
 
   val EOS = "END-OF-SENTENCE"
