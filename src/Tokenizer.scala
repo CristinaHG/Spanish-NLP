@@ -6,7 +6,7 @@ import scala.util.control.Breaks._
   */
 
 
-class Tokenizer {
+ class Tokenizer{
   val punctuation = ".,;:!?()[]{}`'\"@#$^&*+-|=~_"
   val abbreviations=List("a.C.", "a.m.", "apdo.", "aprox.", "Av.", "Avda.", "c.c.", "D.", "Da.", "d.C.",
     "d.j.C.", "dna.", "Dr.", "Dra.", "esq.", "etc.", "Gob.", "h.", "m.n.", "no.",
@@ -18,7 +18,7 @@ class Tokenizer {
   val re_abbr2="""^([A-Za-z]\.)+$""".r //alternating letters, "U.S. , apdo."
   val re_abbr3="""^[A-Z][ + "|".concat("bcdfghjklmnpqrstvwxz") + "]+.$ """.r //# capital followed by consonants, "Mr."
   val re_sarcasm="""\( ?\! ?\)""".r //handle sarcasm punctuation (!)
-  val emoticons:Map[Tuple2[String,Double],List[String]]
+  val emoticons= mutable.Map[(String,Double),List[String]]()
   emoticons+=(("love" , 1.00) ->List("<3","♥"))
   emoticons+=(("grin" , 1.00)->List(">:D", ":-D", ":D", "=-D", "=D", "X-D", "x-D", "XD", "xD", "8-D"))
   emoticons+=(("taunt", +0.75)->List(">:P", ":-P", ":P", ":-p", ":p", ":-b", ":b", ":c)", ":o)", ":^)"))
