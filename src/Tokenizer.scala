@@ -32,10 +32,9 @@ import scala.util.control.Breaks._
 var re_emoticons=""::Nil
   emoticons.values.foreach(list=>re_emoticons:::=list.flatMap(elem=>"|"::elem::Nil).tail)
   var re1_emoticons=""::Nil
-  re_emoticons.foreach(icon=>if(!(icon.equals("|")))
-    re1_emoticons::=icon.mkString("?\\") else re1_emoticons::=icon )
+  re_emoticons.foreach(icon=>if(!(icon.equals("|"))) re1_emoticons::=icon.mkString("?\\") else re1_emoticons::=icon )
 
-  re1_emoticons=re1_emoticons.reverse.tail
+  re1_emoticons=re1_emoticons.reverse.tail //important to reserve and to eliminate the first
 
   val EOS = "END-OF-SENTENCE"
   var TOKEN="""(\S+)\s""".r
