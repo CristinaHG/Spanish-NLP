@@ -31,9 +31,11 @@ import scala.util.control.Breaks._
 
 var re_emoticons=""::Nil
   emoticons.values.foreach(list=>re_emoticons:::=list.flatMap(elem=>"|"::elem::Nil).tail)
-  re_emoticons.foreach(icon=>if(!icon.equals("|")) re_emoticons(re_emoticons.indexOf(icon)).replace(icon,icon.split("'?'\'").toString) )
-   // =icon.split("'?'\'")
-  //.+("'?'\'")) //.r// Handle paragraph line breaks (\n\n marks end of sentence).
+  var re1_emoticons=""::Nil
+  re_emoticons.foreach(icon=>if(!(icon.equals("|")))
+    re1_emoticons::=icon.mkString("?\\") else re1_emoticons::=icon )
+
+  re1_emoticons=re1_emoticons.reverse.tail
 
   val EOS = "END-OF-SENTENCE"
   var TOKEN="""(\S+)\s""".r
