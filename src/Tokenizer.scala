@@ -1,3 +1,5 @@
+import java.util.regex.Pattern
+
 import scala.collection.mutable
 import scala.util.matching.Regex
 import scala.util.control.Breaks._
@@ -30,13 +32,13 @@ import scala.util.control.Breaks._
   emoticons+=(("cry"  , -1.00)->List(":'(", ":'''(", ";'("))
 
 var re_emoticons=""::Nil
-  emoticons.values.foreach(list=>re_emoticons:::=list.flatMap(elem=>"|"::elem::Nil).tail)
+  emoticons.values.foreach(list=>re_emoticons:::=list.flatMap(elem=> if(elem.compareTo(list.last)!=0) "|"::elem::Nil else "|"::elem::"|"::Nil).tail)
   var re1_emoticons=""::Nil
-  re_emoticons.foreach(icon=>if(!(icon.equals("|"))) re1_emoticons::=icon.mkString("?".concat("""\\""")) else re1_emoticons::=icon )
+  re_emoticons.foreach(icon=>if(!(icon.equals("|"))) re1_emoticons::=icon.mkString("?".concat("""\""")) else re1_emoticons::=icon )
 
-  re1_emoticons=re1_emoticons.reverse.tail.map(t => if(!(t.equals("|"))) """\\"""+t else t  )  //important to reserve and to eliminate the first
+  re1_emoticons=re1_emoticons.reverse.tail.map(t => if(!(t.equals("|"))) """\"""+t else t )  //important to reserve and to eliminate the first
 
-  val RE_EMOTICONS=re1_emoticons.mkString.r
+  var RE_EMOTICONS=Pattern.quote(re1_emoticons.mkString).r
 
   val EOS = "END-OF-SENTENCE"
   var TOKEN="""(\S+)\s""".r
