@@ -34,8 +34,9 @@ var re_emoticons=""::Nil
   var re1_emoticons=""::Nil
   re_emoticons.foreach(icon=>if(!(icon.equals("|"))) re1_emoticons::=icon.mkString("?".concat("""\\""")) else re1_emoticons::=icon )
 
-  re1_emoticons=re1_emoticons.reverse.tail.map(t => if(!(t.equals("|"))) """\\"""+t else t  ) //important to reserve and to eliminate the first
+  re1_emoticons=re1_emoticons.reverse.tail.map(t => if(!(t.equals("|"))) """\\"""+t else t  )  //important to reserve and to eliminate the first
 
+  val RE_EMOTICONS=re1_emoticons.mkString
 
   val EOS = "END-OF-SENTENCE"
   var TOKEN="""(\S+)\s""".r
