@@ -38,7 +38,7 @@ var re_emoticons=""::Nil
 
   re1_emoticons=re1_emoticons.reverse.tail.map(t => if(!(t.equals("|"))) """\"""+t else t )  //important to reserve and to eliminate the first
 
-  var RE_EMOTICONS=Pattern.quote(re1_emoticons.mkString).r
+  var RE_EMOTICONS=Pattern.quote(re1_emoticons.dropRight(2).mkString).r
 
   val EOS = "END-OF-SENTENCE"
   var TOKEN="""(\S+)\s""".r
