@@ -45,8 +45,7 @@ var re_emoticons=""::Nil
       else t
   )
 
-  re1_emoticons=re1_emoticons.reverse.tail.map(t => if(!(t.equals("|") || t.equals("D") || t.equals("S") || t.equals("s") || t.equals("b") || t.equals("c")))
-    """\"""+t else t )  //important to reserve and to eliminate the first
+  re1_emoticons=re1_emoticons.reverse.tail.map(t => if(!(t.equals("|"))) """\"""+t else t )  //important to reserve and to eliminate the first
 
   var RE_EMOTICONS=Pattern.quote(re1_emoticons.dropRight(2).mkString).r
   print(RE_EMOTICONS)
