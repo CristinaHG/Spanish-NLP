@@ -36,10 +36,20 @@ var re_emoticons=""::Nil
   var re1_emoticons=""::Nil
   re_emoticons.foreach(icon=>if(!(icon.equals("|"))) re1_emoticons::=icon.mkString("?".concat("""\""")) else re1_emoticons::=icon )
 
-  re1_emoticons=re1_emoticons.reverse.tail.map(t => if(!(t.equals("|"))) """\"""+t else t )  //important to reserve and to eliminate the first
+  re1_emoticons=re1_emoticons.map(t=>
+      if( t.contains("D")) t.dropRight(t.length-t.indexOf("D")+1)+t.last
+      else if (t.contains("S")) t.dropRight(t.length-t.indexOf("S")+1)+t.last
+      else if (t.contains("s")) t.dropRight(t.length-t.indexOf("s")+1)+t.last
+      else if (t.contains("b")) t.dropRight(t.length-t.indexOf("b")+1)+t.last
+      else if (t.contains("c")) t.dropRight(t.length-t.indexOf("c")+1)+t.last
+      else t
+  )
+
+  re1_emoticons=re1_emoticons.reverse.tail.map(t => if(!(t.equals("|") || t.equals("D") || t.equals("S") || t.equals("s") || t.equals("b") || t.equals("c")))
+    """\"""+t else t )  //important to reserve and to eliminate the first
 
   var RE_EMOTICONS=Pattern.quote(re1_emoticons.dropRight(2).mkString).r
-
+  print(RE_EMOTICONS)
   val EOS = "END-OF-SENTENCE"
   var TOKEN="""(\S+)\s""".r
   //return a list of sentences. Each sentence is a space-separated string of tokens.
