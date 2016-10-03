@@ -32,10 +32,12 @@ import scala.util.control.Breaks._
   emoticons+=(("cry"  , -1.00)->List(":'(", ":'''(", ";'("))
 
 var re_emoticons=""::Nil
+  //separating emojis by "|"
   emoticons.values.foreach(list=>re_emoticons:::=list.flatMap(elem=> if(elem.compareTo(list.last)!=0) "|"::elem::Nil else "|"::elem::"|"::Nil).tail)
   var re1_emoticons=""::Nil
+  //scaping each char in icons
   re_emoticons.foreach(icon=>if(!(icon.equals("|"))) re1_emoticons::=icon.mkString("?".concat("""\""")) else re1_emoticons::=icon )
-
+  // if letters= "D" "S" "s" "b" or "c" do not scape
   re1_emoticons=re1_emoticons.map(t=>
       if( t.contains("D")) t.dropRight(t.length-t.indexOf("D")+1)+t.last
       else if (t.contains("S")) t.dropRight(t.length-t.indexOf("S")+1)+t.last
@@ -44,9 +46,9 @@ var re_emoticons=""::Nil
       else if (t.contains("c")) t.dropRight(t.length-t.indexOf("c")+1)+t.last
       else t
   )
-
+  // scape first char in emoji
   re1_emoticons=re1_emoticons.reverse.tail.map(t => if(!(t.equals("|"))) """\"""+t else t )  //important to reserve and to eliminate the first
-
+  //create emoji regex
   var RE_EMOTICONS=Pattern.quote(re1_emoticons.dropRight(2).mkString).r
   print(RE_EMOTICONS)
   val EOS = "END-OF-SENTENCE"
