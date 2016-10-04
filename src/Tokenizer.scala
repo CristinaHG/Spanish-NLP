@@ -116,30 +116,30 @@ var re_emoticons=""::Nil
     var i=0
     var sentences=mutable.MutableList[String]()
 
-    breakable{ while (j < tokens.length){
+    breakable {
+      while (j < tokens.length) {
 
-      if(tokens(j)=="..." || tokens(j)=="." || tokens(j)=="!" || tokens(j)=="?" || tokens(j)==EOS){
-          while(j < tokens.length && (tokens(j)=="'" || tokens(j)=="\"" || tokens(j)=="”" || tokens(j)=="’" || tokens(j)=="..."
-            || tokens(j)== "." || tokens(j)=="!" || tokens(j)=="?" || tokens(j)==")" || tokens(j)==EOS)  ) {
+        if (tokens(j) == "..." || tokens(j) == "." || tokens(j) == "!" || tokens(j) == "?" || tokens(j) == EOS) {
+          while (j < tokens.length && (tokens(j) == "'" || tokens(j) == "\"" || tokens(j) == "”" || tokens(j) == "’" || tokens(j) == "..."
+            || tokens(j) == "." || tokens(j) == "!" || tokens(j) == "?" || tokens(j) == ")" || tokens(j) == EOS)) {
             if ((tokens(j) == "'" || tokens(j) == "\"") && (sentences.last.count(_ == tokens(j)) % 2 == 0)) {
               break()
             }
             j += 1
           }
 
-            sentences+=tokens.slice(i,j).filter(t=>t!=EOS).mkString(" ")
-            //tokens.slice(i,j).filter(t=>t!=EOS).forall(t=>sentences+=t)
-            sentences+=" "
-            i=j
+          sentences += tokens.slice(i, j).filter(t => t != EOS).mkString(" ")
+          //tokens.slice(i,j).filter(t=>t!=EOS).forall(t=>sentences+=t)
+          sentences += " "
+          i = j
+        }
+        j += 1
       }
-      j+=1
     }
       //tokens.slice(i,j).filter(t=>t!=EOS).foreach(t=>sentences+=t)
       sentences+=tokens.slice(i,j).filter(t=>t!=EOS).mkString(" ")
       //handle emoticons
-
-
-    }
+      sentences=sentences.map(s=>re_sarcasm.replaceAllIn(s,"(!)"))
     return sentences
   }
 
