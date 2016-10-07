@@ -96,32 +96,19 @@ class PosTagger {
   def penntreebank2universal(token: String, tag: String):(String,String) ={
     if (tag.startsWith("NNP-") || tag.startsWith("NNPS-")) return (token,(NOUN.concat(tag.split("-").toString.formatted("%s-%s"))))
       //return (token, "%s-%s" % (NOUN, tag.split("-")[-1]))
-    if tag in ("NN", "NNS", "NNP", "NNPS", "NP"):
-    return (token, NOUN)
-    if tag in ("MD", "VB", "VBD", "VBG", "VBN", "VBP", "VBZ"):
-    return (token, VERB)
-    if tag in ("JJ", "JJR", "JJS"):
-    return (token, ADJ)
-    if tag in ("RB", "RBR", "RBS", "WRB"):
-    return (token, ADV)
-    if tag in ("PRP", "PRP$", "WP", "WP$"):
-    return (token, PRON)
-    if tag in ("DT", "PDT", "WDT", "EX"):
-    return (token, DET)
-    if tag in ("IN",):
-    return (token, PREP)
-    if tag in ("CD",):
-    return (token, NUM)
-    if tag in ("CC",):
-    return (token, CONJ)
-    if tag in ("UH",):
-    return (token, INTJ)
-    if tag in ("POS", "RP", "TO"):
-    return (token, PRT)
-    if tag in ("SYM", "LS", ".", "!", "?", ",", ":", "(", ")", "\"", "#", "$"):
-    return (token, PUNC)
+    if(List("NN", "NNS", "NNP", "NNPS", "NP").contains(tag)) return (token, NOUN)
+    if(List("MD", "VB", "VBD", "VBG", "VBN", "VBP", "VBZ").contains(tag)) return (token, VERB)
+    if(List("JJ", "JJR", "JJS").contains(tag)) return (token, ADJ)
+    if(List("RB", "RBR", "RBS", "WRB").contains(tag)) return (token, ADV)
+    if(List("PRP", "PRP$", "WP", "WP$").contains(tag)) return (token, PRON)
+    if(List("DT", "PDT", "WDT", "EX").contains(tag)) return (token, DET)
+    if(List("IN",).contains(tag)) return (token, PREP)
+    if(List("CD",).contains(tag)) return (token, NUM)
+    if(List("CC",).contains(tag)) return (token, CONJ)
+    if(List("UH",).contains(tag)) return (token, INTJ)
+    if(List("POS", "RP", "TO").contains(tag)) return (token, PRT)
+    if(List("SYM", "LS", ".", "!", "?", ",", ":", "(", ")", "\"", "#", "$").contains(tag)) return (token, PUNC)
     return (token, X)
-
   }
 
   //Converts a Parole tag to a universal tag.
