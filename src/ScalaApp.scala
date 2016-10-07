@@ -6,67 +6,6 @@ import scala.collection.mutable
 
 object ScalaApp {
 
-  //lexicon uses the Parole tagset
-  val PAROLE="parole"
-  val parole=mutable.Map[String,String]()
-  parole+=("AO"->"JJ") //primera
-  parole+=("AQ"-> "JJ") //absurdo
-  parole+=("CC"->"CC") //e
-  parole+=("CS"-> "IN") //porque
-  parole+=("DA"->"DT") //el
-  parole+=("DD"->"DT") //ese
-  parole+=("DI"->"DT") //mucha
-  parole+=("DP"-> "PRP$") //mi,nuestra
-  parole+=("DT"->"DT") //cuántos
-  parole+=("Fa"-> ".") // !
-  parole+=("Fc"->",") // ,
-  parole+=("Fd"->":") // :
-  parole+=("Fe"->"\"") // "
-  parole+=("Fg"->".") // -
-  parole+=("Fh"-> ".") //  /
-  parole+=("Fi"-> ".") // ?
-  parole+=("Fp"-> ".") // .
-  parole+=("Fr"->".") // >>
-  parole+=("Fs"->".") // ...
-  parole+=("Fpa"-> "(") // (
-  parole+=("Fpt"->")") // )
-  parole+=("Fx"-> ".") // ;
-  parole+=("Fz"-> ".") //
-  parole+=("I"-> "UH") // ehm
-  parole+=("NC"-> "NN") // islam
-  parole+=("NCS"-> "NN") //guitarra
-  parole+=("NCP"-> "NNS") // guitarras
-  parole+=("NP"->"NNP") // Óscar
-  parole+=("P0"->"PRP")  // se
-  parole+=("PD"->"DT") // ése
-  parole+=("PI"-> "DT") // uno
-  parole+=("PP"->"PRP") // vos
-  parole+=("PR"-> "WP$") // qué
-  parole+=("PT"-> "WP$") // qué
-  parole+=("PX"->"PRP$") // mío
-  parole+=("RG"->"RB")  // tecnológicamente
-  parole+=("RN"-> "RB") // no
-  parole+=("SP"->"IN") // por
-  parole+=("VAG"-> "VBG") // habiendo
-  parole+=("VAI"->"MD")   // había
-  parole+=("VAN"-> "MD") // haber
-  parole+=("VAS"-> "MD") // haya
-  parole+=("VMG"->"VBG")  // habiendo
-  parole+=("VMI"->"VB") // habemos
-  parole+=("VMM"->"VB")  // compare
-  parole+=("VMN"-> "VB") // comparecer
-  parole+=("VMP"->"VBN")  // comparando
-  parole+=("VMS"->"VB")  // compararan
-  parole+=("VSG"-> "VBG")  // comparando
-  parole+=("VSI"-> "VB")   // será
-  parole+=("VSN"-> "VB")   // ser
-  parole+=("VSP"-> "VBN") // sido
-  parole+=("VSS"-> "VB")   // sea
-  parole+=("W"-> "NN") // septiembre
-  parole+=("Z"-> "CD")  // 1,7
-  parole+=("Zd"-> "CD")   // 1,7
-  parole+=("Zm"-> "CD")   // £1,7
-  parole+=("Zp"-> "CD")   // 1,7%
 
 
   def main(args: Array[String]) {
