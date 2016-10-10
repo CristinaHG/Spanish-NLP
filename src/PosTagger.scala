@@ -8,8 +8,11 @@ class PosTagger {
   //lexicon uses the Parole tagset
   // http://www.lsi.upc.edu/~nlp/SVMTool/parole.html
   // http://nlp.lsi.upc.edu/freeling/doc/tagsets/tagset-es.html
-
-  val PAROLE="parole"
+  val lexicon=""
+  val morphology=""
+  val context=""
+  var tagset="parole"
+  //val PAROLE="parole"
   val parole=mutable.Map[String,String]()
   parole+=("AO"->"JJ") //primera
   parole+=("AQ"-> "JJ") //absurdo
@@ -88,6 +91,12 @@ class PosTagger {
   val PUNC="."
   val X = "X"
 
+
+  //set tagset val
+  def setTagset(tagsetname:String){
+    this.tagset=tagsetname
+  }
+
   // Converts a Parole tag to a Penn Treebank II tag. Ej: importantísimo/AQ => importantísimo/ADJ
   def parole2penntreebank(token:String,tag:String):(String, String)={
    return (token,parole.getOrElse(tag,tag))
@@ -121,5 +130,7 @@ class PosTagger {
     var paroletreebank=parole2penntreebank(token, tag)
     return penntreebank2universal(paroletreebank._1,paroletreebank._2)
   }
+
+
 
 }
