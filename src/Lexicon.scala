@@ -20,7 +20,6 @@ def read(path:String,encoding:String,comment:String)={
       var f = scala.io.Source.fromFile(path).getLines()
       f= f.map(line=> if(f.indexOf(line)==0 && line.isInstanceOf[String]) line.replaceAll("\"+$", "").getBytes(StandardCharsets.UTF_8).mkString else line.getBytes(StandardCharsets.UTF_8).mkString)
       f=f.filterNot(line=>line.startsWith(comment))
-
     }else if(path.isInstanceOf[String]){
       //from String
       val f=scala.io.Source.fromString(path)
@@ -28,8 +27,7 @@ def read(path:String,encoding:String,comment:String)={
       //from file or buffer
       val f=path
     }
-
-  }
+  }else throw new IllegalArgumentException("a path must be specified")
 }
 
 
