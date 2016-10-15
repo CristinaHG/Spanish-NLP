@@ -35,6 +35,10 @@ object ScalaApp {
     val toknzr=new Tokenizer
     toknzr.find_tokens("La verdad... es que no me parece normal.").foreach(t => print(t+"\n"))
     ///toknzr.find_tokens(string2).foreach(t => print(t+" "))
+
+    val myLexicon=new Lexicon
+    //val verbs= scala.io.Source.fromFile("../Spanish_Lematizer/src/es-morphology.txt").getLines()
+    val lexiconSpanish=myLexicon.read("../Spanish_Lematizer/src/es-lexicon.txt","utf-8",";;;")
   }
 }
 
