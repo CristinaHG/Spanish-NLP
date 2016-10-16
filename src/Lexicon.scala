@@ -21,9 +21,9 @@ class Lexicon {
     if (!path.isEmpty) {
       if (path.isInstanceOf[String] && Files.exists(Paths.get(path)) ) {
         //from file path
-        var f = scala.io.Source.fromFile(path).getLines().toList
-        f = f.map(line => if (f.indexOf(line) == 0 && line.isInstanceOf[String]) line.replaceAll("\"+$", "").getBytes(StandardCharsets.UTF_8).mkString else line.getBytes(StandardCharsets.UTF_8).mkString)
-        f = f.filterNot(line => line.startsWith(comment))
+        var f = scala.io.Source.fromFile(path).getLines().filter(line=>(!line.startsWith(comment)))
+       // f = f.map(line => if (f.indexOf(line) == 0 && line.isInstanceOf[String]) line.replaceAll("\"+$", "").getBytes(StandardCharsets.UTF_8).mkString else line.getBytes(StandardCharsets.UTF_8).mkString)
+       // f = f.filterNot(line => line.startsWith(comment))
         return f
         //    }else if(path.isInstanceOf[String]){
         //      //from String

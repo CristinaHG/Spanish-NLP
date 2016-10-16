@@ -39,6 +39,7 @@ object ScalaApp {
     val myLexicon=new Lexicon
     //val verbs= scala.io.Source.fromFile("../Spanish_Lematizer/src/es-morphology.txt").getLines()
     val lexiconSpanish=myLexicon.read("../Spanish_Lematizer/src/es-lexicon.txt","utf-8",";;;")
+    val pi=0
   }
 }
 
