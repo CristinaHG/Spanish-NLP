@@ -30,7 +30,7 @@ class Lexicon {
        // f = f.map(line => if (f.indexOf(line) == 0 && line.isInstanceOf[String]) line.replaceAll("\"+$", "") else line)
         //f.foreach(line=> line.split(" ").foreach(s=> emoticons+=(s(0)->s(1))))
        // f = f.filterNot(line => line.startsWith(comment))
-        return emoticons
+
         //    }else if(path.isInstanceOf[String]){
         //      //from String
         //      val f=scala.io.Source.fromString(path)
@@ -39,7 +39,8 @@ class Lexicon {
         //      val f=path
         //    }
       }
-    } else throw new IllegalArgumentException("a path must be specified")
+    } //else throw new IllegalArgumentException("a path must be specified")
+    return emoticons
   }
 
 }
