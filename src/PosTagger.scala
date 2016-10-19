@@ -150,6 +150,19 @@ class PosTagger {
     var tagged:List[(String,String)]=Nil
     // Tag known words.
     tokens.foreach(t=> tagged::=(t,lexicon.getOrElse(t,lexicon.getOrElse(t.toLowerCase,"None"))))
+    //Tag unknow words
+    tagged.foreach( t=> {
+      var prev = ("None", "None")
+      var next = ("None", "None")
+      if (tagged.indexOf(t)>0) prev=tagged(tagged.indexOf(t)-1)
+      if (tagged.indexOf(t)<(tagged.length-1)) next=tagged(tagged.indexOf(t)+1)
+      if(t._2=="None"){
+        //use language model
+      //  if(model.compareTo("None")==false) entrenar usando modelo
+        //use NNP for capitalized words
+        if( t._1.matches("""^[A-Z][a-z]+.$""")) tagged(tagged.indexOf(t))=(t._1,default(1))
+      }
+    })
   }
 
 
