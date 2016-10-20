@@ -167,6 +167,8 @@ class PosTagger {
         if( t._1.matches("""^[A-Z][a-z]+.$""")) (t._1,default(1))
           //use CD for digits and numbers
         else if(t._1.matches(CD)) (t._1,default(2))
+          //use suffix rules (ej, -mente=ADV)
+        else if(morphology)
       }
     })
   }
