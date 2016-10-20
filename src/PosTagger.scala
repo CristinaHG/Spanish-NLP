@@ -13,6 +13,10 @@ class PosTagger {
   val context=""
   var tagset="parole"
   //val PAROLE="parole"
+
+  //Unknow words are recognized as numbers if they contain only digits and -,.:/%$
+  val CD = """^[0-9\-\,\.\:\/\%\$]+$"""
+
   val parole=mutable.Map[String,String]()
   parole+=("AO"->"JJ") //primera
   parole+=("AQ"-> "JJ") //absurdo
@@ -151,7 +155,7 @@ class PosTagger {
     // Tag known words.
     tokens.foreach(t=> tagged::=(t,lexicon.getOrElse(t,lexicon.getOrElse(t.toLowerCase,"None"))))
     //Tag unknow words
-    tagged.foreach( t=> {
+    tagged.map( t=> {
       var prev = ("None", "None")
       var next = ("None", "None")
       if (tagged.indexOf(t)>0) prev=tagged(tagged.indexOf(t)-1)
@@ -160,7 +164,9 @@ class PosTagger {
         //use language model
       //  if(model.compareTo("None")==false) entrenar usando modelo
         //use NNP for capitalized words
-        if( t._1.matches("""^[A-Z][a-z]+.$""")) tagged(tagged.indexOf(t))=(t._1,default(1))
+        if( t._1.matches("""^[A-Z][a-z]+.$""")) (t._1,default(1))
+          //use CD for digits and numbers
+        else if(t._1.matches(CD)) (t._1,default(2))
       }
     })
   }
