@@ -32,4 +32,8 @@ class Morphology {
     }else throw new IllegalArgumentException("a path must be specified")
     return morphology
   }
+//Applies lexical rules to the given token, which is a [word, tag] list.
+  def apply(token:String,previus:(String,String), next:(String,String)): Unit ={
+
+  }
 }
