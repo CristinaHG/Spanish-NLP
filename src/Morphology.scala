@@ -14,7 +14,7 @@ import scala.collection.mutable
 class Morphology {
 
   //set of rules, based on word morphology (prefix,suffix)
-  val rulesSet= Set(
+  var rulesSet= Set(
     "word", // Word is x.
     "char", // Word contains x.
     "haspref", // Word starts with x.
@@ -26,7 +26,7 @@ class Morphology {
     "goodleft", // Word preceded by word x.
     "goodright"// Word followed by word x.
   )
-  rulesSet.foreach(r=> rulesSet.+('f'+r))
+  rulesSet.foreach(r=> rulesSet.+=("f"+r.mkString))
 
 
   // Returns a list of lists as the result of readed morphology.txt rules
