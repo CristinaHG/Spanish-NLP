@@ -50,7 +50,7 @@ class Morphology {
     return morphology
   }
 //Applies lexical rules to the given token, which is a [word, tag] list.
-  def apply(token:String,previus:(String,String), next:(String,String),morphology:List[List[String]]): Unit ={
-
+  def apply(token:String,tag:String,previus:(String,String), next:(String,String),morphology:List[List[String]]): Unit ={
+      
   }
 }
