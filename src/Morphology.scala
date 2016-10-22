@@ -26,24 +26,25 @@ class Morphology {
     "goodleft", // Word preceded by word x.
     "goodright"// Word followed by word x.
   )
+  rulesSet.foreach(r=> rulesSet.+('f'+r))
 
-  
+
   // Returns a list of lists as the result of readed morphology.txt rules
   def read(path: String, encoding: String, comment: String): List[List[String]] = {
-    var morphology:List[List[String]]=Nil
+    var morphology=List[List[String]]()
 
     if (!path.isEmpty) {
       if (path.isInstanceOf[String] && Files.exists(Paths.get(path)) ) {
         //from file path
-        val f = scala.io.Source.fromFile(path).getLines().map(line => morphology::=line.split(" "))
+        val f = scala.io.Source.fromFile(path).getLines().foreach(line => morphology::=line.split(" ").toList)
         //replace "\" by "" -> codecs.BOMUTF8 not necesary because of codification
         // f = f.map(line => if (f.indexOf(line) == 0 && line.isInstanceOf[String]) line.replaceAll("\"+$", "") else line)
       }else if(path.isInstanceOf[String]){
         //from String
-        val f=scala.io.Source.fromString(path).getLines().map(line => morphology::=line.split(" "))
-      }else{
-        //from file or buffer
-        val f=scala.io.Source.fromBytes(path.toBuffer.toArray,encoding).getLines().map(line => morphology::=line.split(" "))
+        val f=scala.io.Source.fromString(path).getLines().map(line => morphology::=line.split(" ").toList)
+//      }else{
+//        //from file or buffer
+//        val f=scala.io.Source.fromBytes(path.toBuffer.toArray,encoding).getLines().map(line => morphology::=line.split(" ").toList)
       }
     }else throw new IllegalArgumentException("a path must be specified")
     return morphology

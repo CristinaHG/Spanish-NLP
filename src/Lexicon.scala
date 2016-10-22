@@ -33,11 +33,11 @@ class Lexicon {
               val f=scala.io.Source.fromString(path).getLines().filter(line=>(!line.startsWith(comment))).map{line=>
                 val x=line.split(" ")
                 (x.head,x.last)}.foreach(u=>lexiconDict+=(u._1->u._2))
-      }else{
-        //from file or buffer
-              val f=scala.io.Source.fromBytes(path.toBuffer.toArray,encoding).getLines().filter(line=>(!line.startsWith(comment))).map{line=>
-          val x=line.split(" ")
-          (x.head,x.last)}.foreach(u=>lexiconDict+=(u._1->u._2))
+//      }else{
+//        //from file or buffer
+//              val f=scala.io.Source.fromBytes(path.toBuffer.toArray,encoding).getLines().filter(line=>(!line.startsWith(comment))).map{line=>
+//          val x=line.split(" ")
+//          (x.head,x.last)}.foreach(u=>lexiconDict+=(u._1->u._2))
             }
       }else throw new IllegalArgumentException("a path must be specified")
     return lexiconDict
