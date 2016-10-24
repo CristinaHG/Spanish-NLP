@@ -53,5 +53,34 @@ class Morphology {
 //Applies lexical rules to the given token, which is a [word, tag] list.
   def apply(token:String,tag:String,previus:(String,String), next:(String,String),morphology:List[List[String]],lexicon:Map[String,String]): Unit ={
 
+    var f = false
+    var x =""
+    var cmd=""
+
+    morphology.foreach(l=> {
+      if (rulesSet.contains(l(1))) { // Rule = ly hassuf 2 RB x
+        f = false
+        x = l(0)
+        val pos = (l.length - 2)
+         cmd = l(1).toLowerCase
+      }
+      if (rulesSet.contains(l(2))) { // Rule = NN s fhassuf 1 NNS x
+         f = true
+         x = l(1)
+        val pos= (l.length -2)
+         cmd= l(2).toLowerCase.stripPrefix("f")
+      }
+      if( f==false || tag.compareTo(l(0))==true){
+        if( (cmd=="word" && x==token) ||
+          (cmd=="char" && x.contains(token)) ||
+          (cmd=="haspref" && token.startsWith(x)) ||
+          (cmd=="hassuf" && token.endsWith(x)) ||
+          (cmd=="addpref" && lexicon.contains(x+token)) ||
+          (cmd=="addsuf" && lexicon.contains(token+x)) ||
+          
+             )
+      }
+
+    })
   }
 }
