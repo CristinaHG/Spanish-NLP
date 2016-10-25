@@ -55,7 +55,7 @@ class Morphology {
 
 
 //Applies lexical rules to the given token, which is a [word, tag] list.
-  def apply(token:String,tag:String,previus:(String,String), next:(String,String),morphology:List[List[String]],lexicon:Map[String,String]): String ={
+  def apply(token:String,tag:String,previus:(String,String), next:(String,String),morphology:List[List[String]],lexicon:mutable.Map[String,String]): String ={
 
     var f = false
     var x =""
