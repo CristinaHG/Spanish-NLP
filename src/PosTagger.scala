@@ -149,32 +149,32 @@ class PosTagger {
   //All words are improved with contextual rules.
   //If a model is given, uses model for unknown words instead of morphology and context.
   //  If map is a function, it is applied to each (token, tag) after applying all rules.
-//  def find_tags(tokens:List[String], lexicon:Map[String,String], model:String, morphology:String, context:String, entities:String, default:List[String],
-//                mapCall:(String,String)=>(String,String)):List[(String,String)]={
-//    var tagged:List[(String,String)]=Nil
-//    // Tag known words.
-//    tokens.foreach(t=> tagged::=(t,lexicon.getOrElse(t,lexicon.getOrElse(t.toLowerCase,"None"))))
-//    //Tag unknow words
-//    tagged.map( t=> {
-//      var prev = ("None", "None")
-//      var next = ("None", "None")
-//      if (tagged.indexOf(t)>0) prev=tagged(tagged.indexOf(t)-1)
-//      if (tagged.indexOf(t)<(tagged.length-1)) next=tagged(tagged.indexOf(t)+1)
-//      if(t._2=="None"){
-//        //use language model
-//      //  if(model.compareTo("None")==false) entrenar usando modelo
-//        //use NNP for capitalized words
-//        if( t._1.matches("""^[A-Z][a-z]+.$""")) (t._1,default(1))
-//          //use CD for digits and numbers
-//        else if(t._1.matches(CD)) (t._1,default(2))
-//          //use suffix rules (ej, -mente=ADV)
-//        else if(!morphology.isEmpty){
-//          val morph=new Morphology
-//          (t._1, morph.apply(t._1,default(0),prev,next)
-//        }
-//      }
-//    })
-//  }
+  def find_tags(tokens:List[String], lexicon:Lexicon, model:String, morphology:Morphology, context:String, entities:String, default:List[String],
+                mapCall:(String,String)=>(String,String)):List[(String,String)]={
+    var tagged:List[(String,String)]=Nil
+    // Tag known words.
+    tokens.foreach(t=> tagged::=(t,lexicon.getOrElse(t,lexicon.getOrElse(t.toLowerCase,"None"))))
+    //Tag unknow words
+    tagged.map( t=> {
+      var prev = ("None", "None")
+      var next = ("None", "None")
+      if (tagged.indexOf(t)>0) prev=tagged(tagged.indexOf(t)-1)
+      if (tagged.indexOf(t)<(tagged.length-1)) next=tagged(tagged.indexOf(t)+1)
+      if(t._2=="None"){
+        //use language model
+      //  if(model.compareTo("None")==false) entrenar usando modelo
+        //use NNP for capitalized words
+        if( t._1.matches("""^[A-Z][a-z]+.$""")) (t._1,default(1))
+          //use CD for digits and numbers
+        else if(t._1.matches(CD)) (t._1,default(2))
+          //use suffix rules (ej, -mente=ADV)
+        else if(!morphology.isEmpty){
+          val morph=new Morphology
+          (t._1, morph.apply(t._1,default(0),prev,next)
+        }
+      }
+    })
+  }
 
 
 }
