@@ -168,7 +168,7 @@ class PosTagger {
           //use CD for digits and numbers
         else if(t._1.matches(CD)) (t._1,default(2))
           //use suffix rules (ej, -mente=ADV)
-        else if(!morphology.isEmpty){
+        else if(!morphology.morphologyList.isEmpty){
           val morph=new Morphology
           (t._1, morph.apply(t._1,default(0),prev,next)
         }
