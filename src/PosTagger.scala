@@ -153,7 +153,7 @@ class PosTagger {
                 mapCall:(String,String)=>(String,String)):List[(String,String)]={
     var tagged:List[(String,String)]=Nil
     // Tag known words.
-    tokens.foreach(t=> tagged::=(t,lexicon.getOrElse(t,lexicon.getOrElse(t.toLowerCase,"None"))))
+    tokens.foreach(t=> tagged::=(t,lexicon.lexiconDict.getOrElse(t,lexicon.lexiconDict.getOrElse(t.toLowerCase,"None"))))
     //Tag unknow words
     tagged.map( t=> {
       var prev = ("None", "None")
