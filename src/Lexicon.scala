@@ -15,8 +15,10 @@ import scala.xml.Comment
 
 class Lexicon {
 
+  var lexiconDict=mutable.Map[String,String]()
+
   // Returns a dictironary with readed lexicon over the lines in the file at the given path strippping comments
-  def read(path: String, encoding: String, comment: String): mutable.Map[String, String] = {
+  def read(path: String, encoding: String, comment: String): Unit = {
     //creating empty lexicon dict
     val lexiconDict= mutable.Map[String,String]()
 
@@ -40,7 +42,8 @@ class Lexicon {
 //          (x.head,x.last)}.foreach(u=>lexiconDict+=(u._1->u._2))
             }
       }else throw new IllegalArgumentException("a path must be specified")
-    return lexiconDict
+    this.lexiconDict=lexiconDict
+   // return lexiconDict
   }
 
 }

@@ -64,7 +64,7 @@ class Morphology {
         f = false
         x = l(0)
         pos = l(l.length - 2)
-         cmd = l(1).toLowerCase
+        cmd = l(1).toLowerCase
       }
       if (rulesSet.contains(l(2))) { // Rule = NN s fhassuf 1 NNS x
          f = true
@@ -73,7 +73,7 @@ class Morphology {
          cmd= l(2).toLowerCase.stripPrefix("f")
       }
       if( f==false || tag.compareTo(l(0))==true){
-        if( (cmd=="word" && x==token) ||
+        if((cmd=="word" && x==token) ||
           (cmd=="char" && token.contains(x)) ||
           (cmd=="haspref" && token.startsWith(x)) ||
           (cmd=="hassuf" && token.endsWith(x)) ||
