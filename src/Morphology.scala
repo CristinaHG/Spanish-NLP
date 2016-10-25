@@ -13,7 +13,8 @@ import scala.collection.mutable
 //     ly hassuf 2 RB x => unknown words ending in -ly change to RB.
 class Morphology {
 
-  val knowLexicon=new Lexicon
+  //val knowLexicon=new Lexicon
+  var morphologyList=List[List[String]]()
   //set of rules, based on word morphology (prefix,suffix)
   var rulesSet= Set(
     "word", // Word is x.
@@ -31,7 +32,7 @@ class Morphology {
 
 
   // Returns a list of lists as the result of readed morphology.txt rules
-  def read(path: String, encoding: String, comment: String): List[List[String]] = {
+  def read(path: String, encoding: String, comment: String): Unit = {
     var morphology=List[List[String]]()
 
     if (!path.isEmpty) {
@@ -48,8 +49,11 @@ class Morphology {
 //        val f=scala.io.Source.fromBytes(path.toBuffer.toArray,encoding).getLines().map(line => morphology::=line.split(" ").toList)
       }
     }else throw new IllegalArgumentException("a path must be specified")
-    return morphology
+    this.morphologyList=morphology
+    //return morphology
   }
+
+
 //Applies lexical rules to the given token, which is a [word, tag] list.
   def apply(token:String,tag:String,previus:(String,String), next:(String,String),morphology:List[List[String]],lexicon:Map[String,String]): String ={
 
