@@ -56,31 +56,38 @@ class Morphology {
     var f = false
     var x =""
     var cmd=""
+    var pos=""
+    var realTag=""
 
     morphology.foreach(l=> {
       if (rulesSet.contains(l(1))) { // Rule = ly hassuf 2 RB x
         f = false
         x = l(0)
-        val pos = (l.length - 2)
+        pos = l(l.length - 2)
          cmd = l(1).toLowerCase
       }
       if (rulesSet.contains(l(2))) { // Rule = NN s fhassuf 1 NNS x
          f = true
          x = l(1)
-        val pos= (l.length -2)
+         pos= l(l.length -2)
          cmd= l(2).toLowerCase.stripPrefix("f")
       }
       if( f==false || tag.compareTo(l(0))==true){
         if( (cmd=="word" && x==token) ||
-          (cmd=="char" && x.contains(token)) ||
+          (cmd=="char" && token.contains(x)) ||
           (cmd=="haspref" && token.startsWith(x)) ||
           (cmd=="hassuf" && token.endsWith(x)) ||
           (cmd=="addpref" && lexicon.contains(x+token)) ||
           (cmd=="addsuf" && lexicon.contains(token+x)) ||
-          
-             )
+          (cmd=="deletepref" && token.startsWith(x) && lexicon.contains(token.substring(x.length))) ||
+          (cmd=="deletesuf" && token.endsWith(x) && lexicon.contains(token.substring(0,token.length-x.length))) ||
+          (cmd=="goodleft" && x==next._1) ||
+          (cmd=="goodright" && x==previus._1)
+        ){
+          realTag=pos
+        }
       }
-
     })
+    return realTag
   }
 }
