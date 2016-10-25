@@ -169,8 +169,7 @@ class PosTagger {
         else if(t._1.matches(CD)) (t._1,default(2))
           //use suffix rules (ej, -mente=ADV)
         else if(!morphology.morphologyList.isEmpty){
-          val morph=new Morphology
-          (t._1, morph.apply(t._1,default(0),prev,next,morphology.morphologyList,lexicon.lexiconDict))
+          (t._1, morphology.apply(t._1,default(0),prev,next,morphology.morphologyList,lexicon.lexiconDict))
         }
       }
     })
