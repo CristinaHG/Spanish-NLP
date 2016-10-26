@@ -57,7 +57,7 @@ class Context {
         //        val f=scala.io.Source.fromBytes(path.toBuffer.toArray,encoding).getLines().map(line => morphology::=line.split(" ").toList)
       }
     }else throw new IllegalArgumentException("a path must be specified")
-    this.contextList=context
+    this.contextList=context.reverse
     //return morphology
   }
 }

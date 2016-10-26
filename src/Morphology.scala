@@ -49,7 +49,7 @@ class Morphology {
 //        val f=scala.io.Source.fromBytes(path.toBuffer.toArray,encoding).getLines().map(line => morphology::=line.split(" ").toList)
       }
     }else throw new IllegalArgumentException("a path must be specified")
-    this.morphologyList=morphology
+    this.morphologyList=morphology.reverse
     //return morphology
   }
 
