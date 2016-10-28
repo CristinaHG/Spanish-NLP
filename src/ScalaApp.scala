@@ -43,7 +43,7 @@ object ScalaApp {
     val lexiconSpanish=myLexicon.read("../Spanish_Lematizer/data/es-lexicon.txt","utf-8",";;;")
     val morphologySpanish=myMorphology.read("../Spanish_Lematizer/data/es-morphology.txt","utf-8",";;;")
     val contextSpanish=myContext.read("../Spanish_Lematizer/data/es-context.txt","utf-8",";;;")
-    val pi=0
+
   }
 }
 
