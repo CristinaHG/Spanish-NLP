@@ -33,7 +33,7 @@ object ScalaApp {
     val string14="con tanto calor se funde el hielo"
     val string15="lo que no queremos es que lo acaparéis todo"
     val toknzr=new Tokenizer
-    val tokens=toknzr.find_tokens("La verdad... es que no me parece normal.")//.foreach(t => print(t+"\n"))
+    val tokens=toknzr.find_tokens("el gato negro.")//.foreach(t => print(t+"\n"))
     ///toknzr.find_tokens(string2).foreach(t => print(t+" "))
 
     val myLexicon=new Lexicon
@@ -44,7 +44,12 @@ object ScalaApp {
     val morphologySpanish=myMorphology.read("../Spanish_Lematizer/data/es-morphology.txt","utf-8",";;;")
     val contextSpanish=myContext.read("../Spanish_Lematizer/data/es-context.txt","utf-8",";;;")
     val posTagged=new PosTagger
-    posTagged.find_tags(tokens,myLexicon,"",myMorphology,myContext,"",Nil,posTagged.parole2penntreebank)
+    //posTagged.find_tags(tokens,myLexicon,"",myMorphology,myContext,"",List("NN","NNP","CD"),posTagged.parole2penntreebank)
+    val lexiconPath="../Spanish_Lematizer/data/es-lexicon.txt"
+    val morphologyPath="../Spanish_Lematizer/data/es-morphology.txt"
+    val contextPath="../Spanish_Lematizer/data/es-context.txt"
+    val myParser=new Parser(lexiconPath,"",morphologyPath,contextPath,List("NN","NNP","CD"),"utf-8",";;;")
+    myParser.parse("el gato negro.",true,true,true,true)
   }
 }
 
