@@ -17,7 +17,7 @@ class Parser(lex: String,model: String,morph: String, contx: String, omission: L
   val morphology=new Morphology
   val context=new Context
   val default=omission
-
+  val posTagger=new PosTagger
   //Load data
   if(!lex.isEmpty) lexicon.read(lex,enc,comm)
   if(!morph.isEmpty) morphology.read(morph,enc,comm)
@@ -37,10 +37,12 @@ class Parser(lex: String,model: String,morph: String, contx: String, omission: L
   //the tokenizer, tagger, chunker, labeler and lemmatizer
   def parse(text:String,tokenize:Boolean,tags:Boolean,chunks:Boolean,lemmatize:Boolean): Unit ={
   //Tokenizer
-    if(tokenize==true){
-      var s=tokenizer.find_tokens(text).map(t=>t.split(" "))
-      print(1+2+3)
-      //s=s.map(t=>t.split(" "))
+    //if(tokenize==true){
+      var s=tokenizer.find_tokens(text).map(t=>t.split(" ").toList)
+    //}
+    //tagger (needed by chunker,labeler and lemmatizer)
+    if(tags==true){
+      s.map(t=>posTagger.find_tags(t,lexicon,model,morphology,context,"",default,posTagger.parole2penntreebank))
     }
   }
  }
