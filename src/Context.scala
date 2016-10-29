@@ -98,7 +98,7 @@ class Context {
             (cmd=="nextbigram" && (x==t(t.indexOf(token)+1)._2 && y==t(t.indexOf(token)+2)._2 ))
           ) (t(t.indexOf(token))._1,r(1))
         }))
-      return t.filter(p=>p._1=="STAART")
+      return t.filter(p=>p._1!="STAART")
 
   }
 
