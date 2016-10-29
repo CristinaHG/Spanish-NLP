@@ -155,6 +155,7 @@ class PosTagger {
     // Tag known words.
     tokens.foreach(t=> tagged::=(t,lexicon.lexiconDict.getOrElse(t,lexicon.lexiconDict.getOrElse(t.toLowerCase,"None"))))
     //Tag unknow words
+    tagged=tagged.reverse
     tagged.map( t=> {
       var prev = ("None", "None")
       var next = ("None", "None")
