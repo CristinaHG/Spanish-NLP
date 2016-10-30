@@ -66,7 +66,7 @@ class Context {
     val o=List(("STAART", "STAART"),("STAART", "STAART"),("STAART", "STAART")) //empty delimiters for look ahead/back
     var t=o.++(tokensTags).++(o)
     t.map(token=> this.contextList.foreach(r=>
-        if(!((token._2=="STAART") || (token._2!=r(0) && r(0)!="*"))){
+        if((token._2 != "STAART") && (token._2 == r(0) || r(0) != "*")){
           val cmd=r(2).toLowerCase
           val x=r(3)
           val y=if(r.length>4) r(4) else ""
