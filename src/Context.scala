@@ -78,7 +78,7 @@ class Context {
             (cmd=="prev1or2tag" && (  (t(t.indexOf(token)-1)._2, t(t.indexOf(token)-2)._2).toString().contains(x) )) ||
             (cmd=="next1or2tag" && (  (t(t.indexOf(token)+1)._2, t(t.indexOf(token)+2)._2).toString().contains(x) )) ||
             (cmd=="prev1or2or3tag" && ( (t(t.indexOf(token)-1)._2, t(t.indexOf(token)-2)._2,t(t.indexOf(token)-3)._2).toString().contains(x) )) ||
-            (cmd=="next1or2or3tag" && ( (t(t.indexOf(token)-1)._2, t(t.indexOf(token)-2)._2,t(t.indexOf(token)-3)._2).toString().contains(x) )) ||
+            (cmd=="next1or2or3tag" && ( (t(t.indexOf(token)+1)._2, t(t.indexOf(token)+2)._2,t(t.indexOf(token)+3)._2).toString().contains(x) )) ||
             (cmd=="surroundtag" && ( x==t(t.indexOf(token)-1)._2 && y==t(t.indexOf(token)+1)._2 )) ||
             (cmd=="curwd" && ( x==t(t.indexOf(token))._1 )) ||
             (cmd=="prevwd" && (x==t(t.indexOf(token)-1)._1 )) ||
