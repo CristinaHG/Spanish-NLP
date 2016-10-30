@@ -64,7 +64,7 @@ class Context {
   //Applies contextual rules to the given list of tokens, where each token is a [word,tag] list.
   def apply(tokensTags:List[(String,String)]):List[(String,String)]={
     val o=List(("STAART", "STAART"),("STAART", "STAART"),("STAART", "STAART")) //empty delimiters for look ahead/back
-    var t=o.++:(tokensTags).++(o)
+    var t=o.++(tokensTags).++(o)
     t.map(token=> this.contextList.foreach(r=>
         if(!((token._2=="STAART") || (token._2!=r(0) && r(0)!="*"))){
           val cmd=r(2).toLowerCase
