@@ -180,6 +180,7 @@ class PosTagger {
     //Tag words by context
     if(!context.contextList.isEmpty && model.isEmpty) tagged=context.apply(tagged)
     //Map tag with a custom function
+    if(mapCall != null) tagged=tagged.map(t=>mapCall(t._1,t._2))
     return tagged
   }
 
