@@ -90,7 +90,7 @@ class Morphology {
         ){
           realTag=pos
         }
-      }
+      } else realTag=tag
     })
     return realTag
   }

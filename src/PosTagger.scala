@@ -151,37 +151,40 @@ class PosTagger {
   //  If map is a function, it is applied to each (token, tag) after applying all rules.
   def find_tags(tokens:List[String], lexicon:Lexicon, model:String, morphology:Morphology, context:Context, entities:String, default:List[String],
                 mapCall:(String,String)=>(String,String)):List[(String,String)]={
-    var tagged:List[(String,String)]=Nil
+
+    var tagged=List[(String,String)]()
+    var taggedMorp=List[(String,String)]()
+    var taggedCntxt=List[(String,String)]()
+
     // Tag known words.
     tokens.foreach(t=> tagged::=(t,lexicon.lexiconDict.getOrElse(t,lexicon.lexiconDict.getOrElse(t.toLowerCase,"None"))))
     //Tag unknow words
     tagged=tagged.reverse
-    tagged.map( t=> {
+    taggedMorp=tagged.map(t=> {
       var prev = ("None", "None")
       var next = ("None", "None")
-      if (tagged.indexOf(t)>0) prev=tagged(tagged.indexOf(t)-1)
-      if (tagged.indexOf(t)<(tagged.length-1)) next=tagged(tagged.indexOf(t)+1)
-      if(t._2=="None"){
+      if (tagged.indexOf(t) > 0) prev = tagged(tagged.indexOf(t) - 1)
+      if (tagged.indexOf(t) < (tagged.length - 1)) next = tagged(tagged.indexOf(t) + 1)
+      if (t._2 == "None") {
         //use language model
-      //  if(model.compareTo("None")==false) entrenar usando modelo
+        //  if(model.compareTo("None")==false) entrenar usando modelo
         //use NNP for capitalized words
-        if( t._1.matches("""^[A-Z][a-z]+.$""")) (t._1,default(1))
-          //use CD for digits and numbers
-        else if(t._1.matches(CD)) (t._1,default(2))
-          //use suffix rules (ej, -mente=ADV)
-        else if(!morphology.morphologyList.isEmpty){
-          (t._1, morphology.apply(t._1,default(0),prev,next,morphology.morphologyList,lexicon.lexiconDict))
+        if (t._1.matches("""^[A-Z][a-z]+.$""")) (t._1, default(1))
+        //use CD for digits and numbers
+        else if (t._1.matches(CD)) (t._1, default(2))
+        //use suffix rules (ej, -mente=ADV)
+        else if (!morphology.morphologyList.isEmpty) (t._1,morphology.apply(t._1, default(0), prev, next, morphology.morphologyList, lexicon.lexiconDict))
           // Use most frequent tag (NN).
-        }else{
-          (t._1,default(0))
-        }
-      }
+        else (t._1, default(0))
+
+      } else (t._1,t._2)
     })
     //Tag words by context
-    if(!context.contextList.isEmpty && model.isEmpty) tagged=context.apply(tagged)
+    if(!context.contextList.isEmpty && model.isEmpty) taggedCntxt=context.apply(taggedMorp)
+    else taggedCntxt=taggedMorp
     //Map tag with a custom function
-    if(mapCall != null) tagged=tagged.map(t=>mapCall(t._1,t._2))
-    return tagged
+    if(mapCall != null) return taggedCntxt.map(t=>mapCall(t._1,t._2))
+    else return taggedCntxt
   }
 
 
