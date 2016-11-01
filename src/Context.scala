@@ -64,7 +64,10 @@ class Context {
   //Applies contextual rules to the given list of tokens, where each token is a [word,tag] list.
   def apply(tokensTags:List[(String,String)]):List[(String,String)]={
     val o=List(("STAART", "STAART"),("STAART", "STAART"),("STAART", "STAART")) //empty delimiters for look ahead/back
-    var t=o.++(tokensTags).++(o)
+
+   var t=o.++(tokensTags).++(o)
+   var tMapped=List[(String,String)]()
+
     t.map(token=> this.contextList.foreach(r=>
         if((token._2 != "STAART") && (token._2 == r(0) || r(0) == "*")){
           val cmd=r(2).toLowerCase
@@ -96,14 +99,11 @@ class Context {
             (cmd=="rbigram" && (x==t(t.indexOf(token))._1 && y==t(t.indexOf(token)+1)._1 )) ||
             (cmd=="prevbigram" && (x==t(t.indexOf(token)-2)._2 && y==t(t.indexOf(token)-1)._2 )) ||
             (cmd=="nextbigram" && (x==t(t.indexOf(token)+1)._2 && y==t(t.indexOf(token)+2)._2 ))
-          ) (t(t.indexOf(token))._1,r(1))
-        }))
-      return t.filter(p=>p._1!="STAART")
-
+          ){ tMapped::=(t(t.indexOf(token))._1,r(1)) }else tMapped::=(token._1,token._2)
+        } else tMapped::=(token._1,token._2)
+    ))
+     return tMapped.filter(p=>p._1 != "STAART")
   }
-
-
-
 
 }
 
