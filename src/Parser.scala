@@ -1,3 +1,4 @@
+import scala.collection.mutable
 import scala.util.hashing.Hashing.Default
 
 /**
@@ -18,6 +19,7 @@ class Parser(lex: String,model: String,morph: String, contx: String, omission: L
   val context=new Context
   val default=omission
   val posTagger=new PosTagger
+  val lematizer=new Lemmatizer
   //Load data
   if(!lex.isEmpty) lexicon.read(lex,enc,comm)
   if(!morph.isEmpty) morphology.read(morph,enc,comm)
@@ -39,10 +41,17 @@ class Parser(lex: String,model: String,morph: String, contx: String, omission: L
   //Tokenizer
     //if(tokenize==true){
       var s=tokenizer.find_tokens(text).map(t=>t.split(" ").toList)
+      var tagged=mutable.MutableList[List[(String,String)]]()
+    var lemmatas=List()
     //}
     //tagger (needed by chunker,labeler and lemmatizer)
-    if(tags==true){
-      s.map(t=>posTagger.find_tags(t,lexicon,model,morphology,context,"",default,posTagger.parole2penntreebank))
+    if(tags==true || chunks==true || lemmatize==true){
+      //lematizer and chunks need tags
+       tagged=s.map(t=>posTagger.find_tags(t,lexicon,model,morphology,context,"",default,posTagger.parole2penntreebank))
+      if(lemmatize==true){
+        lemmatas=tagged.map(t=>this.lematizer.find_lemma())
+      }
     }
+
   }
  }

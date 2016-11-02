@@ -23,6 +23,8 @@ class Lemmatizer {
     ("todo","DT"))
 
   val verbsDict="/home/cris/mrcrstnherediagmez@gmail.com/Spanish_Lematizer/data/es-verbs.txt"
+  //verbs dictionary
+  val mappedVerbs = verbsToDictionaryPair(verbsDict)
   val irregular_inflections=List(
     ("yéramos", "ir"   ), ( "cisteis", "cer"   ), ( "tuviera", "tener"), ( "ndieron", "nder" ),
     ( "ndiendo", "nder" ), ("tándose", "tarse" ), ( "ndieran", "nder" ), ( "ndieras", "nder" ),
