@@ -42,14 +42,14 @@ class Parser(lex: String,model: String,morph: String, contx: String, lemma:Strin
     //if(tokenize==true){
       var s=tokenizer.find_tokens(text).map(t=>t.split(" ").toList)
       var tagged=mutable.MutableList[List[(String,String)]]()
-    var lemmatas=List()
+
     //}
     //tagger (needed by chunker,labeler and lemmatizer)
     if(tags==true || chunks==true || lemmatize==true){
       //lematizer and chunks need tags
        tagged=s.map(t=>posTagger.find_tags(t,lexicon,model,morphology,context,"",default,posTagger.parole2penntreebank))
       if(lemmatize==true){
-        lemmatas=tagged.map(t=>this.lematizer.find_lemma())
+       var lemmatas=tagged.map(t=>this.lematizer.get_lemmas(t,this.lematizer.mappedVerbs)).toList
       }
     }
 

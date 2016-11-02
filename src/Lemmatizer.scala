@@ -22,7 +22,6 @@ class Lemmatizer(verbsDict:String) {
   var lista15=List(("lo","DT"),("que","WP"),("no","RB"),("queremos","VB"),("es","VB"),("que","IN"),("lo","DT"),("acaparéis","VB"),
     ("todo","DT"))
 
-  val verbsDict="/home/cris/mrcrstnherediagmez@gmail.com/Spanish_Lematizer/data/es-verbs.txt"
   //verbs dictionary
   val mappedVerbs = verbsToDictionaryPair(verbsDict)
   val irregular_inflections=List(
