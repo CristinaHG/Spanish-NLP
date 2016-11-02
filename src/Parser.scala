@@ -11,7 +11,7 @@ import scala.util.hashing.Hashing.Default
 //Unknown words that contain only digits and punctuation are tagged CD.
 //  Optionally, morphological and contextual rules (or a language model) can be used
 //  to improve the tags of unknown words.
-class Parser(lex: String,model: String,morph: String, contx: String, omission: List[String],enc:String,comm:String) {
+class Parser(lex: String,model: String,morph: String, contx: String, lemma:String, omission: List[String],enc:String,comm:String) {
 
   val tokenizer= new Tokenizer
   val lexicon=new Lexicon
@@ -19,7 +19,7 @@ class Parser(lex: String,model: String,morph: String, contx: String, omission: L
   val context=new Context
   val default=omission
   val posTagger=new PosTagger
-  val lematizer=new Lemmatizer
+  val lematizer=new Lemmatizer(lemma)
   //Load data
   if(!lex.isEmpty) lexicon.read(lex,enc,comm)
   if(!morph.isEmpty) morphology.read(morph,enc,comm)

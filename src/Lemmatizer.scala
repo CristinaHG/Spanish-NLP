@@ -3,7 +3,7 @@
   */
 import scala.io.Source
 
-class Lemmatizer {
+class Lemmatizer(verbsDict:String) {
   var lista1 = List(("Los", "DT"), ("gatos", "NNS"),("negros", "JJ"),("son", "VB"),("horribles", "JJ"))
   var lista2=List(("no","RB"),("podrás","VB"),("vivir","VB"),("eternamente","RB"))
   var lista3=List(("Los","DT"),("ingenieros","NNS"),("informáticos","JJ"),("son","VB"),("muy","RB"),("inteligentes","JJ"))
