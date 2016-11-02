@@ -105,6 +105,7 @@ class PosTagger {
   def parole2penntreebank(token:String,tag:String):(String, String)={
    return (token,parole.getOrElse(tag,tag))
   }
+
   // Returns a (token, tag)-tuple with a simplified universal part-of-speech tag.
   def penntreebank2universal(token: String, tag: String):(String,String) ={
     if (tag.startsWith("NNP-") || tag.startsWith("NNPS-")) return (token,(NOUN.concat(tag.split("-").toString.formatted("%s-%s"))))
@@ -155,7 +156,7 @@ class PosTagger {
     var tagged=List[(String,String)]()
     var taggedMorp=List[(String,String)]()
     var taggedCntxt=List[(String,String)]()
-
+    var taggedfin=List[(String,String)]()
     // Tag known words.
     tokens.foreach(t=> tagged::=(t,lexicon.lexiconDict.getOrElse(t,lexicon.lexiconDict.getOrElse(t.toLowerCase,"None"))))
     //Tag unknow words
@@ -183,8 +184,10 @@ class PosTagger {
     if(!context.contextList.isEmpty && model.isEmpty) taggedCntxt=context.apply(taggedMorp)
     else taggedCntxt=taggedMorp
     //Map tag with a custom function
-    if(mapCall != null) return taggedCntxt.map(t=>mapCall(t._1,t._2))
-    else return taggedCntxt
+    if(mapCall != null){
+      taggedCntxt.foreach(t => taggedfin ::= mapCall(t._1, t._2))
+    } else taggedfin=taggedCntxt
+    return taggedfin
   }
 
 
