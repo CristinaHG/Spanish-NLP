@@ -186,6 +186,7 @@ class PosTagger {
     //Map tag with a custom function
     if(mapCall != null){
       taggedCntxt.foreach(t => taggedfin ::= mapCall(t._1, t._2))
+      taggedfin=taggedfin.reverse
     } else taggedfin=taggedCntxt
     return taggedfin
   }
