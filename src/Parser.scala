@@ -13,19 +13,19 @@ import scala.util.hashing.Hashing.Default
 //  to improve the tags of unknown words.
 class Parser(lex: String,model: String,morph: String, contx: String, lemma:String, omission: List[String],enc:String,comm:String) {
 
-  val tokenizer= new Tokenizer
-  val lexicon=new Lexicon
-  val morphology=new Morphology
-  val context=new Context
-  val default=omission
-  val posTagger=new PosTagger
-  val lematizer=new Lemmatizer(lemma)
+  val tokenizer = new Tokenizer
+  val lexicon = new Lexicon
+  val morphology = new Morphology
+  val context = new Context
+  val default = omission
+  val posTagger = new PosTagger
+  val lematizer = new Lemmatizer(lemma)
   //Load data
-  if(!lex.isEmpty) lexicon.read(lex,enc,comm)
-  if(!morph.isEmpty) morphology.read(morph,enc,comm)
-  if(!contx.isEmpty) context.read(contx,enc,comm)
-  // if(!model.isEmpty) apply Model
+  if (!lex.isEmpty) lexicon.read(lex, enc, comm)
+  if (!morph.isEmpty) morphology.read(morph, enc, comm)
+  if (!contx.isEmpty) context.read(contx, enc, comm)
 
+  // if(!model.isEmpty) apply Model
 
 
   // a string (sentences) and returns a tagged Unicode string (TaggedString).
@@ -37,25 +37,27 @@ class Parser(lex: String,model: String,morph: String, contx: String, lemma:Strin
   //  With lemmata=True, word lemmata are parsed.
   //Optional parameters are passed to
   //the tokenizer, tagger, chunker, labeler and lemmatizer
-  def parse(text:String,tokenize:Boolean,tags:Boolean,chunks:Boolean,lemmatize:Boolean): Unit ={
-  //Tokenizer
+  def parse(text: String, tokenize: Boolean, tags: Boolean, chunks: Boolean, lemmatize: Boolean): Unit = {
+    //Tokenizer
     //if(tokenize==true){
-      var s=tokenizer.find_tokens(text).map(t=>t.split(" ").toList)
-      var tagged=mutable.MutableList[List[(String,String)]]()
+    var s = tokenizer.find_tokens(text).map(t => t.split(" ").toList)
+    var tagged = mutable.MutableList[List[(String, String)]]()
 
     //}
     //tagger (needed by chunker,labeler and lemmatizer)
-    if(tags==true || chunks==true || lemmatize==true){
+    if (tags == true || chunks == true || lemmatize == true) {
       //lematizer and chunks need tags
-       tagged=s.map(t=>posTagger.find_tags(t,lexicon,model,morphology,context,"",default,posTagger.parole2penntreebank))
-      if(lemmatize==true){
-       var lemmatas=tagged.map(t=>this.lematizer.get_lemmas(t,this.lematizer.mappedVerbs)).toList
+      tagged = s.map(t => posTagger.find_tags(t, lexicon, model, morphology, context, "", default, posTagger.parole2penntreebank))
+      if (lemmatize == true) {
+        var lemmatas = tagged.map(t => this.lematizer.get_lemmas(t, this.lematizer.mappedVerbs)).toList
         // Collapse raw list.
         // Sentences are separated by newlines, tokens by spaces, tags by slashes.
         // Slashes in words are encoded with &slash;
-
+        //var SlashLemmata = lemmatas.map(l => l.foreach(u => l.updated(l.indexOf(u), (u._1.replaceAll("e", "&slash;"), u._2, u._3))))
+        var SlashLemmata=for(l<-lemmatas; u<-l) yield ((u._1.replaceAll("/", "&slash;"), u._2, u._3))
+        var finLem = List()
       }
-    }
 
+    }
   }
- }
+}
