@@ -50,6 +50,10 @@ class Parser(lex: String,model: String,morph: String, contx: String, lemma:Strin
        tagged=s.map(t=>posTagger.find_tags(t,lexicon,model,morphology,context,"",default,posTagger.parole2penntreebank))
       if(lemmatize==true){
        var lemmatas=tagged.map(t=>this.lematizer.get_lemmas(t,this.lematizer.mappedVerbs)).toList
+        // Collapse raw list.
+        // Sentences are separated by newlines, tokens by spaces, tags by slashes.
+        // Slashes in words are encoded with &slash;
+
       }
     }
 

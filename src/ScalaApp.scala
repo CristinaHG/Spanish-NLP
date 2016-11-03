@@ -10,11 +10,11 @@ object ScalaApp {
 
   def main(args: Array[String]) {
     //val lemmatizr = new Lemmatizer
-    val mappedVerbs = lemmatizr.verbsToDictionaryPair(lemmatizr.verbsDict)
-    // print(mappedVerbs)
-    //    print(lemmatizr.lista(1)._1)
-    val lemas = lemmatizr.get_lemmas(lemmatizr.lista15, mappedVerbs)
-    lemas.foreach(i => print(i))
+//    val mappedVerbs = lemmatizr.verbsToDictionaryPair(lemmatizr.verbsDict)
+//    // print(mappedVerbs)
+//    //    print(lemmatizr.lista(1)._1)
+//    val lemas = lemmatizr.get_lemmas(lemmatizr.lista15, mappedVerbs)
+//    lemas.foreach(i => print(i))
 
     //test tokenizer
     val string1="Los gatos negros son horribles."
