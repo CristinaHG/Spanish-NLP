@@ -51,7 +51,7 @@ object ScalaApp {
     val verbsPath="/home/cris/mrcrstnherediagmez@gmail.com/Spanish_Lematizer/data/es-verbs.txt"
     val myParser=new Parser(lexiconPath,"",morphologyPath,contextPath,verbsPath,List("NCS","NP","Z"),"utf-8",";;;")
     myParser.parse("el gato negro.",true,true,true,true)
-    myParser.parse("el sedentarismo físico es la carencia de actividad física fuerte.",true,true,true,true)
+    myParser.parse("el sedentarismo físico es la carencia de actividad física fuerte. Yo no hago deporte.",true,true,true,true)
 
   }
 }
