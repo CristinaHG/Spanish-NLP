@@ -28,6 +28,15 @@ class Parser(lex: String,model: String,morph: String, contx: String, lemma:Strin
   // if(!model.isEmpty) apply Model
 
 
+
+  // gets a message and a string of results to print
+  // concats them and print them by command line
+def commandLine(comments:String,moduleResult:String)={
+    print(comments+moduleResult)
+  }
+
+
+  
   // a string (sentences) and returns a tagged Unicode string (TaggedString).
   //  Sentences in the output are separated by newlines.
   //With tokenize=True, punctuation is split from words and sentences are separated by \n.
@@ -46,7 +55,10 @@ class Parser(lex: String,model: String,morph: String, contx: String, lemma:Strin
     if(tokenize==true){
       return "*** TOKENS: *** "+ s.mkString
     }
+    //Chunker
 
+
+    //Tagger
     //tagger (needed by chunker,labeler and lemmatizer)
     if (tags == true || chunks == true || lemmatize == true) {
 
@@ -60,9 +72,9 @@ class Parser(lex: String,model: String,morph: String, contx: String, lemma:Strin
         var SlashLemmata=for(l<-lemmatas; u<-l) yield (List(u._1.replaceAll("/", "&slash;"), u._2, u._3).mkString("/"))
         //var SlashLemmata=lemmatas.map(u=>u.map(t=>List(t._1.replaceAll("/", "&slash;"), t._2, t._3).mkString("/")))
         return SlashLemmata
-      }
-
-
+      }else if (tags==true) return tagged.mkString
+      //else if(chunks)
+      else
     }
   }
 }
