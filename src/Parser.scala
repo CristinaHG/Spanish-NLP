@@ -54,8 +54,8 @@ class Parser(lex: String,model: String,morph: String, contx: String, lemma:Strin
         // Sentences are separated by newlines, tokens by spaces, tags by slashes.
         // Slashes in words are encoded with &slash;
         //var SlashLemmata = lemmatas.map(l => l.foreach(u => l.updated(l.indexOf(u), (u._1.replaceAll("e", "&slash;"), u._2, u._3))))
-        var SlashLemmata=for(l<-lemmatas; u<-l) yield ((u._1.replaceAll("/", "&slash;"), u._2, u._3))
-        var finLem = for (l<-SlashLemmata; u<-l) yield ((List(u).mkString("/")))
+        var SlashLemmata=for(l<-lemmatas; u<-l) yield (List(u._1.replaceAll("/", "&slash;"), u._2, u._3).mkString("/"))
+        
       }
 
     }
