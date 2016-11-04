@@ -38,14 +38,18 @@ class Parser(lex: String,model: String,morph: String, contx: String, lemma:Strin
   //Optional parameters are passed to
   //the tokenizer, tagger, chunker, labeler and lemmatizer
   def parse(text: String, tokenize: Boolean, tags: Boolean, chunks: Boolean, lemmatize: Boolean): Unit = {
-    //Tokenizer
-    //if(tokenize==true){
-    var s = tokenizer.find_tokens(text).map(t => t.split(" ").toList)
-    var tagged = mutable.MutableList[List[(String, String)]]()
 
-    //}
+    var tagged = mutable.MutableList[List[(String, String)]]()
+    var s = tokenizer.find_tokens(text).map(t => t.split(" ").toList)
+
+    //Tokenizer
+    if(tokenize==true){
+      return "*** TOKENS: *** "+ s.mkString
+    }
+
     //tagger (needed by chunker,labeler and lemmatizer)
     if (tags == true || chunks == true || lemmatize == true) {
+
       //lematizer and chunks need tags
       tagged = s.map(t => posTagger.find_tags(t, lexicon, model, morphology, context, "", default, posTagger.parole2penntreebank))
       if (lemmatize == true) {
@@ -53,10 +57,11 @@ class Parser(lex: String,model: String,morph: String, contx: String, lemma:Strin
         // Collapse raw list.
         // Sentences are separated by newlines, tokens by spaces, tags by slashes.
         // Slashes in words are encoded with &slash;
-        //var SlashLemmata=for(l<-lemmatas; u<-l) yield (List(u._1.replaceAll("/", "&slash;"), u._2, u._3).mkString("/"))
-        var SlashLemmata=lemmatas.map(u=>u.map(t=>List(t._1.replaceAll("/", "&slash;"), t._2, t._3).mkString("/")))
-        
+        var SlashLemmata=for(l<-lemmatas; u<-l) yield (List(u._1.replaceAll("/", "&slash;"), u._2, u._3).mkString("/"))
+        //var SlashLemmata=lemmatas.map(u=>u.map(t=>List(t._1.replaceAll("/", "&slash;"), t._2, t._3).mkString("/")))
+        return SlashLemmata
       }
+
 
     }
   }
