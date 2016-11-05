@@ -36,7 +36,7 @@ def commandLine(comments:String,moduleResult:String)={
   }
 
 
-  
+
   // a string (sentences) and returns a tagged Unicode string (TaggedString).
   //  Sentences in the output are separated by newlines.
   //With tokenize=True, punctuation is split from words and sentences are separated by \n.
@@ -51,16 +51,10 @@ def commandLine(comments:String,moduleResult:String)={
     var tagged = mutable.MutableList[List[(String, String)]]()
     var s = tokenizer.find_tokens(text).map(t => t.split(" ").toList)
 
-    //Tokenizer
-    if(tokenize==true){
-      return "*** TOKENS: *** "+ s.mkString
-    }
-    //Chunker
-
 
     //Tagger
     //tagger (needed by chunker,labeler and lemmatizer)
-    if (tags == true || chunks == true || lemmatize == true) {
+    if ( tokenize==true || tags == true || lemmatize == true) {
 
       //lematizer and chunks need tags
       tagged = s.map(t => posTagger.find_tags(t, lexicon, model, morphology, context, "", default, posTagger.parole2penntreebank))
@@ -74,7 +68,8 @@ def commandLine(comments:String,moduleResult:String)={
         return SlashLemmata
       }else if (tags==true) return tagged.mkString
       //else if(chunks)
-      else
-    }
+      else if (tokenize) return s.mkString
+    }else return text
   }
+  
 }
