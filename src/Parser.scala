@@ -48,7 +48,6 @@ def commandLine(comments:String,moduleResult:String)={
   //the tokenizer, tagger, chunker, labeler and lemmatizer
   def parse(text: String, tokenize: Boolean, tags: Boolean, chunks: Boolean, lemmatize: Boolean): Unit = {
 
-
     if ( tokenize==true || tags == true || lemmatize == true) {
       //Tagger (needed by chunker,labeler and lemmatizer)
       var tagged = mutable.MutableList[List[(String, String)]]()
