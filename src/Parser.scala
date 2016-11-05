@@ -48,20 +48,19 @@ def commandLine(comments:String,moduleResult:String)={
   //the tokenizer, tagger, chunker, labeler and lemmatizer
   def parse(text: String, tokenize: Boolean, tags: Boolean, chunks: Boolean, lemmatize: Boolean): Unit = {
 
-    var tagged = mutable.MutableList[List[(String, String)]]()
-    var s = tokenizer.find_tokens(text).map(t => t.split(" ").toList)
 
-
-    //Tagger
-    //tagger (needed by chunker,labeler and lemmatizer)
     if ( tokenize==true || tags == true || lemmatize == true) {
+      //Tagger (needed by chunker,labeler and lemmatizer)
+      var tagged = mutable.MutableList[List[(String, String)]]()
+      //Tokens needed by tagger and lemmatizer
+      var s = tokenizer.find_tokens(text).map(t => t.split(" ").toList)
 
       //lematizer and chunks need tags
       tagged = s.map(t => posTagger.find_tags(t, lexicon, model, morphology, context, "", default, posTagger.parole2penntreebank))
       if (lemmatize == true) {
         var lemmatas = tagged.map(t => this.lematizer.get_lemmas(t, this.lematizer.mappedVerbs)).toList
         // Collapse raw list.
-        // Sentences are separated by newlines, tokens by spaces, tags by slashes.
+        // Tags are separated by slashes.
         // Slashes in words are encoded with &slash;
         var SlashLemmata=for(l<-lemmatas; u<-l) yield (List(u._1.replaceAll("/", "&slash;"), u._2, u._3).mkString("/"))
         //var SlashLemmata=lemmatas.map(u=>u.map(t=>List(t._1.replaceAll("/", "&slash;"), t._2, t._3).mkString("/")))
@@ -71,5 +70,5 @@ def commandLine(comments:String,moduleResult:String)={
       else if (tokenize) return s.mkString
     }else return text
   }
-  
+
 }
