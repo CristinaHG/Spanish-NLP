@@ -48,7 +48,7 @@ def commandLine(comments:String,moduleResult:String)={
   //the tokenizer, tagger, chunker, labeler and lemmatizer
   def parse(text: String, tokenize: Boolean, tags: Boolean, chunks: Boolean, lemmatize: Boolean): String = {
 
-    if ( tokenize==true || tags == true || lemmatize == true) {
+    if (tokenize == true || tags == true || lemmatize == true) {
       //Tagger (needed by chunker,labeler and lemmatizer)
       var tagged = mutable.MutableList[List[(String, String)]]()
       //Tokens needed by tagger and lemmatizer
@@ -61,14 +61,16 @@ def commandLine(comments:String,moduleResult:String)={
         // Collapse raw list.
         // Tags are separated by slashes.
         // Slashes in words are encoded with &slash;
-        var SlashLemmata=for(l<-lemmatas; u<-l) yield (List(u._1.replaceAll("/", "&slash;"), u._2, u._3).mkString("/"))
+        var SlashLemmata = for (l <- lemmatas; u <- l) yield (List(u._1.replaceAll("/", "&slash;"), u._2, u._3).mkString("/"))
         //var SlashLemmata=lemmatas.map(u=>u.map(t=>List(t._1.replaceAll("/", "&slash;"), t._2, t._3).mkString("/")))
         return SlashLemmata.mkString("\n")
-      }else if (tags==true) {
+      } else if (tags == true) {
         return tagged.mkString
         //else if(chunks)
-      }else if (tokenize==true){ return s.mkString
-      }else return text
+        //else return tokens
+      } else return s.mkString
+      //if no options specified, return introduced text
+    }else return text
   }
 
 }
