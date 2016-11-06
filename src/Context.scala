@@ -1,5 +1,7 @@
 import java.nio.file.{Files, Paths}
 
+import scala.collection.mutable
+
 /**
   * Created by cris on 26/10/16.
   */
@@ -66,13 +68,15 @@ class Context {
     val o=List(("STAART", "STAART"),("STAART", "STAART"),("STAART", "STAART")) //empty delimiters for look ahead/back
 
    var t=o.++(tokensTags).++(o)
-
+   var mapped=mutable.MutableList[(String,String)]()
 
     var cmd=""
     var x=""
     var y=""
+    var r1=""
+    var matches=false
 
-   var mapped=t.map(token=> this.contextList.foreach(r=> {
+   t.foreach(token=> { this.contextList.foreach(r=>
      if ((token._2 != "STAART") && (token._2 == r(0) || r(0) == "*")) {
        cmd = r(2).toLowerCase
        x = r(3)
@@ -103,13 +107,13 @@ class Context {
          (cmd == "rbigram" && (x == t(t.indexOf(token))._1 && y == t(t.indexOf(token) + 1)._1)) ||
          (cmd == "prevbigram" && (x == t(t.indexOf(token) - 2)._2 && y == t(t.indexOf(token) - 1)._2)) ||
          (cmd == "nextbigram" && (x == t(t.indexOf(token) + 1)._2 && y == t(t.indexOf(token) + 2)._2))
-       ) t.updated(t.indexOf(token), (t(t.indexOf(token))._1 + "AAHAAAHAHA", r(1)))
-       else t.updated(t.indexOf(token),token)
-     }
-   }))
-
-     return t.filter(p=>p._1 != "STAART")
+       ) {matches=true ;r1=r(1)}
+     })
+   if(matches){ mapped+=Tuple2(token._1,r1) ; matches=false} else mapped+=token
+   })
+    return mapped.filter(p=>p!="STAART").toList
   }
-
+//  mapped+=Tuple2(token._1,r(1))
+//  else mapped+=token
 }
 
