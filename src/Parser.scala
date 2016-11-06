@@ -46,7 +46,7 @@ def commandLine(comments:String,moduleResult:String)={
   //  With lemmata=True, word lemmata are parsed.
   //Optional parameters are passed to
   //the tokenizer, tagger, chunker, labeler and lemmatizer
-  def parse(text: String, tokenize: Boolean, tags: Boolean, chunks: Boolean, lemmatize: Boolean): Unit = {
+  def parse(text: String, tokenize: Boolean, tags: Boolean, chunks: Boolean, lemmatize: Boolean): String = {
 
     if ( tokenize==true || tags == true || lemmatize == true) {
       //Tagger (needed by chunker,labeler and lemmatizer)
@@ -63,11 +63,12 @@ def commandLine(comments:String,moduleResult:String)={
         // Slashes in words are encoded with &slash;
         var SlashLemmata=for(l<-lemmatas; u<-l) yield (List(u._1.replaceAll("/", "&slash;"), u._2, u._3).mkString("/"))
         //var SlashLemmata=lemmatas.map(u=>u.map(t=>List(t._1.replaceAll("/", "&slash;"), t._2, t._3).mkString("/")))
-        return SlashLemmata
-      }else if (tags==true) return tagged.mkString
-      //else if(chunks)
-      else if (tokenize) return s.mkString
-    }else return text
+        return SlashLemmata.mkString("\n")
+      }else if (tags==true) {
+        return tagged.mkString
+        //else if(chunks)
+      }else if (tokenize==true){ return s.mkString
+      }else return text
   }
 
 }
