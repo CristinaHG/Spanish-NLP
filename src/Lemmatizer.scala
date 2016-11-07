@@ -203,7 +203,7 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
 
   //--------isVowel
   def isVowel(char: Char):Boolean={
-   if (List("a","e","i","o","u").contains(char))
+   if (List('a','e','i','o','u').contains(char))
     return true
     else return false
   }
