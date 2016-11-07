@@ -68,8 +68,8 @@ class Context {
     val o=List(("STAART", "STAART"),("STAART", "STAART"),("STAART", "STAART")) //empty delimiters for look ahead/back
 
    var t=o.++(tokensTags).++(o)
-   var mapped=mutable.MutableList[(String,String)]()
-
+  // var mapped=mutable.MutableList[(String,String)]()
+  var mapped=List[(String,String)]()
     var cmd=""
     var x=""
     var y=""
@@ -110,12 +110,11 @@ class Context {
          (cmd == "nextbigram" && (x == t(index + 1)._2 && y == t(index + 2)._2))
        ) {matches=true ;r1=r(1)}
      })
-   if(matches){ mapped+=Tuple2(token._1,r1) ; matches=false} else mapped+=token
+     if(matches){ mapped::=Tuple2(token._1,r1) ; matches=false} else mapped::=token
    index+=1
    })
-    return mapped.filter(p=>p!="STAART").toList
+    return mapped.reverse.filter(p=>p!="STAART")
   }
-//  mapped+=Tuple2(token._1,r(1))
-//  else mapped+=token
+
 }
 
