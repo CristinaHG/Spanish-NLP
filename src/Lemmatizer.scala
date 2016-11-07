@@ -227,13 +227,14 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
     //histéricos=>histérico
   if (w.endsWith("os") || w.endsWith("as")) w=w.substring(0,w.length-1)
     // histérico=>histérico
-    if (w.endsWith("o")) return w
+    if (w.endsWith("o")) w= w
     //histérica=>histérico
-    if(w.endsWith("a")) return w.substring(0,w.length-1).concat("o")
+    if(w.endsWith("a")) w= w.substring(0,w.length-1).concat("o")
     //horribles=>horrible, humorales=>humoral
-    if(w.endsWith("es")) {
-      if (w.length >= 4 && !(isVowel(normalize(w.charAt(w.length - 3)))) && !isVowel(normalize(w.charAt(w.length - 4)))) return w.substring(0, w.length - 1)
-    }else return w.substring(0,w.length-2)
+    if(w.endsWith("es")){
+      if (w.length >= 4 && !(isVowel(normalize(w.charAt(w.length - 3)))) && !isVowel(normalize(w.charAt(w.length - 4)))) w= w.substring(0, w.length - 1)
+      else w= w.substring(0,w.length-2)
+    }
     return w
   }
 
