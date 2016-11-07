@@ -203,7 +203,7 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
 
   //--------isVowel
   def isVowel(char: Char):Boolean={
-   if (char.equals("a","e","i","o","u"))
+   if (List("a","e","i","o","u").contains(char))
     return true
     else return false
   }
@@ -232,7 +232,7 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
     if(w.endsWith("a")) w= w.substring(0,w.length-1).concat("o")
     //horribles=>horrible, humorales=>humoral
     if(w.endsWith("es")){
-      if (w.length >= 4 && !(isVowel(normalize(w.charAt(w.length - 3)))) && !isVowel(normalize(w.charAt(w.length - 4)))) w= w.substring(0, w.length - 1)
+      if (w.length >= 4 && !(isVowel(normalize(w.charAt(w.length - 3)))) && !(isVowel(normalize(w.charAt(w.length - 4))))) w= w.substring(0, w.length - 1)
       else w= w.substring(0,w.length-2)
     }
     return w
