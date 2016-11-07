@@ -56,7 +56,7 @@ var re_emoticons=""::Nil
   //return a list of sentences. Each sentence is a space-separated string of tokens.
   //handles common abreviations.Punctuation marks are split fron other words. Periods or ?! mark the end of a sentence.
   //Headings without ending period are inferred by line breaks.
-  def find_tokens(string:String):mutable.MutableList[String]={
+  def find_tokens(string:String):List[Array[String]]={
     var s=string
     val punc=punctuation.replace(".","").toCharArray
 //    var lista=Nil
@@ -129,19 +129,18 @@ var re_emoticons=""::Nil
           }
 
           sentences += tokens.slice(i, j).filter(t => t != EOS).mkString(" ")
-          //tokens.slice(i,j).filter(t=>t!=EOS).forall(t=>sentences+=t)
-          sentences += " "
+          sentences += ""
           i = j
         }
         j += 1
       }
     }
-      //tokens.slice(i,j).filter(t=>t!=EOS).foreach(t=>sentences+=t)
-      sentences+=tokens.slice(i,j).filter(t=>t!=EOS).mkString(" ")
+
+    //sentences+=tokens.slice(i,j).filter(t=>t!=EOS).mkString(" ")
       //handle emoticons
       sentences=sentences.map(s=>re_sarcasm.replaceAllIn(s,"(!)"))
-      sentences=sentences.map(s=> RE_EMOTICONS.replaceAllIn(s, m=>s"""${m.group(1).replace(" ","")}${m.group(2)}"""))
-    return sentences
+      sentences=sentences.map(s=> RE_EMOTICONS.replaceAllIn(s, m=> s"${m.group(1).replace(" ","")+m.group(2)}"))
+    return sentences.filter(s=> !s.isEmpty).map(t => t.split(" ")).toList
   }
 
   def get_sentences(sentences:List[String]): Unit ={

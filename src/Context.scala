@@ -113,7 +113,7 @@ class Context {
      if(matches){ mapped::=Tuple2(token._1,r1) ; matches=false} else mapped::=token
    index+=1
    })
-    return mapped.reverse.filter(p=>p!="STAART")
+    return mapped.reverse.filter(p=>p._1!="STAART")
   }
 
 }

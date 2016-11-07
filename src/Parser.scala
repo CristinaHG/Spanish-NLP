@@ -50,9 +50,9 @@ def commandLine(comments:String,moduleResult:String)={
 
     if (tokenize == true || tags == true || lemmatize == true) {
       //Tagger (needed by chunker,labeler and lemmatizer)
-      var tagged = mutable.MutableList[List[(String, String)]]()
+      var tagged = List[List[(String, String)]]()
       //Tokens needed by tagger and lemmatizer
-      var s = tokenizer.find_tokens(text).map(t => t.split(" ").toList)
+      var s = tokenizer.find_tokens(text)
 
       //lematizer and chunks need tags
       tagged = s.map(t => posTagger.find_tags(t, lexicon, model, morphology, context, "", default, posTagger.parole2penntreebank))
