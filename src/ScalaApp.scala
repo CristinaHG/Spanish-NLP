@@ -33,7 +33,11 @@ object ScalaApp {
     val string14="con tanto calor se funde el hielo"
     val string15="lo que no queremos es que lo acaparéis todo"
     val toknzr=new Tokenizer
-    val tokens=toknzr.find_tokens("el gato negro.")//.foreach(t => print(t+"\n"))
+    val tokens=toknzr.find_tokens(string1)
+    var lista:List[Array[String]]=Nil
+    lista::=Array("Los","gatos","negros","son","horribles",".",".")
+    var nuevo=tokens.exists(t=> lista.toList.exists(a=> a==t))
+    //.foreach(t => print(t+"\n"))
     ///toknzr.find_tokens(string2).foreach(t => print(t+" "))
 
     val myLexicon=new Lexicon
