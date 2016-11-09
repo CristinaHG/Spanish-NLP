@@ -151,7 +151,7 @@ var re_emoticons=""::Nil
       sentences.foreach(p=>print(p+"\n"))
   }
 
-  def count_sentences(sentences:List[String]): Unit ={
+  def count_sentences(sentences:List[List[String]]): Int ={
     return sentences.length
   }
 

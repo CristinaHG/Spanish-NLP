@@ -33,6 +33,8 @@ import org.junit.Assert.assertArrayEquals
   /**
     * Testing Tokenizer
     */
+
+    //testing find tokens method
 test("find tokens test"){
    tokenizer.find_tokens(string1)
   assert(tokenizer.find_tokens(string1)==List(List("Los","gatos","negros","son","bonitos",".")))
@@ -51,11 +53,23 @@ test("find tokens test"){
    assert(tokenizer.find_tokens(string14)==List(List("con","tanto","calor","se","funde","el","hielo")))
    assert(tokenizer.find_tokens(string15)==List(List("El","sedentarismo","físico","se","presenta","con","mayor","frecuencia","en","la","vida","moderna","urbana",",","en","sociedades","altamente","tecnificadas","en","donde","todo","está","pensado","para","evitar","grandes","esfuerzos","físicos",",","en","las","clases","altas","y","en","los","círculos","intelectuales","en","donde","las","personas","se","dedican","más","a","actividades","cerebrales","."
   )))
-
-
-
-
-
 }
+    test(" count sentences test"){
+       assert(tokenizer.count_sentences(tokenizer.find_tokens(string1))==1)
+       assert(tokenizer.count_sentences(tokenizer.find_tokens(string2))==1)
+       assert(tokenizer.count_sentences(tokenizer.find_tokens(string3))==1)
+       assert(tokenizer.count_sentences(tokenizer.find_tokens(string4))==1)
+       assert(tokenizer.count_sentences(tokenizer.find_tokens(string5))==2)
+       assert(tokenizer.count_sentences(tokenizer.find_tokens(string6))==1)
+       assert(tokenizer.count_sentences(tokenizer.find_tokens(string7))==1)
+       assert(tokenizer.count_sentences(tokenizer.find_tokens(string8))==1)
+       assert(tokenizer.count_sentences(tokenizer.find_tokens(string9))==1)
+       assert(tokenizer.count_sentences(tokenizer.find_tokens(string10))==1)
+       assert(tokenizer.count_sentences(tokenizer.find_tokens(string11))==1)
+       assert(tokenizer.count_sentences(tokenizer.find_tokens(string12))==1)
+       assert(tokenizer.count_sentences(tokenizer.find_tokens(string13))==1)
+       assert(tokenizer.count_sentences(tokenizer.find_tokens(string14))==1)
+       assert(tokenizer.count_sentences(tokenizer.find_tokens(string15))==1)
+    }
 
 }
