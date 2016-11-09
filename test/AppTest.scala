@@ -72,4 +72,11 @@ test("find tokens test"){
        assert(tokenizer.count_sentences(tokenizer.find_tokens(string15))==1)
     }
 
+    /**
+      * Testing Context
+      */
+
+def("apply context test"){
+
+    }
 }
