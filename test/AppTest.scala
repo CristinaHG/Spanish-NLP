@@ -39,7 +39,7 @@ test("find tokens test"){
   assert(tokenizer.find_tokens(string2)==List(List("Nadie","podrá","vivir","eternamente")))
   assert(tokenizer.find_tokens(string3)==List(List("Los","ingenieros","informáticos","son","muy","inteligentes")))
   assert(tokenizer.find_tokens(string4)==List(List("Aún","no","puedo","creer","que","Trump","haya","ganado","las","elecciones",".")))
-  assert(tokenizer.find_tokens(string5)==List(List("El","cielo","es","azul"),List("El","agua","es","transparente","y","las","amapolas","son","rojas",".")))
+   assert(tokenizer.find_tokens(string5)==List(List("El","cielo","es","azul","."),List("El","agua","es","transparente","y","las","amapolas","son","rojas",".")))
    assert(tokenizer.find_tokens(string6)==List(List("Los","lobos","aullaban","desesperadamente")))
    assert(tokenizer.find_tokens(string7)==List(List("Dijo","que","lo","esperáramos","aquí","mientras","compraba","galletas")))
    assert(tokenizer.find_tokens(string8)==List(List("Te","advertimos","que","serían","duros","contigo")))
@@ -50,7 +50,7 @@ test("find tokens test"){
    assert(tokenizer.find_tokens(string13)==List(List("cuando","éramos","niños","cazábamos","muchos","bichos")))
    assert(tokenizer.find_tokens(string14)==List(List("con","tanto","calor","se","funde","el","hielo")))
    assert(tokenizer.find_tokens(string15)==List(List("El","sedentarismo","físico","se","presenta","con","mayor","frecuencia","en","la","vida","moderna","urbana",",","en","sociedades","altamente","tecnificadas","en","donde","todo","está","pensado","para","evitar","grandes","esfuerzos","físicos",",","en","las","clases","altas","y","en","los","círculos","intelectuales","en","donde","las","personas","se","dedican","más","a","actividades","cerebrales","."
-/   )))
+  )))
 
 
 
