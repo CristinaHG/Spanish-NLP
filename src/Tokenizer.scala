@@ -139,7 +139,7 @@ var re_emoticons=""::Nil
       }
     }
 
-    //sentences+=tokens.slice(i,j).filter(t=>t!=EOS).mkString(" ")
+    sentences::=tokens.slice(i,j).filter(t=>t!=EOS).mkString(" ")
       //handle emoticons
       sentences=sentences.map(s=>re_sarcasm.replaceAllIn(s,"(!)"))
       sentences=sentences.map(s=> RE_EMOTICONS.replaceAllIn(s, m=> s"${m.group(1).replace(" ","")+m.group(2)}"))
