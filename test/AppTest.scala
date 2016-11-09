@@ -35,7 +35,7 @@ import org.junit.Assert.assertArrayEquals
     * Testing Tokenizer
     */
 test("find tokens test"){
-  assert(tokenizer.find_tokens(string1)==Array("Los","gatos","negros","son","bonitos","-").deep)
+  assert(tokenizer.find_tokens(string1)==List(Array("Los","gatos","negros","son","bonitos",".").deep))
 }
 
 }
