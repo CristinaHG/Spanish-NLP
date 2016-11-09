@@ -1,18 +1,18 @@
 /**
   * Created by cris on 08/11/16.
   */
-import org.scalatest.FunSuite
+import org.scalatest._
 import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
+//import org.scalatest.junit.JUnitRunner
+import org.junit.Test
+import org.junit.Assert.assertArrayEquals
 
-@RunWith(classOf[JUnitRunner])
-class AppTest extends FunSuite {
 
-  //import class Tokenizer
-  import Tokenizer
+ class TokenizerTest extends FunSuite {
+
 
   //create trait containing Strings to be used to test
-  trait TestStrings {
+
     val string1="Los gatos negros son bonitos."
     val string2="Nadie podrá vivir eternamente"
     val string3="Los ingenieros informáticos son muy inteligentes"
@@ -29,17 +29,13 @@ class AppTest extends FunSuite {
     val string14="con tanto calor se funde el hielo"
     val string15="lo que no queremos es que lo acaparéis todo"
     val string16="El sedentarismo físico se presenta con mayor frecuencia en la vida moderna urbana, en sociedades altamente tecnificadas en donde todo está pensado para evitar grandes esfuerzos físicos, en las clases altas y en los círculos intelectuales en donde las personas se dedican más a actividades cerebrales."
-  }
+    val tokenizer=new Tokenizer
+
   /**
     * Testing Tokenizer
     */
-
-   test(" find tokens "){
-     //instance of Strings is created
-     new TestStrings {
-       //if assert fails error mesage is show
-       assert(find_tokens(s1).toArray.deep, Array("Los","gatos","negros","son","bonitos",".").deep , "error: tokens missmatch")
-     }
-   }
+test("find tokens test"){
+  assert(tokenizer.find_tokens(string1)==Array("Los","gatos","negros","son","bonitos","-").deep)
+}
 
 }
