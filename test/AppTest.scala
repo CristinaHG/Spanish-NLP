@@ -72,11 +72,15 @@ test("find tokens test"){
        assert(tokenizer.count_sentences(tokenizer.find_tokens(string15))==1)
     }
 
+
     /**
-      * Testing Context
+      * Testing POSTagger
       */
+def("parole to penntreebank tag test") {
+     parole2penntreebank(token: String, tag: String)
+   }
 
 def("apply context test"){
-
+     assert(apply(tokensTags:List[(String,String)]))
     }
 }
