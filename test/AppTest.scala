@@ -29,7 +29,7 @@ import org.junit.Assert.assertArrayEquals
     val string14="con tanto calor se funde el hielo"
     val string15="El sedentarismo físico se presenta con mayor frecuencia en la vida moderna urbana, en sociedades altamente tecnificadas en donde todo está pensado para evitar grandes esfuerzos físicos, en las clases altas y en los círculos intelectuales en donde las personas se dedican más a actividades cerebrales."
     val tokenizer=new Tokenizer
-
+    val tagger=new PosTagger
   /**
     * Testing Tokenizer
     */
@@ -76,11 +76,17 @@ test("find tokens test"){
     /**
       * Testing POSTagger
       */
-def("parole to penntreebank tag test") {
-     parole2penntreebank(token: String, tag: String)
+test("parole to penntreebank tag test") {
+     assert(tagger.parole2penntreebank("El", "DA")==("El","DT"))
+     assert(tagger.parole2penntreebank("pájaro", "NC")==("pájaro","NN"))
+     assert(tagger.parole2penntreebank("está", "VMI")==("está","VB"))
+     assert(tagger.parole2penntreebank("en", "SP")==("en","IN"))
+     assert(tagger.parole2penntreebank("la", "DA")==("la","DT"))
+     assert(tagger.parole2penntreebank("jaula", "NC")==("jaula","NN"))
+     assert(tagger.parole2penntreebank(".", "Fp")==(".","."))
    }
 
-def("apply context test"){
-     assert(apply(tokensTags:List[(String,String)]))
-    }
+//def("apply context test"){
+//     assert(apply(tokensTags:List[(String,String)]))
+//    }
 }
