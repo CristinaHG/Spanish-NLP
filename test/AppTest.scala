@@ -1,6 +1,8 @@
 /**
   * Created by cris on 08/11/16.
   */
+import java.nio.file.{Files, Paths}
+
 import org.scalatest._
 import org.junit.runner.RunWith
 //import org.scalatest.junit.JUnitRunner
@@ -105,6 +107,26 @@ test("parole to penntreebank tag test") {
      assert(tagger.parole2penntreebank("jaula", "NC")==("jaula","NN"))
      assert(tagger.parole2penntreebank(".", "Fp")==(".","."))
    }
+
+   /**
+     * Testing Lemmatizer
+     */
+
+test("singularize"){
+  var wordforms=List[List[String]]()
+  //read file
+  scala.io.Source.fromFile("../Spanish_Lematizer/test/data/wordforms-es-davies.csv").getLines().foreach(line => wordforms::=line.split(" ").toList)
+  wordforms.reverse.foreach(l=> {
+    val w=l(0)
+    val lemma=l(1)
+    val tag=l(2)
+    val f=l(3)
+    val i=0
+    val n=0
+  })
+  singularize(word: String, pos:String ):String
+}
+
 //def("apply context test"){
 //     assert(apply(tokensTags:List[(String,String)]))
 //    }
