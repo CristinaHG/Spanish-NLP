@@ -96,6 +96,15 @@ test("parole to penntreebank tag test") {
      assert(tagger.parole2penntreebank(".", "Fp")==(".","."))
    }
 
+   test("parole to universal"){
+     assert(tagger.parole2universal("El", "DA")==("El","DT"))
+     assert(tagger.penntreebank2universal("pájaro","NC")==("pájaro","X"))
+     assert(tagger.parole2penntreebank("está", "VMI")==("está","VB"))
+     assert(tagger.parole2penntreebank("en", "SP")==("en","IN"))
+     assert(tagger.parole2penntreebank("la", "DA")==("la","DT"))
+     assert(tagger.parole2penntreebank("jaula", "NC")==("jaula","NN"))
+     assert(tagger.parole2penntreebank(".", "Fp")==(".","."))
+   }
 //def("apply context test"){
 //     assert(apply(tokensTags:List[(String,String)]))
 //    }
