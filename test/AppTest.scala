@@ -120,19 +120,21 @@ test("singularize"){
   //read file
   scala.io.Source.fromFile("../Spanish_Lematizer/test/data/wordforms-es-davies.csv").getLines().foreach(line => wordforms::=line.split(" ").toList)
   wordforms.reverse.foreach(l=> {
-    val w=l(0)
-    val lemma=l(1)
-    val tag=l(2)
-    val f=l(3)
+    val splitted=l(0).split(",")
+    val w=splitted(0)
+    val lemma=splitted(1)
+    val tag=splitted(2)
+    val f=splitted(3)
 
     if(tag=="n"){
       testDict += (lemma -> (w +: testDict.getOrElse(lemma, List.empty)))
     }
-
-
-
   })
-  singularize(word: String, pos:String ):String
+
+  var i=0
+  var n=0
+
+ // singularize(word: String, pos:String ):String
 }
 
 //def("apply context test"){
