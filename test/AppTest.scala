@@ -144,6 +144,31 @@ test("singularize"){
   assert(i.toFloat/n > 0.93)
 }
 
+   test("predicative"){
+     var wordforms=List[List[String]]()
+     var testDict=mutable.Map.empty[String,List[String]]
+     //read file
+     scala.io.Source.fromFile("../Spanish_Lematizer/test/data/wordforms-es-davies.csv").getLines().foreach(line => wordforms::=line.split(" ").toList)
+     wordforms.reverse.foreach(l=> {
+       val splitted=l(0).split(",").map(u=> u.tail.stripPrefix("\"").stripSuffix("\""))
+       val w=splitted(0)
+       val lemma=splitted(1)
+       val tag=splitted(2)
+       val f=splitted(3)
+
+       if(tag=="j"){
+         testDict += (lemma -> (w +: testDict.getOrElse(lemma, List.empty)))
+       }
+     })
+     var i=0
+     var n=0
+     testDict.foreach(f=> {
+       if(lemmatizer.predicative(f._2.sortWith(_.length<_.length).head)==f._1) i=i+1
+       n=n+1
+     })
+
+     assert(i.toFloat/n > 0.92)
+   }
 //def("apply context test"){
 //     assert(apply(tokensTags:List[(String,String)]))
 //    }
