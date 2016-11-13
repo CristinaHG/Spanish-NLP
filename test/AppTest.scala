@@ -169,6 +169,17 @@ test("singularize"){
 
      assert(i.toFloat/n > 0.92)
    }
+
+
+test("find lemma"){
+  var i=0
+  var n=0
+  lemmatizer.mappedVerbs.foreach(u=> {if(lemmatizer.find_lemma(u._1)==u._2) i=i+1
+  n=n+1
+  })
+  assert(i.toFloat/n > 0.80)
+}
+
 //def("apply context test"){
 //     assert(apply(tokensTags:List[(String,String)]))
 //    }

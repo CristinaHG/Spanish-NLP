@@ -73,11 +73,11 @@ class Lemmatizer(verbsDict:String) {
   //-----------load file and make a dictionary pair[verb form, infinitive] method
 
   def verbsToDictionaryPair(file: String):Map[String,String]={
-    var dict:Map[String,String]=Map()
+    var dict=Map[String,String]()
     for (line<-Source.fromFile(file).getLines().filterNot(_.startsWith(";"))){ //not filter comments
       val a=line.split(",")
       //dict+=("comíamos"->"comer")
-      a.foreach(u=>dict+=(u->a{0}))
+      a.filter(p=>p!="").foreach(u=>if(!dict.contains(u)) dict+=(u->a(0)))
     }
     return dict
   }
