@@ -120,7 +120,7 @@ test("singularize"){
   //read file
   scala.io.Source.fromFile("../Spanish_Lematizer/test/data/wordforms-es-davies.csv").getLines().foreach(line => wordforms::=line.split(" ").toList)
   wordforms.reverse.foreach(l=> {
-    val splitted=l(0).split(",")
+    val splitted=l(0).split(",").map(u=> u.tail.stripPrefix("\"").stripSuffix("\""))
     val w=splitted(0)
     val lemma=splitted(1)
     val tag=splitted(2)
