@@ -5,6 +5,8 @@ import java.nio.file.{Files, Paths}
 
 import org.scalatest._
 import org.junit.runner.RunWith
+
+import scala.collection.mutable
 //import org.scalatest.junit.JUnitRunner
 import org.junit.Test
 import org.junit.Assert.assertArrayEquals
@@ -114,7 +116,7 @@ test("parole to penntreebank tag test") {
 
 test("singularize"){
   var wordforms=List[List[String]]()
-  var testDict=Map[String,List[String]]()
+  var testDict=mutable.Map.empty[String,List[String]]
   //read file
   scala.io.Source.fromFile("../Spanish_Lematizer/test/data/wordforms-es-davies.csv").getLines().foreach(line => wordforms::=line.split(" ").toList)
   wordforms.reverse.foreach(l=> {
@@ -122,8 +124,13 @@ test("singularize"){
     val lemma=l(1)
     val tag=l(2)
     val f=l(3)
-    val i=0
-    val n=0
+
+    if(tag=="n"){
+      testDict += (lemma -> (w +: testDict.getOrElse(lemma, List.empty)))
+    }
+
+
+
   })
   singularize(word: String, pos:String ):String
 }
