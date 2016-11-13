@@ -32,8 +32,11 @@ import org.junit.Assert.assertArrayEquals
     val string13="cuando éramos niños cazábamos muchos bichos"
     val string14="con tanto calor se funde el hielo"
     val string15="El sedentarismo físico se presenta con mayor frecuencia en la vida moderna urbana, en sociedades altamente tecnificadas en donde todo está pensado para evitar grandes esfuerzos físicos, en las clases altas y en los círculos intelectuales en donde las personas se dedican más a actividades cerebrales."
-    val tokenizer=new Tokenizer
-    val tagger=new PosTagger
+   //needed paths
+   val verbsPath="/home/cris/mrcrstnherediagmez@gmail.com/Spanish_Lematizer/data/es-verbs.txt"
+   val tokenizer=new Tokenizer
+   val tagger=new PosTagger
+   val lemmatizer=new Lemmatizer(verbsPath)
   /**
     * Testing Tokenizer
     */
@@ -133,8 +136,12 @@ test("singularize"){
 
   var i=0
   var n=0
+  testDict.foreach(f=> {
+    if(lemmatizer.singularize((f._2.sortWith(_.length<_.length)).head,"NN")==f._1) i=i+1
+    n=n+1
+  })
 
- // singularize(word: String, pos:String ):String
+  assert(i.toFloat/n > 0.93)
 }
 
 //def("apply context test"){
