@@ -114,6 +114,7 @@ test("parole to penntreebank tag test") {
 
 test("singularize"){
   var wordforms=List[List[String]]()
+  var testDict=Map[String,List[String]]()
   //read file
   scala.io.Source.fromFile("../Spanish_Lematizer/test/data/wordforms-es-davies.csv").getLines().foreach(line => wordforms::=line.split(" ").toList)
   wordforms.reverse.foreach(l=> {
