@@ -163,7 +163,16 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
   )
   val terminations=Array("ar","er","ir")
   //terminations{1}
-  present_plural_inflection_o.foreach(u=> if(v.endsWith(u._2)) return v.substring(0,v.length-u._2.length).concat(terminations{present_plural_inflection_o.indexOf(u)}) )
+  present_plural_inflection_o.foreach(u=> {
+    if (v.endsWith(u._1)) return v.substring(0, v.length - u._1.length).concat(terminations {
+      present_plural_inflection_o.indexOf(u)
+    })
+
+    if (v.endsWith(u._2)) return v.substring(0, v.length - u._2.length).concat(terminations {
+      present_plural_inflection_o.indexOf(u)
+    })
+
+  })
 
   return v
 }
