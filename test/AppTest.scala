@@ -190,5 +190,18 @@ import org.junit.Assert.assertArrayEquals
 
   assert(i.toFloat/n > 0.80)
 }
+   test("test get lemmas"){
+     val lemmatas=List(("Los", "DT", "el"),
+     ("gatos", "NNS", "gato"),
+       ("negros", "JJ", "negro"),
+     ("se", "PRP", "se"),
+     ("sentó", "VB", "sentar"),
+     ("en", "IN", "en"),
+     ("la", "DT", "el"),
+     ("alfombra", "NN", "alfombra"))
+
+     assert(lemmatizer.get_lemmas(List(("Los", "DT"), ("gatos", "NNS"), ("negros", "JJ"), ("se", "PRP"), ("sentó", "VB"),
+       ("en", "IN"), ("la", "DT"), ("alfombra", "NN")),lemmatizer.mappedVerbs)==lemmatas)
+   }
 
 }
