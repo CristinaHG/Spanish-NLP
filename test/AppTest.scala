@@ -180,19 +180,15 @@ import org.junit.Assert.assertArrayEquals
        n = n + 1
      })
 
-     var pyfaults =scala.io.Source.fromFile("../Spanish_Lematizer/data/pyfaults.txt").getLines().toList
-     var ScalaFaults=faults.filterNot(p=>pyfaults.contains(p._1))
-
-
-     ScalaFaults.foreach(s=>{
-       if(lemmatizer.find_lemma(s._1)==s._2) i=i+1
-       n=n+1
-     })
+     //know the faults
+     //var pyfaults =scala.io.Source.fromFile("../Spanish_Lematizer/data/pyfaults.txt").getLines().toList
+     // var ScalaFaults=faults.filterNot(p=>pyfaults.contains(p._1))
+//     ScalaFaults.foreach(s=>{
+//       if(lemmatizer.find_lemma(s._1)==s._2) i=i+1
+//       n=n+1
+//     })
 
   assert(i.toFloat/n > 0.80)
 }
 
-////def("apply context test"){
-////     assert(apply(tokensTags:List[(String,String)]))
-////    }
 }
