@@ -144,7 +144,12 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
   if(v.endsWith("o")) return v.substring(0,v.length-1).concat("ar")
   //Present 2sg, 3sg and 3pl: tú hablas.
   if(v.endsWith("a")) return v.substring(0,v.length-1).concat("ar")
-  if(v.endsWith("as") || v.endsWith("an")) return v.substring(0,v.length-2).concat("ar")
+
+  if(v.endsWith("as") || v.endsWith("an")){
+    if (v.endsWith("as")) v =v.stripSuffix("s").dropRight(1)
+    else if( v.endsWith("an")) v=v.stripSuffix("n").dropRight(1)
+   return v.concat("ar")
+  }
   // Present 2sg, 3sg and 3pl: tú comes, tú vives.
   if(v.endsWith("e")){
     if(v.substring(0,v.length-1).length>2 && v.substring(0,v.length-1).charAt(v.length-3)=='i') return v.substring(0,v.length-1).concat("ir")
@@ -152,7 +157,7 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
   }
   if(v.endsWith("es") || v.endsWith("en")){
     if (v.endsWith("es")) v =v.stripSuffix("s").dropRight(1)
-    if( v.endsWith("en")) v=v.stripSuffix("n").dropRight(1)
+    else if( v.endsWith("en")) v=v.stripSuffix("n").dropRight(1)
     if(v.length>2 && v.charAt(v.length-2)=='i') return v.concat("ir")
   else return v.concat("er")
   }
