@@ -34,6 +34,10 @@ import org.junit.Assert.assertArrayEquals
    val string15 = "El sedentarismo físico se presenta con mayor frecuencia en la vida moderna urbana, en sociedades altamente tecnificadas en donde todo está pensado para evitar grandes esfuerzos físicos, en las clases altas y en los círculos intelectuales en donde las personas se dedican más a actividades cerebrales."
    //needed paths
    val verbsPath = "/home/cris/mrcrstnherediagmez@gmail.com/Spanish_Lematizer/data/es-verbs.txt"
+   val lexiconPath="../Spanish_Lematizer/data/es-lexicon.txt"
+   val morphologyPath="../Spanish_Lematizer/data/es-morphology.txt"
+   val contextPath="../Spanish_Lematizer/data/es-context.txt"
+      val myParser=new Parser(lexiconPath,"",morphologyPath,contextPath,verbsPath,List("NCS","NP","Z"),"utf-8",";;;")
    val tokenizer = new Tokenizer
    val tagger = new PosTagger
    val lemmatizer = new Lemmatizer(verbsPath)
@@ -204,4 +208,10 @@ import org.junit.Assert.assertArrayEquals
        ("en", "IN"), ("la", "DT"), ("alfombra", "NN")),lemmatizer.mappedVerbs)==lemmatas)
    }
 
+   test("test parse"){
+     val sentence="El gato negro se sentó en la alfombra."
+     val listSol=List("El/DT/el", "gato/NN/gato", "negro/JJ/negro","se/PRP/se","sentó/VB/sentar","en/IN/en", "la/DT/el" ,"alfombra/NN/alfombra","././.")
+     //print(myParser.parse(sentence, true, true, true, true))
+     assert(myParser.parse(sentence, true, true, true, true)==listSol.mkString("\n"))
+   }
 }
