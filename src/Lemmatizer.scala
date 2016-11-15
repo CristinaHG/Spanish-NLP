@@ -95,7 +95,7 @@ class Lemmatizer(verbsDict:String) {
 def find_lemma(verb:String):String={
   // Spanish has 12,000+ verbs, ending in -ar (85%), -er (8%), -ir (7%).
   // Over 65% of -ar verbs (6500+) have a regular inflection.
-  var v = verb
+  var v = verb.toLowerCase
   if(verb.endsWith("ar") || verb.endsWith("er") || verb.endsWith("ir")) return verb //verb is infinitive
   //set of rules for irregular inflections +10%
 
@@ -150,9 +150,11 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
     if(v.substring(0,v.length-1).length>2 && v.substring(0,v.length-1).charAt(v.length-3)=='i') return v.substring(0,v.length-1).concat("ir")
     else return v.substring(0,v.length-1).concat("er")
   }
-  if (v.endsWith("es") || v.endsWith("en")){
-    if(v.substring(0,v.length-2).length>2 && v.substring(0,v.length-2).charAt(v.length-3)=='i') return v.substring(0,v.length-2).concat("ir")
-    else return v.substring(0,v.length-2).concat("er")
+  if(v.endsWith("es") || v.endsWith("en")){
+    if (v.endsWith("es")) v =v.stripSuffix("s").dropRight(1)
+    if( v.endsWith("en")) v=v.stripSuffix("n").dropRight(1)
+    if(v.length>2 && v.charAt(v.length-2)=='i') return v.concat("ir")
+  else return v.concat("er")
   }
   // Present 1pl and 2pl: nosotros hablamos.
 
