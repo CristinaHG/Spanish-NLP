@@ -131,7 +131,7 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
 
   regular_inflection_er.foreach(u=>if(v.endsWith(u)){
     val difLength=v.length-u.length
-    if(v.substring(0,difLength).length>2 && v.substring(0,difLength).charAt(difLength-2)=="i")
+    if(v.substring(0,difLength).length>2 && v.substring(0,difLength).charAt(difLength-2)=='i')
   return v.substring(0,difLength).concat("ir") else return v.substring(0,difLength).concat("er")} )
 
   //Many verbs end in -ir and have a regular inflection
