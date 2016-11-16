@@ -41,6 +41,9 @@ import org.junit.Assert.assertArrayEquals
    val tokenizer = new Tokenizer
    val tagger = new PosTagger
    val lemmatizer = new Lemmatizer(verbsPath)
+   val Lexicon= new Lexicon
+   val context=new Context
+   val morphology=new Morphology
    /**
      * Testing Tokenizer
      */
@@ -211,7 +214,35 @@ import org.junit.Assert.assertArrayEquals
    test("test parse"){
      val sentence="El gato negro se sentó en la alfombra."
      val listSol=List("El/DT/el", "gato/NN/gato", "negro/JJ/negro","se/PRP/se","sentó/VB/sentar","en/IN/en", "la/DT/el" ,"alfombra/NN/alfombra","././.")
+     var wikicorpus=List[List[String]]()
+     var i=0
+     var n=0
      //print(myParser.parse(sentence, true, true, true, true))
      assert(myParser.parse(sentence, true, true, true, true)==listSol.mkString("\n"))
+
+     // Assert the accuracy of the Spanish tagger.
+
+     val lexiconSpanish=Lexicon.read("../Spanish_Lematizer/data/es-lexicon.txt","utf-8",";;;")
+     val morphologySpanish=morphology.read("../Spanish_Lematizer/data/es-morphology.txt","utf-8",";;;")
+     val contextSpanish=context.read("../Spanish_Lematizer/data/es-context.txt","utf-8",";;;")
+
+     scala.io.Source.fromFile("../Spanish_Lematizer/corpus/tagged-es-wikicorpus.txt").getLines().foreach(line => wikicorpus ::= line.split(" ").toList)
+     wikicorpus=wikicorpus.reverse
+     wikicorpus.foreach(sentenceList=>{
+      var s1= sentenceList.map(f=>f.split("/"))
+     // var sentenceToParse=s1.map(f=>f(0)+" ".mkString)
+       var s1ToTag=List[String]()
+       s1.foreach(f=> s1ToTag::=f(0))
+       s1ToTag=s1ToTag.reverse
+       val tagged=tagger.find_tags(s1ToTag, Lexicon, "", morphology,context,"", List("NCS","NP","Z"), null)//:List[(String,String)]
+
+       var j=0
+       s1.foreach(s=>{
+         if(s(1)==tagged(j)._2) i=i+1
+         n=n+1
+         j=j+1
+       })
+     })
+     assert(i.toFloat/n>0.92)
    }
 }
