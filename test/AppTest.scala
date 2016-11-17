@@ -243,6 +243,6 @@ import org.junit.Assert.assertArrayEquals
          j=j+1
        })
      })
-     assert(i.toFloat/n>0.92)
+     assert(i.toFloat/n>0.91)
    }
 }
