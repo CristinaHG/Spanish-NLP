@@ -156,6 +156,7 @@
      \endlist}
 
 % Some definitions.
+\def\subtitle#1{\gdef\@subtitle{#1}}
 \def\advisor#1{\gdef\@advisor{#1}}
 \def\coadvisorOne#1{\gdef\@coadvisorOne{#1}}
 \def\coadvisorTwo#1{\gdef\@coadvisorTwo{#1}}
@@ -253,11 +254,14 @@
 	\vspace*{35pt}
 	\begin{center}
     	\Large \textcolor{SchoolColor}{\@title} \normalsize \\
+	\large \textcolor{SchoolColor}{\@subtitle} \normalsize \\
     	\vspace*{20pt}
-    	\scshape Abstract \\ \rm
+    	\scshape Resumen \\ \rm
 	\end{center}
     \begin{spacing}{\dnormalspacing}
     	\input{frontmatter/abstract}
+	\vspace*{5pt}
+	\textcolor{SchoolColor}{Palabras Clave:} \text{NLP,Lematizador,Tokenizador}
     \end{spacing}
 	\vspace*{\fill}
 	\newpage \lhead{} \rhead{}
