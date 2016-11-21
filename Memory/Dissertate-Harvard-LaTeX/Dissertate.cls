@@ -261,7 +261,32 @@
     \begin{spacing}{\dnormalspacing}
     	\input{frontmatter/abstract}
 	\vspace*{5pt}
-	\textcolor{SchoolColor}{Palabras Clave:} \text{NLP,Lematizador,Tokenizador}
+	\textcolor{SchoolColor}{Palabras Clave:} \text{Procesamiento del lenguaje natural, Scala, tokenizador, pos etiquetado, lematizador}
+    \end{spacing}
+	\vspace*{\fill}
+	\newpage \lhead{} \rhead{}
+	\cfoot{\thepage}
+}
+
+\newcommand{\abstractpageEn}{
+    \pdfbookmark{Abstract}{Abstract}
+	\newpage
+	\pagenumbering{roman}
+	\setcounter{page}{3}
+	\pagestyle{fancy}
+	\lhead{Director: \@advisor} \rhead{Autor: \@author}
+	\renewcommand{\headrulewidth}{0.0pt}
+	\vspace*{35pt}
+	\begin{center}
+    	\Large \textcolor{SchoolColor}{\@title} \normalsize \\
+	\large \textcolor{SchoolColor}{\@subtitle} \normalsize \\
+    	\vspace*{20pt}
+    	\scshape Abstract \\ \rm
+	\end{center}
+    \begin{spacing}{\dnormalspacing}
+    	\input{frontmatter/abstract}
+	\vspace*{5pt}
+	\textcolor{SchoolColor}{Keywords:} \text{Natural language processing, Scala, tokenizer, pos tagger, lematizer}
     \end{spacing}
 	\vspace*{\fill}
 	\newpage \lhead{} \rhead{}
