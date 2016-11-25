@@ -30,8 +30,14 @@ Sin embargo, aún se está investigando como hacer estas herramientas más preci
 En los últimos años se ha aplicado deep learning en estos sistemas, mapeando señales de sonido a secuencias de palabras y sonidos del lenguaje humano \citet{hinton2012deep}, aunque actualmente el
 enfoque más usado es el proceso de decisión de Markov, que hace identificación del diálogo (pregunta, sentencia, acuerdo..) mediante una probabilidad de distribución sobre todos los posibles estados del sistema, que va actualizando según se desarrolla el diálogo. \citet{young2013pomdp}.
 
-Quisque facilisis erat a dui. Nam malesuada ornare dolor. Cras gravida, diam sit amet rhoncus ornare, erat elit consectetuer erat, id egestas pede nibh eget odio. Proin tincidunt, velit vel porta elementum, magna diam molestie sapien, non aliquet massa pede eu diam. Aliquam iaculis. Fusce et ipsum et nulla tristique facilisis. Donec eget sem sit amet ligula viverra gravida. Etiam vehicula urna vel turpis. Suspendisse sagittis ante a urna. Morbi a est quis orci consequat rutrum. Nullam egestas feugiat felis. Integer adipiscing semper ligula. Nunc molestie, nisl sit amet cursus convallis, sapien lectus pretium metus, vitae pretium enim wisi id lectus. Donec vestibulum. Etiam vel nibh. Nulla facilisi. Mauris pharetra. Donec augue. Fusce ultrices, neque id dignissim ultrices, tellus mauris dictum elit, vel lacinia enim metus eu nunc.
+\section*{Lectura Automática}
+La lectura automática es el área que tiene como objetivo que las máquinas puedan integrar o resumir información a los humanos, mediante la lectura y comprensión de las grandes cantidades de texto disponibles. \newline
+Esta idea atrae especialmente a los científicos, ya que es complicado llevar el ritmo de todas las publicaciones que se hacen, aunque sólo sea en su campo, por lo que sería de gran utilidad que un sistema pudiera resumir e identificar los datos más relevantes de las publicaciones. 
+El objetivo inicial de estos sistemas es la extracción de relaciones, es decir, ser capaz de extraer relaciones entre dos entidades, como por ejemplo "A es hermano de B", lo cual ya se ha realizado con éxito en dominios específicos. Aunque hay técnicas que escriben los patrones de las relaciones a mano (por ejemplo: <PERSONA>, el hermano de <PERSONA>), se ha demostado que aplicando Machine learning se obtienen mejores resultados, ya que se pueden obtener relaciones basadas en características extraidas de secuencias de palabras y secuencias gramaticales de una frase. \citet{culotta2004dependency}.
+\newline
+Los sistemas más recientes han usado inferencia probabilística sofisticada para distinguir qué claúsulas textuales se asocian a qué factores de la base del conocimiento, por ejemplo \citet{niu2012deepdive}  y apuestan por técnicas de extracción de hechos más simples pero más escalables que no requieren etiquetado manual de los datos, o las extraen usando NLP. \citet{etzioni2011open}. 
 
+     
 \section*{Minería de datos en Redes sociales}
 
 \section*{Análisis de sentimientos}
