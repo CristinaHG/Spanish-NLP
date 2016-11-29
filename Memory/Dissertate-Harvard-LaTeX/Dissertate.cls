@@ -36,7 +36,7 @@
     \newcommand{\dnormalspacing}{1.2}
     \newcommand{\dcompressedspacing}{1.0}
 }{
-    \newcommand{\dnormalspacing}{2.0}
+    \newcommand{\dnormalspacing}{1.4}
     \newcommand{\dcompressedspacing}{1.2}
 }
 
