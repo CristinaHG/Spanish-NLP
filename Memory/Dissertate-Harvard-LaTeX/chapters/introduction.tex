@@ -46,7 +46,7 @@ Otra dificultad  con la que cuenta este campo, es la validación. Muchas veces n
 Este campo (también conocido como minería de opiniones) analiza las opiniones, sentimientos, valoraciones, actitudes y emociones de la gente frente a entidades como productos, servicios, organizaciones, individuos, eventos, temas, cuestiones...\newline
 \citet{9781107017894} emplea el término \textsl{opinión} para referirse al concepto de sentimento, evaluación, valoración o actitud e información asociada (objetivo de la opinión o persona que da la opinión) en su totalidad, y el término \textsl{sentimiento} para referirse al sentido positivo o negativo subyacente en una opinión. Por ejemplo \textsl{"Apple lo está haciendo muy bien en esta economía pobre"} es una opinión que contiene dos sentimientos, uno positivo con Apple como objetivo y otro negativo sobre la economía actual.\newline
  Los estudios sobre este campo comenzaron en el año 2000, principalmente debido a que para entonces se empezó a recoger texto subjetivo en formato digital. Actualmente hay muchos campos relacionados con este cuyas tareas difieren ligeramente, por ejemplo análisis de opiniones, análisis de subjetividad, minería de sentimientos... aunque gran parte del trabajo se concentra en el análisis de sentimientos. \newline
- Los enfoques más simples tratan de identificar si lo expresado en el texto (por ejemplo, en un tweet) tiene una orientación positiva o negativa usando dicccionarios de sentimientos como \citet{whissell1989dictionary}. Otros enfoques más complejos tratan de identificar la polaridad del sentimiento así como el objeto de éste.\citet{wiebe2005annotating}. También se han realizado trabajos recientes tratando de indentificar algunas emociones en particular, como las de Ekman (furia, aversión, miedo, felicidad,tristeza y sorpresa) y se ha investigado sobre reconocer esas emociones clásicas usando características como la edad, la personalidad , el género las condiciones mentales o médicas del usuario.  \citet{hirschberg2015advances}. \newline
+Los enfoques más simples tratan de identificar si lo expresado en el texto (por ejemplo, en un tweet) tiene una orientación positiva o negativa usando dicccionarios de sentimientos como \citet{whissell1989dictionary}. Otros enfoques más complejos tratan de identificar la polaridad del sentimiento así como el objeto de éste.\citet{wiebe2005annotating}. También se han realizado trabajos recientes tratando de indentificar algunas emociones en particular, como las de Ekman (furia, aversión, miedo, felicidad,tristeza y sorpresa) y se ha investigado sobre reconocer esas emociones clásicas usando características como la edad, la personalidad , el género las condiciones mentales o médicas del usuario.  \citet{hirschberg2015advances}. \newline
 Las aplicaciones de este campo son innumerables y abarcan desde identificar valoraciones en productos \citet{wang2015sentiment} a predecir los precios del mercado o evaluar el estado mental de una comunidad. \citet{bollen2011modeling}.
 \section{Historia del PLN}
 De acuerdo a lo descrito en \citet{hirschberg2015advances}, el PLN comienza en 1980s como intersección entre la inteligencia artificial y la lingüística.  
@@ -76,9 +76,18 @@ Este proceso es importante porque reduce el número de términos a procesar, ya 
 \subsubsection{Stemming} 
 Este método es común en lugar de la lematización e incluso en algunos casos se incluye dentro de ésta o como complemento. El Stemming es un proceso simple mediante el cual se trata de reducir la palabra a su forma base eliminando sus sufijos. Se obtiene así una forma de la palabra que no es necesariamente la raíz de la palabra, pero que suele bastar, dado que palabras de la misma familia tienen esa parte en común, o un conjunto reducido de partes en común, si son palabras irregulares.  Por ejemplo: \textsl{"sleep"}, \textsl{"sleeping"}, \textsl{"sleeped"}, \textsl{"sleeps"}... tienen el común el stem \textsl{"sleep"}, que es la forma base del verbo.
 En lenguajes con pocas inflexiones, como el Inglés, es muy probable que el lema y el stem coincidan. Sin embargo, en lenguajes con más inflexiones, como el Español, eso rara vez ocurre.  
+\subsubsection{POS Tagging}
+POS Tagging es un proceso muy importante en tareas de PLN, ya que etiqueta mediante algoritmos cada palabra con su \textsc{part-of-speech}, es decir, con su categoría morfosintáctica (nombre, verbo, preporisición, adjetivo...) junto a otras propiedades que dependen de esta. De hecho es necesario para realizar el parseo sintáctico (el paso posterior).\newline
 
- 
+Aunque lo usual es aplicar un proceso de lematización o stemming antes de esta fase, hay sistemas que aplican primero esta fase, como el desarrollado en este proyecto.\newline
 
+Los principales desafíos que se presentan en esta etapa, son: 
+\begin{itemize}
+\item Tratar la ambigüedad, dado que las palabras pueden desempeñar distinta función morfosintáctica y por tanto, tener diferentes POS tags dependiendo del contexto. 
+\item Asignar una etiqueta morfosintáctica a palabras de las que el sistema no tiene conocimiento
+\end{itemize}  
+Para tratar de solventar los problemas anteriores, normalmente se tiene en cuenta el contexto dentro de la frase de la palabra a etiquetar, y se selecciona la etiqueta morfosintáctica más probable dada esa palabra y su contexto. \newline
+Que sea una tarea muy necesaria hace que esté muy investigada, por lo que actualmente la precisión de etiquetado ronda el 90\%, aunque esto se debe a que la precisión se mide en porcentaje de palabras bien etiquetadas. Si se midiera por porcentaje de frases completamente bien etiquetadas, la cifra descendería al 55\%-57\% de precisión, como manifestaban \citet{giesbrecht2009part}.   
 
 
 
