@@ -70,6 +70,10 @@ La tokenización se sirve de heurísticas simples, como considerar que todos los
 \subsubsection{Detección de límites de oraciones}
 En esta fase se aborda el problema de establecer los límites de una oración en el texto. En algunos casos esto se incluye dentro de la fase de tokenización. Encontrar los límites de una oración no es una tarea trivial, ya que las marcas de puntuación que delimitan el final de una frase suelen ser ambiguas en muchos lenguajes. En español lo son, ya que por ejemplo, el punto se puede usar como marcador de final de oración pero también como separador entre parte entera y decimal en números reales o en iniciales y abreviaciones (por ejemplo, Srta.). \newline
 Algunos sisemas que han demostrado buenos resultados en separación de frases sobre diferentes lenguajes naturales, son \textsf{Punkt} \citet{kiss2006unsupervised} e \textsf{iSentenizer}\citet{wong2014isentenizer}.  
+\subsubsection{Lematización}
+Lematización es el proceso mediante el cual se determina el lema de cada palabra. El lexema de una palabra se define como la unidad mínima que es parte común en todas las palabras de una misma familia. Por ejemplo, \textsl{"arte"} , \textsl{"artístico"} o \textsl{"artista"} son tres palabras distintas que comparten el lexema \textsl{"art"}. Lema es la representación de la forma canónica (o forma de diccionario) de los lexemas, y tiene por tanto significado. Por ejemplo, \textsl{"escribían"}, \textsl{"escribieron"} o \textsl{"escribirán"} son palabras derivadas de un mismo lexema cuyo lema es \textsl{"escribir"}.\newline
+Este proceso es importante porque reduce el número de términos a procesar, ya que muchos se reducen al mismo lema, acortando así la complejidad computacional del problema. La dificultad de este proceso varía dependiendo del lenguaje, resultando mucho más sencillo para lenguajes con una morfología inflexiva simple, como el Inglés, y complicándose más para lenguajes morfológicamente más ricos como el Español o el Alemán.  
+\subsubsection{Stemming} 
  
 
 
