@@ -93,16 +93,23 @@ La mayoría de estas herramientas han sido desarrolladas para el Inglés y evalu
 El parseo sintáctico es una tarea que consiste en analizar las oraciones para producir estructuras que representen como se organizan las palabras en las frases, dada una gramática formal. Las gramáticas tienen dos posibles formalismos estructurales: 
 \begin{itemize}
 \item Constituyente: es una unidad dentro de una estructura jerárquica que está compuesta por una palabra o un grupo de palabras. \newline
-Por ejemplo, para la frase \textsf{"this books has two authors" ("este libro tiene dos autores")}
-\begin{figure}[H] %con el [H] le obligamos a situar aquí la figura
+\item de Dependencia: estas gramáticas desciben la estructura de una frase en términos de los enlaces entre las palabras, ya que cada enlace refleja una relación de dominancia/dependencia entre un término y otro dependiente de él. Estas gramáticas son las que normalmente se emplean para parsear texto. 
+\end{itemize}
+Por ejemplo, para la frase \textsf{"this books has two authors" ("este libro tiene dos autores")} \newline
+\begin{figure}[H]%con el [H] le obligamos a situar aquí la figura
 \centering
-\includegraphics[scale=0.52]{constituency.png}  %el parámetro scale permite agrandar o %achicar la imagen. En el nombre de archivo puede especificar directorios
+\includegraphics[scale=0.40]{constituency.png}  %el parámetro scale permite agrandar o %achicar la imagen. En el nombre de archivo puede especificar directorios
 \label{}
 \caption{Posible árbol de gramática Constituyente}   
 \end{figure}
-\item de Dependencia: estas gramáticas desciben la estructura de una frase en términos de los enlaces entre las palabras, ya que cada enlace refleja una relación de dominancia/dependencia entre un término y otro dependiente de él. Estas gramáticas son las que normalmente se emplean para parsear texto. 
-\end{itemize}
- Es una tarea computacionalmente muy intensiva, por lo que a veces es posible sustituirla por otra menos costosa en cómputo que produzca resultados similares, como \textsf{localizar patrones textuales}. Sin embargo, esta sustitución no siempre es posible, sino que deben de tenerse fuentes de información semiestructuradas, estructuradas, o generadas por una máquina. 
+\begin{figure}[H]%con el [H] le obligamos a situar aquí la figura
+\centering
+\includegraphics[scale=0.35]{dependency.png}  %el parámetro scale permite agrandar o %achicar la imagen. En el nombre de archivo puede especificar directorios
+\label{}
+\caption{Posible árbol de gramática de Dependencias}   
+\end{figure}
+
+ El parseo sintáctico una tarea computacionalmente muy intensiva, por lo que a veces es deseable sustituirla por otra menos costosa en cómputo que produzca resultados similares, como \textsf{localizar patrones textuales}. Sin embargo, esta sustitución no siempre es posible, sino que deben de tenerse fuentes de información semiestructuradas, estructuradas, o generadas por una máquina. 
   
 
 

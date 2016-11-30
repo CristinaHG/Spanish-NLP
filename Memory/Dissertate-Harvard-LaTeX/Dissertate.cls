@@ -62,6 +62,7 @@
     {\endoldenumerate\end{spacing}}
 
 % Text layout.
+\usepackage{float}
 \RequirePackage[width=5.75in, letterpaper]{geometry}
 \usepackage{ragged2e}
 \RaggedRight
