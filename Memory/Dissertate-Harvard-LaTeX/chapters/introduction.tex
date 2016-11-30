@@ -109,7 +109,13 @@ Por ejemplo, para la frase \textsf{"this books has two authors" ("este libro tie
 \caption{Posible árbol de gramática de Dependencias}   
 \end{figure}
 
- El parseo sintáctico una tarea computacionalmente muy intensiva, por lo que a veces es deseable sustituirla por otra menos costosa en cómputo que produzca resultados similares, como \textsf{localizar patrones textuales}. Sin embargo, esta sustitución no siempre es posible, sino que deben de tenerse fuentes de información semiestructuradas, estructuradas, o generadas por una máquina. 
+ El parseo sintáctico una tarea computacionalmente muy intensiva, por lo que a veces es deseable sustituirla por otra menos costosa en cómputo que produzca resultados similares, como \textsf{localizar patrones textuales}. Sin embargo, esta sustitución no siempre es posible, dado que deben de tenerse fuentes de información semiestructuradas, estructuradas, o generadas por una máquina. \newline
+ Algunas herramientas para parseo sintáctico son \textsf{StandfordParser}, \textsf{MaltParser} \citet{nivre2006maltparser} o \textsf{TurboParser} \url{http://www.cs.cmu.edu/~ark/TurboParser/}, estas dos últimas implementan gramáticas de dependencias.
+\\[\baselineskip]
+Aquí concluye la parte genérica del pipeline. Además del pipeline genérico, hay procesos que se engloban en una parte que se conoce como pipeline dependiente del dominio, algunos de los cuales se detallan en la siguiente sección.
+
+
+ 
   
 
 
