@@ -87,7 +87,10 @@ Los principales desafíos que se presentan en esta etapa, son:
 \item Asignar una etiqueta morfosintáctica a palabras de las que el sistema no tiene conocimiento
 \end{itemize}  
 Para tratar de solventar los problemas anteriores, normalmente se tiene en cuenta el contexto dentro de la frase de la palabra a etiquetar, y se selecciona la etiqueta morfosintáctica más probable dada esa palabra y su contexto. \newline
-Que sea una tarea muy necesaria hace que esté muy investigada, por lo que actualmente la precisión de etiquetado ronda el 90\%, aunque esto se debe a que la precisión se mide en porcentaje de palabras bien etiquetadas. Si se midiera por porcentaje de frases completamente bien etiquetadas, la cifra descendería al 55\%-57\% de precisión, como manifestaban \citet{giesbrecht2009part}.   
+Que sea una tarea muy necesaria hace que esté muy investigada, por lo que actualmente la precisión de etiquetado ronda el 90\%, aunque esto se debe a que la precisión se mide en porcentaje de palabras bien etiquetadas. Si se midiera por porcentaje de frases completamente bien etiquetadas, la cifra descendería al 55\%-57\% de precisión, como manifestaban \citet{giesbrecht2009part}. \newline
+La mayoría de estas herramientas han sido desarrolladas para el Inglés y evaluadas usando los datos de \textsf{Penn Treebank}. Destacan por ejemplo \textsf{Standford POS Tagger} que tiene modelos de etiquetado para 6 lenguajes diferentes, \textsf{SVMTool} \citet{gimenez2004svmtool} que se basa en clasificadores de máquinas de soporte vectorial  y \textsf{TreeTager}, basado en modelos de Markov \citet{schmid1995treetagger}. 
+
+  
 
 
 
