@@ -52,8 +52,19 @@ Las aplicaciones de este campo son innumerables y abarcan desde identificar valo
 De acuerdo a lo descrito en \citet{hirschberg2015advances}, el PLN comienza en 1980s como intersección entre la inteligencia artificial y la lingüística.  
 Durante las primeras décadas, los investigadores escribían a mano las reglas y el vocabulario del lenguaje humano. Sin embargo, no se obtuvo éxito, debido a la variabilidad y dificultad del lenguaje humano. Por ejemplo, el traductor palabra a palabra de ruso a inglés que no tenía en cuenta el contexto, el léxico o la morfología y que tradujo la frase bíblica : \textsl{"El espíritu está dispuesto, pero la carne es débil"} como \textsl{"El vodka es agradable, pero la carne es
 estropeado"} según \citet{nadkarni2011natural}. \newline
-Es a partir de 1990 cuando el PLN sufre una transformación cuando los investigadores comienzan a tener la posibilidad de obtener grandes cantidades de datos del lenguaje en formado digital y construyen modelos sobre estos. Surge así el PLN estadístico o PLN basado en corpus, lo que supuso un éxito en el uso del "big data", aunque ese término se introduciría más adelante. Con lo anterior surgen métodos que usan el \textsc{Part-Of-Speech} (POS) de las palabras (es decir, si son sustantivo, un adjetivo, un verbo, una preposición...) adquiriendo notables resultados cuando se entrena con un conjunto de datos suficientemente grande. \newline
+Es a partir de 1990 cuando el PLN sufre una transformación cuando los investigadores comienzan a tener la posibilidad de obtener grandes cantidades de datos del lenguaje en formado digital y construyen modelos sobre estos. Surge así el PLN estadístico o PLN basado en corpus, lo que supuso un éxito en el uso del "big data", aunque ese término se introduciría más adelante. Con lo anterior surgen métodos que usan el \textsc{Part-Of-Speech} (POS) de las palabras, es decir, su categoría morfosintáctica( si son sustantivo, un adjetivo, un verbo, una preposición...) adquiriendo notables resultados cuando se entrena con un conjunto de datos suficientemente grande. \newline
 Actualmente, muchos clasificadores de texto y sentimientos se basan únicamente en los diferentes conjuntos de palabras que presenta el texto (bolsas de palabras) sin tener en cuenta estructuras a nivel de frase, de documento o de significado. Sin embargo, los mejores enfoques actuales usan técnicas sofisticadas de machine learning y un buen entendimiento de la estructura lingüística subyacente, identificando información sintáctica, semántica y de contexto. Por ejemplo, Standford CoreNLP \citet{manning2014stanford} o python NLTK \citet{bird2006nltk}. 
+
+\section{Aproximaciones más comunes en PLN} 
+Debido a la gran aplicabilidad que tiene el análisis de sentimientos, se ha despertado un gran interés 
+por este área del PLN, proponiendo en los últimos años numerosas aproximaciones que emplean varias técnicas desde diferentes áreas de la informática para resolver el problema. \newline
+En la actualidad, las aproximaciones más comunes son dos \citet{ribeiro2016sentibench}: 
+\subsection{Aplicación de métodos de machine learning supervisados}
+Estos enfoques aplican métodos de clasificación supervisada, por lo que tienen como desventaja que requieren de datos (corpus) etiquetados (con información morfosintáctica, lema...) para entrenar los clasificadores, lo que resulta costoso en tiempo dado que son cantidades grandes de datos.\newline
+De esta forma se consigue que los algoritmos aprendan de los datos etiquetados para luego ser capaces de clasificar otros datos de entrada. Como ventaja, estos métodos tienen la habilidad de adaptar y crear modelos entrenados para objetivos y contextos concretos.  
+\subsection{Aplicación de métodos basados en léxico}
+Estos enfoques tienen en común que emplean listas predefinidas de palabras, donde cada palabra está asociada a un sentimiento específico. Los métodos basados en léxico varían según el contexto en el que se crean, por ejemplo, \textsc{LIWC} \citet{tausczik2010psychological} fue originalmente propuesto para analizar patrones de sentimientos en textos formales escritos en inglés, mientras que \textsc{PANAS-t} \citet{gonccalves2013panas} fue adaptado al contexto web.\newline
+A pesar de que no tienen la parte negativa de necesitar un conjunto de datos etiquetados, tienen la dificultad de crear un diccionario basado en léxico que sea aplicable en múltiples contextos. 
 
 \section{El pipeline Genérico}
 El objetivo final de toda suite de PLN es tener un herramienta para poder realizar análisis de sentimientos o algún tipo de extracción de información. Esto se alcanza a través de varias tareas de procesamiento del texto, empezando por hacer el contenido uniforme y acabando por identificar las funciones de las palabras y como se organizan. Aquí se describen las tareas más comunes del pipeline de un software de PLN junto con las aproximaciones más comunes. \newline
@@ -113,6 +124,8 @@ Por ejemplo, para la frase \textsf{"this books has two authors" ("este libro tie
  Algunas herramientas para parseo sintáctico son \textsf{StandfordParser}, \textsf{MaltParser} \citet{nivre2006maltparser} o \textsf{TurboParser} \url{http://www.cs.cmu.edu/~ark/TurboParser/}, estas dos últimas implementan gramáticas de dependencias.
 \\[\baselineskip]
 Aquí concluye la parte genérica del pipeline. Además del pipeline genérico, hay procesos que se engloban en una parte que se conoce como pipeline dependiente del dominio, algunos de los cuales se detallan en la siguiente sección.
+
+\section{El pipeline Específico}
 
 
  
