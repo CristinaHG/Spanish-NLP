@@ -89,7 +89,20 @@ Los principales desafíos que se presentan en esta etapa, son:
 Para tratar de solventar los problemas anteriores, normalmente se tiene en cuenta el contexto dentro de la frase de la palabra a etiquetar, y se selecciona la etiqueta morfosintáctica más probable dada esa palabra y su contexto. \newline
 Que sea una tarea muy necesaria hace que esté muy investigada, por lo que actualmente la precisión de etiquetado ronda el 90\%, aunque esto se debe a que la precisión se mide en porcentaje de palabras bien etiquetadas. Si se midiera por porcentaje de frases completamente bien etiquetadas, la cifra descendería al 55\%-57\% de precisión, como manifestaban \citet{giesbrecht2009part}. \newline
 La mayoría de estas herramientas han sido desarrolladas para el Inglés y evaluadas usando los datos de \textsf{Penn Treebank}. Destacan por ejemplo \textsf{Standford POS Tagger} que tiene modelos de etiquetado para 6 lenguajes diferentes, \textsf{SVMTool} \citet{gimenez2004svmtool} que se basa en clasificadores de máquinas de soporte vectorial  y \textsf{TreeTager}, basado en modelos de Markov \citet{schmid1995treetagger}. 
-
+\subsubsection{Parseo Sintáctico}
+El parseo sintáctico es una tarea que consiste en analizar las oraciones para producir estructuras que representen como se organizan las palabras en las frases, dada una gramática formal. Las gramáticas tienen dos posibles formalismos estructurales: 
+\begin{itemize}
+\item Constituyente: es una unidad dentro de una estructura jerárquica que está compuesta por una palabra o un grupo de palabras. \newline
+Por ejemplo, para la frase \textsf{"this books has two authors" ("este libro tiene dos autores")}
+\begin{figure}[H] %con el [H] le obligamos a situar aquí la figura
+\centering
+\includegraphics[scale=0.52]{constituency.png}  %el parámetro scale permite agrandar o %achicar la imagen. En el nombre de archivo puede especificar directorios
+\label{}
+\caption{Posible árbol de gramática Constituyente}   
+\end{figure}
+\item de Dependencia: estas gramáticas desciben la estructura de una frase en términos de los enlaces entre las palabras, ya que cada enlace refleja una relación de dominancia/dependencia entre un término y otro dependiente de él. Estas gramáticas son las que normalmente se emplean para parsear texto. 
+\end{itemize}
+ Es una tarea computacionalmente muy intensiva, por lo que a veces es posible sustituirla por otra menos costosa en cómputo que produzca resultados similares, como \textsf{localizar patrones textuales}. Sin embargo, esta sustitución no siempre es posible, sino que deben de tenerse fuentes de información semiestructuradas, estructuradas, o generadas por una máquina. 
   
 
 
