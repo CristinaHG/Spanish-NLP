@@ -91,7 +91,13 @@ A diferencia de la técnica anterior, \citet{yu2003towards} presentaron un traba
 Este nivel de análisis es el más detallado, lo que lo convierte en el más útil pero también el más complicado, ya que el objetivo no es solo determinar qué frases son objetivas o subjetivas y si estas últimas tienen orientación positiva, negativa o neutral, sino que también tiene como objetivo detectar qué es esactamente lo que le gusta o no al autor. \newline
 Una de las primeras soluciones más conocidas a este problema fue \citet{hu2004mining}, un enfoque basado en el léxico que utilizaba la mayor frecuencia de las entidades, aspectos o servicios. Sobre éste se publica una mejora 4 años más tarde \citet{ding2008holistic}, presentando así un método que funciona bastante bien en la práctica y consta de cuatro pasos:
 \begin{itemize}
-\item Paso 1:
+\item Paso 1. Marcar expresiones de sentimientos: consiste en marcar todas las expresiones de sentimientos en cada frase que contengan uno o más aspectos con +1 o -1. Por ejemplo: \textsl{"el altavoz de este teléfono no es bueno"} sería marcada con un (+1) dado que "bueno" es una palabra asociada a polaridad positiva.
+\item Paso 2. Aplicar desplazadores de sentimientos: esto son, palabras o frases que pueden cambiar la orientación del sentimiento. Por ejemplo, "no" es un desplazador. Ahora la frase anterior sería marcada con (-1).
+\item Paso 3. Manejo de palabras y frases adversativas: palabras y frases que indican contrariedad necesitan ser manejadas, ya que suelen cambiar la orientación de los sentimientos. Por ejemplo, "pero" o"sin embargo"..son conjunciones adversativas. Un ejemplo de manejo sería \textsl{"el altavoz de este teléfono no es bueno (-1), sin embargo la cámara es estupenda (+1)"}
+\item paso 4. Agregar puntuación de los sentimientos: para ello se suele aplicar una función como 
+\[puntuacion(a_{i},s)=\sum_{se_{j}\epsilon s}{}\frac{se_{j}.ss}{dist(se_{j},a_{i})}\]
+donde $se_{j}$ es la expresión de un sentimiento en la frase $s$, $a_{i}$ es el aspecto(objeto, servicio...) i-ésimo de la frase $s$ , $se_{j}.ss$ es la puntuación del sentimiento $se_{i}$  y $dist(se_{j},a_{i})$ es la distancia entre el aspecto $a_{i}$ y el sentimiento $se_{j}$ en la oración $s$.\newline
+Si la puntuación final es positiva, entonces la opinión sobre el aspecto $a_{i}$ en la frase $s$ es positivo. Si la puntuación es negativa, la opinión sobre el aspecto es negativa. Si es 0, la opinión sobre ese aspecto es neutral.
 \end{itemize}  
 
 \section{El pipeline Genérico}
