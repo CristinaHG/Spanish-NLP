@@ -83,6 +83,8 @@ Presentan resultados para \textsf{Naive Bayes} \citet{lewis1998naive}, \textsf{M
 \subsection{Análisis de sentimientos a nivel de oración}
 Dos son los objetivos de este análisis: el primero es identificar si la frase contiene opiniones (es subjetiva) u objetiva. El otro es clasificar la frase si es subjetiva, en positiva, negativa o neutral.   
 Al igual que el anterior nivel de análisis descrito, la mayoría de las soluciones propuestas a nivel de oración aplican técnicas de machine learning. \newline
+Entre los trabajos más conocidos centrados en encontrar frases subjetivas está\citet{riloff2003learning} donde propusieron un método que usa clasificadores de alta precisión basados en listas hechas de palabras indicativas de subjetividad, para extraer las oraciones subjetivas. En la primera fase del algoritmo, las frases con alto nivel de confianza son etiquetadas por dos clasificadores (primero, se etiquetan las subjetivas con alto nivel de confianza, y luego las objetivas con alto nivel de confianza). Las frases que no tengan un alto nivel de confianza de pertenecer a una u otra categoría quedan sin etiquetar en esta primera fase. \newline
+En la segunda etapa del algoritmo, con los datos etiqetados obtenidos en la fase anterior se entrena un algoritmo de extracción que genera patrones para oraciones subjetivas, patrones que después son usados para buscar más sentencias subjetivas en el texto.
 
 
 
