@@ -96,9 +96,11 @@ Una de las primeras soluciones más conocidas a este problema fue \citet{hu2004m
 \item Paso 3. Manejo de palabras y frases adversativas: palabras y frases que indican contrariedad necesitan ser manejadas, ya que suelen cambiar la orientación de los sentimientos. Por ejemplo, "pero" o"sin embargo"..son conjunciones adversativas. Un ejemplo de manejo sería \textsl{"el altavoz de este teléfono no es bueno (-1), sin embargo la cámara es estupenda (+1)"}
 \item paso 4. Agregar puntuación de los sentimientos: para ello se suele aplicar una función como 
 \[puntuacion(a_{i},s)=\sum_{se_{j}\epsilon s}{}\frac{se_{j}.ss}{dist(se_{j},a_{i})}\]
-donde $se_{j}$ es la expresión de un sentimiento en la frase $s$, $a_{i}$ es el aspecto(objeto, servicio...) i-ésimo de la frase $s$ , $se_{j}.ss$ es la puntuación del sentimiento $se_{i}$  y $dist(se_{j},a_{i})$ es la distancia entre el aspecto $a_{i}$ y el sentimiento $se_{j}$ en la oración $s$.\newline
-Si la puntuación final es positiva, entonces la opinión sobre el aspecto $a_{i}$ en la frase $s$ es positivo. Si la puntuación es negativa, la opinión sobre el aspecto es negativa. Si es 0, la opinión sobre ese aspecto es neutral.
+donde $se_{j}$ es la expresión de un sentimiento en la frase $s$, $a_{i}$ es el aspecto(objeto, servicio...) i-ésimo de la frase $s$ , $se_{j}.ss$ es la puntuación del sentimiento $se_{i}$  y $dist(se_{j},a_{i})$ es la distancia entre el aspecto $a_{i}$ y el sentimiento $se_{j}$ en la oración $s$.
 \end{itemize}  
+Si la puntuación final es positiva, entonces la opinión sobre el aspecto $a_{i}$ en la frase $s$ es positivo. Si la puntuación es negativa, la opinión sobre el aspecto es negativa. Si es 0, la opinión sobre ese aspecto es neutral.\newline
+También se han planteado métodos que usan aprendizaje automático en este nivel de análisis, como por ejemplo \citet{jiang2011target} que emplea un árbol de parseo sintáctico para generar un conjunto de características que representen algunas relaciones sintácticas de la entidad o aspecto objetivo, y otras palabras. 
+
 
 \section{El pipeline Genérico}
 El objetivo final de toda suite de PLN es tener un sofware que contenga un conjunto de herramientas para poder realizar análisis de sentimientos o algún tipo de extracción de información. Esto se alcanza a través de varias tareas de procesamiento del texto, empezando por hacer el contenido uniforme y acabando por identificar las funciones de las palabras y como se organizan. Aquí se describen las tareas más comunes del pipeline de un software de PLN junto con las aproximaciones más comunes. \newline
