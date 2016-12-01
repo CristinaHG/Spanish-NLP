@@ -65,11 +65,20 @@ De esta forma se consigue que los algoritmos aprendan de los datos etiquetados p
 \subsection{Aplicación de métodos basados en léxico}
 Estos enfoques tienen en común que emplean listas predefinidas de palabras, donde cada palabra está asociada a un sentimiento específico. Los métodos basados en léxico varían según el contexto en el que se crean, por ejemplo, \textsc{LIWC} \citet{tausczik2010psychological} fue originalmente propuesto para analizar patrones de sentimientos en textos formales escritos en inglés, mientras que \textsc{PANAS-t} \citet{gonccalves2013panas} fue adaptado al contexto web.\newline
 A pesar de que no tienen la parte negativa de necesitar un conjunto de datos etiquetados, tienen la dificultad de crear un diccionario basado en léxico que sea aplicable en múltiples contextos. 
-\section{Estado del Arte}
+\section{Estado del arte}
 En la sección anterior se describían las aproximaciones más comunes actualmente en el análisis de sentimientos. Ya que tenemos una idea, en esta sección se ilustra brevemente el estado del arte.\newline
 En investigación, el análisis de sentimientos se ha desarrollado a tres niveles, según  \citet{9781107017894} y \citet{westerski2007sentiment} :
 \subsection{Análisis de sentimientos a nivel de documento}
-El objetivo de este análisis es clasificar todos los sentimientos expresados por los autores a lo largo del documento, concluyendo si el documento es positivo, negativo o neutro. Estas técnicas 
+El objetivo de este análisis es clasificar todos los sentimientos expresados por los autores a lo largo del documento, concluyendo si lo expresado en el documento es positivo, negativo o neutro, sobre una entidad que puede ser un producto o servicio. La mayoría de las técnicas de análisis de sentimientos a nivel de documento obtienen un acierto de clasificación entre el 70\% y el 80\%,cuando son aplicadas a un solo tipo de texto, dependiendo de la cantidad de texto que se tenga como entrada y del tipo de texto. \newline
+Algunos de las soluciones más destacadas en este área, son:\newline
+Por una parte, el trabajo desarrollado por  \citet{turney2002thumbs} para clasificación de críticas, donde presenta un algoritmo de tres pasos que procesa los documentos sin supervisión humana. Este se basa en la medida de la distancia entre los adjetivos encontrados en el texto a palabras preseleccionadas con polaridad conocida. Brevemente, los pasos que sigue son:\newline
+\begin{itemize}
+\item Paso 1: Extrae los adjetivos del documento aplicando una serie de patrones predefinidos ( como nombre-adverbio, nombre-adjetivo...etc)
+\item Paso 2: Mide la orientación semántica. Para ello se mide la distancia a palabras cuya polaridad se conoce ("excelente" y "pobre"). Obtiene la dependencia entre dos palabras analizando el número de ocurrencias con el motor de búsqueda \textcolor{SchoolColor}{AltaVista} para documentos que contienen dos palabras relativamente próximas. 
+\item Paso 3: Finalmente cuenta la orientación semántica media para todos los pares de palabras y  clasifica la crítica como recomendada o no recomendada. 
+\end{itemize}
+\\[\baselineskip] 
+Por otro lado, \citet{pang2002thumbs} presentaron otro trabajo basándose en técnicas conocidas de clasificación. La propuesta permite testear si un grupo seleccionado de algoritmos de aprendizaje automático puede producir buenos resultados cuando se aplica el análisis de sentimientos a nivel de documento. Presentan resultados para \textsf{Naive Bayes} \citet{lewis1998naive}, \textsf{Máxima entropía} \citet{berger1996maximum} y \textsf{Máquinas de soporte vectorial} \citet{joachims1998text},       
 
 
 
