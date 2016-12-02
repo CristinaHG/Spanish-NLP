@@ -163,7 +163,7 @@ Aquí concluye la parte genérica del pipeline. Además del pipeline genérico, 
 
 \section{El pipeline de OpenNLP}
 En la sección anterior vimos el pipeline genérico que suelen seguir los softwares de NLP. En esta se describe OpenNLP \url{http://opennlp.apache.org/}, un conocido framework desarrollado por Apache.\newline
-Apache OpenNLP es una librería que incorpora un kit de herramientas basadas en aprendizaje automático para hacer procesamiento del texto en lenguaje natural, permitiendo al usuario crear su propio pipeline de PLN, entrenar sus propios modelos o evaluarlos. Como consecuencia, no ofrece soporte para ningún lenguaje específico, sino que ofrece algoritmos bastante genéricos que podrían funcionar con cualquier lenguaje. Sí que tiene algunos modelos pre entrenados para algunos lenguajes. 
+Apache OpenNLP es una librería desarrollada en Java que incorpora un kit de herramientas basadas en aprendizaje automático para hacer procesamiento del texto en lenguaje natural, permitiendo al usuario crear su propio pipeline de PLN, entrenar sus propios modelos o evaluarlos. Como consecuencia, no ofrece soporte para ningún lenguaje específico, sino que ofrece algoritmos bastante genéricos que podrían funcionar con cualquier lenguaje. Sí que tiene algunos modelos pre entrenados para algunos lenguajes. 
 \subsection{Herramientas que incorpora}
 las herramientas de OpenNLP son accesibles a través de su API o por línea de comandos. Estas son las herramientas que incorpora:
 \subsubsection{Detector de frases} 
@@ -189,9 +189,12 @@ Un \textsl{diccionario de etiquetas} es un diccionario de palabras donde se espe
 \subsubsection{Parseador}
  OpenNLP tiene dos implementaciones para el parseado: una llamada "chunking parser" que genera como salida el texto parseado separado por espacios, y el "tree insert parser" que genera un árbol como resultado, pero este último está aún en fase experimental. En ambos caso se requiere el entrenamiento de un modelo con datos en formato de OpenNLP (formato Penn treebank pero limitado a una frase por línea).
 \subsubsection{Resolución de coreferencias}
- 
+La resolución de coreferencias es una herramienta que incorpora OpenNLP para linkar las múltiples referencias que se hacen a una misma entidad a lo largo del documento, aunque se limita a menciones de sintagmas nominales, por ejemplo \textsf{"el gato"}. 
 \subsection{Modelos que incorpora}
-OpenNPL incorpora modelos preentrenados para algunos idiomas. Donde  son entrenados aplicando primero detección de frases y luego tokenización. 
+Además de las herramientas anteriores, OpenNPL incorpora modelos preentrenados para los siguientes idiomas: Inglés, Alemán, Portugués, Danés, Holandés, Sueco y Español. \url{http://opennlp.sourceforge.net/models-1.5/}. Aunque en algunos enfoques se invierte el orden, todos los modelos aquí son entrenados aplicando primero detección de frases y luego tokenización (además de otras fases). \newline
+Para el Inglés incorpora modelos para todas las fases: tokenizador, detección de frases, pos Tagger, NER, chunker, parser y resolución de Coreferencias. Para el Sueco, Portugués, Alemán o Danés incluye tokenizador, detección de frases y pos Tagger, mientras que para el Holandés incluye los anteriores y además el NER. Para el Español, sólo incluye el NER.
+
+
 
  
   
