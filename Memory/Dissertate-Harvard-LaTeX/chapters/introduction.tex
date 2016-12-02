@@ -180,7 +180,14 @@ esta herramienta hace justo lo contrario que el tokenizador, es decir, construye
 \subsubsection{NER}
 NER (name entity recognition) es la tarea que se encarga de buscar nombres de entidades y números en el texto. Para ello necesita un modelo que dependerá del lenguaje y el tipo de entidad que se quiera identificar. OpenNLP incluye algunos modelos pre entrenados sobre varios corpus libres disponibles. Para encontrar nombres en filas de texto, el texto debe ser previamente segmentado en frases y tokens.  
 \subsubsection{Categorizador de documento}
-
+El categorizador de documento de OpenNLP puede clasificar texto dentro de categorías predefinidas. Se basa en un framework de máxima entropía. De nuevo, para clasificar el texto se necesita de un modelo, pero OpenNLP no provee de ninguno pre entrenado, dado que para clasificar se requiere de requisitos específicos. 
+\subsubsection{POS tagger}
+El POS tagger que incorpora OpenNLP marca los tokens con su correspondiente tipo de palabra (según su categoría morfosintáctica) y para ello se basa en información del propio token y del contexto del mismo. Para resolver la ambiguedad que se presenta cuando un token puede tener múltiples etiquetas morfosintácticas, se aplica un modelo de probabilidad para predecir la etiqueta correcta. Para limitar el posible número de etiquetas que puede recibir un token, se emplea un diccionario de etiquetas. \newline
+Un \textsl{diccionario de etiquetas} es un diccionario de palabras donde se especifica qué etiquetas puede tener cada posible token.
+\subsubsection{Chunker}
+ Esta herramienta separa el texto en sintagmas correlados, como el sujeto y el predicado de la frase, pero no especifica su estructura interna ni su función en la frase principal. 
+\subsubsection{Parseador}
+ 
 \subsection{Modelos que incorpora}
 OpenNPL incorpora modelos preentrenados para algunos idiomas. Donde  son entrenados aplicando primero detección de frases y luego tokenización. 
 
