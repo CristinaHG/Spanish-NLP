@@ -173,7 +173,7 @@ OpenNLP incorpora tres tokenizadores que segmentan una entrada de cadena de cara
 \begin{itemize}
 \item Tokenizador de espacios en blanco: toma como tokens toda secuencia que no sean caracteres en blanco.
 \item Tokenizador simple: basado en clases de caracteres, donde las secuencias con la misma clase de caracter se consideran tokens. 
-\item Tokenizador basado en aprendizaje: tokenizador de máxima entropía que detecta las fronteras de los tokens basándose en un modelo probabilístico. 
+\item Tokenizador basado en aprendizaje: tokenizador de máxima entropía que detecta las fronteras de los tokens basándose en un modelo probabilístico.
 \end{itemize}
 \subsubsection{Detokenizador}
 esta herramienta hace justo lo contrario que el tokenizador, es decir, construye el texto original no tokenizado a partir de una secuencia de tokens. La implementación se basa en reglas que definen como los tokens deben añadirse a la cadena de caracteres:  \textsl{MERGE\_TO\_LEFT} añade el token por la izquierda, \textsl{MERGE\_TO\_RIGHT} añade el token por la derecha y \textsl{RIGHT\_LEFT\_MATCHING} añade el token a la derecha d la primera ocurrencia y a la izquierda de la segunda ocurrencia.
@@ -195,8 +195,19 @@ Además de las herramientas anteriores, OpenNPL incorpora modelos preentrenados 
 Para el Inglés incorpora modelos para todas las fases: tokenizador, detección de frases, pos Tagger, NER, chunker, parser y resolución de Coreferencias. Para el Sueco, Portugués, Alemán o Danés incluye tokenizador, detección de frases y pos Tagger, mientras que para el Holandés incluye los anteriores y además el NER. Para el Español, sólo incluye el NER.
 
 \section{Limitaciones}
-En \citet{hirschberg2015advances} dicen que la mayor limitación de los sistemas de PLN actuales es que dan soporte a los lenguajes más hablados y más extendidos, como el Inglés, Francés, Alemán, Español o Chino, sin emargo otros como el Swahili , Bengali o Indonesio hablados por millones de personas no tienen disponible una herramienta de este tipo. \newline
-
+En \citet{hirschberg2015advances} dicen que la mayor limitación de los sistemas de PLN actuales es que dan soporte a los lenguajes más hablados y más extendidos, como el Inglés, Francés, Alemán, Español o Chino, pero otros como el Swahili, Bengali o Indonesio hablados por millones de personas no tienen disponible una herramienta de este tipo. \newline
+Sin embargo, aunque el Español está entre los focos de mira de las suites de PLN más usadas actualmente, rara vez hay un pipeline completo para análisis de sentimientos en español que proporcione resltados similares a los que se obtienen para el Inglés. Por ejemplo, en la sección anterior explicábamos \textcolor{SchoolColor}{Apache OpenNLP}, que directamente no incluye herramientas como lematización o análisis de sentimientos para ningún idioma.\newline
+Quizá la suite de NLP más conocida en la actualidad y referenciada junto con \textcolor{SchoolColor}{Python NLTK} es \textcolor{SchoolColor}{Standford CoreNLP}, debido a que es bastante completa, está bien documentada y tiene módulos para muchos de los idiomas más usados:
+\begin{figure}[H]%con el [H] le obligamos a situar aquí la figura
+\centering
+\includegraphics[scale=0.45]{stanford.png}  %el parámetro scale permite agrandar o %achicar la imagen. En el nombre de archivo puede especificar directorios
+\label{}
+\caption{Disponibilidad de herramientas e idiomas en Standford CoreNLP}   
+\end{figure}
+Pero de nuevo vemos que sólo está completo para Inglés, faltando métodos como la lematización o el análisis de sentimientos para Español. Otro paquete menos conocido que incluye funcionalidad para minería web, procesamiento del lenguaje natural y machine learning es  \textcolor{SchoolColor}{Pattern} \citet{smedt2012pattern}  implementada en Python, que según el benchmark de métodos de análisis de sentimientos que hicieron \citet{ribeiro2016sentibench} da mejores resultados en media que Stanford CoreNLP, aunque el benchmark solo hace comparaciones para el Inglés. \newline
+\textcolor{SchoolColor}{Pattern} incluye una serie de herramientas para Español, pero esta tampoco incluye análisis de sentimientos. \newline
+Por tanto, el proyecto desarrollado en este trabajo se centra en implementar las tres primeras etapas  del pipeline de un software NLP para análisis de sentimientos: tokenizador, lematizador y POS tagger.
+El trabajo se implementa usando el lenguaje \textcolor{SchoolColor}{Scala}, a partir de las propuestas en \citet{smedt2012pattern} y tiene como finalidad a largo plazo construir un software que haga análisis de sentimientos en Español. 
 
  
   
