@@ -178,7 +178,7 @@ OpenNLP incorpora tres tokenizadores que segmentan una entrada de cadena de cara
 \subsubsection{Detokenizador}
 esta herramienta hace justo lo contrario que el tokenizador, es decir, construye el texto original no tokenizado a partir de una secuencia de tokens. La implementación se basa en reglas que definen como los tokens deben añadirse a la cadena de caracteres:  \textsl{MERGE\_TO\_LEFT} añade el token por la izquierda, \textsl{MERGE\_TO\_RIGHT} añade el token por la derecha y \textsl{RIGHT\_LEFT\_MATCHING} añade el token a la derecha d la primera ocurrencia y a la izquierda de la segunda ocurrencia.
 \subsubsection{NER}
-NER (name entity recognition) es la tarea que se encarga de buscar nombres de entidades y números en el texto. Para ello necesita un modelo que dependerá del lenguaje y el tipo de entidad que se quiera identificar. OpenNLP incluye algunos modelos pre entrenados sobre varios corpus libres disponibles. Para encontrar nombres en filas de texto, el texto debe ser previamente segmentado en frases y tokens.  
+(name entity recognition) es la herramienta que se encarga de buscar nombres de entidades y números en el texto. Para ello necesita un modelo que dependerá del lenguaje y el tipo de entidad que se quiera identificar. OpenNLP incluye algunos modelos pre entrenados sobre varios corpus libres disponibles. Para encontrar nombres en filas de texto, el texto debe ser previamente segmentado en frases y tokens.  
 \subsubsection{Categorizador de documento}
 El categorizador de documento de OpenNLP puede clasificar texto dentro de categorías predefinidas. Se basa en un framework de máxima entropía. De nuevo, para clasificar el texto se necesita de un modelo, pero OpenNLP no provee de ninguno pre entrenado, dado que para clasificar se requiere de requisitos específicos. 
 \subsubsection{POS tagger}
@@ -187,6 +187,8 @@ Un \textsl{diccionario de etiquetas} es un diccionario de palabras donde se espe
 \subsubsection{Chunker}
  Esta herramienta separa el texto en sintagmas correlados, como el sujeto y el predicado de la frase, pero no especifica su estructura interna ni su función en la frase principal. 
 \subsubsection{Parseador}
+ OpenNLP tiene dos implementaciones para el parseado: una llamada "chunking parser" que genera como salida el texto parseado separado por espacios, y el "tree insert parser" que genera un árbol como resultado, pero este último está aún en fase experimental. En ambos caso se requiere el entrenamiento de un modelo con datos en formato de OpenNLP (formato Penn treebank pero limitado a una frase por línea).
+\subsubsection{Resolución de coreferencias}
  
 \subsection{Modelos que incorpora}
 OpenNPL incorpora modelos preentrenados para algunos idiomas. Donde  son entrenados aplicando primero detección de frases y luego tokenización. 
