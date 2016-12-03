@@ -63,6 +63,8 @@
 
 % Text layout.
 \usepackage{float}
+\usepackage{minted}
+\usemintedstyle{colorful}
 \RequirePackage[width=5.75in, letterpaper]{geometry}
 \usepackage{ragged2e}
 \RaggedRight
