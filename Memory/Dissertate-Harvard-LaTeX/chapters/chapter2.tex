@@ -7,7 +7,7 @@ This is some random quote to start off the chapter.
 \chapter{Resolución del trabajo}
 \chapter*{Introducción a Scala}
 \newthought{SCALA (Scalable language)}, es un lenguaje de programación de propósito general cuya primera versión fue lanzada en 2004, y desde entonces ha ido creciendo enormemente en usuarios. Estas son algunas razones por las que usar Scala \citet{9781491949856}:
-\section*{Es escalable} Tal y como indica su nombre, este lenguaje ha sido diseñado para crecer con las demandas de sus usuarios, por lo que es una buena opción para escribir desde scripts pequeños a grandes sistemas, abordar desafíos actuales como el Big data o proporcionar servicios con gran disponibilidad y robustez.
+\section*{Es escalable} Tal y como indica su nombre, este lenguaje ha sido diseñado para crecer con las demandas de sus usuarios, por lo que es una buena opción para escribir desde scripts pequeños a grandes sistemas, abordar desafíos actuales como el Big data o proporcionar servicios con gran disponibilidad y robustez. Esta es la principal razón por la que se escoge para este proyecto, dado que la intención es ir ampliándolo.
 
 \section*{Soporta un paradigma mixto} Por una parte \textsf{Scala} soporta programación orientada a objetos (POO), mejorando los objects de Java incluyendo los \textsf{traits}, una forma clara de implementar los tipos usando composiciones mixtas. En \textsf{Scala} todo son objetos realmente, incluso los tipos numéricos. Por otro lado, también soporta totalmente programación funcional (FP),
 herramienta que se ha convertido en la mejor forma de pensar en concurrencia, Big data y corrección del código en general (empleo de inmutabilidad, funciones de primera clase, funciones de alto orden...). 
@@ -36,7 +36,65 @@ fontsize=\footnotesize
     class Persona(edad: Int, nombre: String)
 \end{minted}
 Sí, dado este código en Scala el compilador creará dos atributos privados edad(entero) y nombre(cadena de caracteres) y un constructor que tomará los valores que se le pasen inicialmente para inicializar esas variables. Más rápido de escribir, de leer, y menos errores.  
-\section*{Más ejemplos de Scala vs Java}
-
-
-
+\section*{Más ejemplos de Scala}
+A continuación se muestran algunos ejemplos simples de \textsf{Scala} obtenidos de \citet{9781935182757}
+\subsection{Encontrar caracter en mayúscula}
+Éste es un ejemplo en Java y Scala del problema de encontrar un caracter en mayúcula en una cadena de texto:
+\begin{minted}
+[frame=lines,
+framesep=1mm,
+fontsize=\footnotesize
+]{java}
+ // código en Java
+  boolean hasUpperCase = false;
+for(int i = 0; i < name.length(); i++) {
+    if(Character.isUpperCase(name.charAt(i))) {
+        hasUpperCase = true;
+        break;  
+    }
+}
+ // código en Scala
+    val hasUpperCase = name.exists(_.isUpper)
+\end{minted}
+Mientras que el código en Java itera sobre cada caracter del string, comprobando uno a uno hasta que encuentra una mayúscula, modifica el flag boolenano y se sale del bucle, en Scala basta con llamar a la función \textsf{exist} sobre el string \textsf{name}, devolviendo un booleano. La \textsf{\_} representa cada caracter de la cadena. De nuevo Scala seduce con su sintaxis. 
+\subsection{Contar las líneas de un fichero}
+\begin{minted}
+[frame=lines,
+framesep=1mm,
+fontsize=\footnotesize
+]{ruby}
+ # código en Ruby
+count = 0     
+File.open "someFile.txt" do |file|
+   file.each { |line| count += 1 }
+end 
+\end{minted}
+\begin{minted}
+[frame=lines,
+framesep=1mm,
+fontsize=\footnotesize
+]{java}
+ // código en Scala
+val count = scala.io.Source.fromFile("someFile.txt").getLines().map(x => 1).sum 
+\end{minted}
+En \textsf{Ruby} también se realiza de forma breve, pero no tan elegante, ya que necesita una variable contador que va incrementando en cada vez que cuenta una línea. En \textsf{Scala}, una posible forma de hacerlo es usando \textsf{map}, una función que a cada línea del fichero le hace corresponder un 1. Finalmente los suma todos llamando a \textsf{sum}. \newline
+Además, \textsf{Scala} soporta composición mixta a través de los \textsf{traits}. Los \textsf{traits} son parecidos a las clases abstractas con implementación parcial. Por ejemplo, podríamos crear un nuevo tipo de colección que permitiera acceder al contenido del fichero como un \textsf{iterable}, mezclando el trait \textsf{Iterable} de \textsf{Scala}:
+\begin{minted}
+[frame=lines,
+framesep=1mm,
+fontsize=\footnotesize
+]{java}
+ class FileAsIterable {
+  def iterator = scala.io.Source.fromFile("someFile.txt").getLines()
+}
+\end{minted}
+Ahora si lo mezclamos con el trait \textsf{Iterable} de \textsf{Scala}, al crear un objeto de esa clase, éste será un \textsf{Iterable}, teniendo acceso a los métodos de \textsf{Iterable}:
+ \begin{minted}
+[frame=lines,
+framesep=1mm,
+fontsize=\footnotesize
+]{java}
+val newIterator = new FileAsIterable with Iterable[String]
+newIterator.foreach { line => println(line) }
+\end{minted}
+donde el método \textsf{foreach} al que llama, es de \textsf{Iterable}.
