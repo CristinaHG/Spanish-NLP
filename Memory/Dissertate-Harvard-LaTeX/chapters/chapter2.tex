@@ -136,9 +136,62 @@ Se usa un método \textsc{sleep} para simular la ocupación por un tiempo. El m�
 Una regla de la concurrencia es: si puedes, no compartas. Los actores son entidades software independientes que no comparten unos con otros información mutable que se pueda alterar. En su lugar se comunican mediante mensajes, eliminando la necesidad de sincronizar el acceso a datos, estados e información mutable. De esta forma es más fácil crear aplicaciones concurrentes robustas. Cada actor cambia su estado según lo necesite, pero sólo si tiene acceso exclusivo a ese estado y sus invocaciones se garantizan seguras. 
 
 \section*{Scala y Big data}
+Las funciones \textsf{map, flatMap, filter, fold, reduce...etc} siempre han sido funciones para trabajar con datos, independientemente de que estos fueran grandes o pequeños. Es por esto que una vez que se entiende \textsf{Scala} y sus colecciones, resulta fácil enganchar una API de Big data basada en Scala, sin embargo, sabiendo Java, enganchar con MapReduce Java API resulta más complicado por ser más difícil de usar y estar a más bajo nivel.\newline
+Pero la principal ventaja de Scala en Big data frente a otros lenguajes no es la curva de aprendizaje, sino la programación funcional. Scala permite escribir lo mismo (o más), con menos código que otros lenguajes. El ejemplo simple de contar el número de palabras, sacado de \citet{9781491949856} bastará para evidenciar a simple vista la ventaja de las APIs Big data basadas en Scala frente a las basadas en Java. \newline
+Esto es sólo parte de la versión \textsf{Hadoop}. El original se compone de unas 60 líneas de código, sin imports ni comentarios.
+\begin{minted}
+[frame=lines,
+framesep=1mm,
+fontsize=\footnotesize
+]{java}
+// src/main/java/progscala2/bigdata/HadoopWordCount.javaX
+...
+class WordCountMapper extends MapReduceBase
+   implements Mapper<IntWritable, Text, Text, IntWritable> {
+   
+ static final IntWritable one = new IntWritable(1);
+ static final Text word = new Text;
+ 
+ @Override public void map(IntWritable key, Text valueDocContents,
+   OutputCollector<Text, IntWritable> output, Reporter reporter) {
+  String[] tokens = valueDocContents.toString.split("\\s+");
+  for (String wordString: tokens) {
+    if (wordString.length > 0) {
+      word.set(wordString.toLowerCase);
+      output.collect(word, one);
+    }
+  }
+ }
+}
 
+class WordCountReduce extends MapReduceBase
+  implements Reducer<Text, IntWritable, Text, IntWritable> {
+  
+public void reduce(Text keyWord, java.util.Iterator<IntWritable> counts,
+   OutputCollector<Text, IntWritable> output, Reporter reporter) {
+ int totalCount = 0;
+ while (counts.hasNext) {
+   totalCount += counts.next.get;
+}
+\end{minted}
 
+Ahora una versión \textsf{Scalding}, basado en Scala. El código orignial tiene 12 líneas de código, contando el import:
+\begin{minted}
+[frame=lines,
+framesep=1mm,
+fontsize=\footnotesize
+]{scala}
+// src/main/scala/progscala2/bigdata/WordCountScalding.scalaX
+import com.twitter.scalding._
 
+class WordCount(args : Args) extends Job(args) {
 
-
-
+  TextLine(args("input"))
+     .read
+     .flatMap('line -> 'word) {
+       line: String => line.trim.toLowerCase.split("""\s+""")
+     }
+     .groupBy('word){ group => group.size('count) }
+     .write(Tsv(args("output")))
+}
+\end{minted}
