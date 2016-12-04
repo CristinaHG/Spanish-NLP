@@ -1,13 +1,13 @@
 %!TEX root = ../dissertation.tex
+\chapter*{Resolución del trabajo}
 \begin{savequote}[75mm]
-This is some random quote to start off the chapter.
-\qauthor{Firstname lastname}
+"If I were to pick a language to use today other than Java, it would be Scala."
+\qauthor{James Gosling}
 \end{savequote}
 
-\chapter{Resolución del trabajo}
-\chapter*{Introducción a Scala}
-\newthought{SCALA (Scalable language)}, es un lenguaje de programación de propósito general cuya primera versión fue lanzada en 2004, y desde entonces ha ido creciendo enormemente en usuarios. Estas son algunas razones por las que usar Scala \citet{9781491949856}:
-\section*{Es escalable} Tal y como indica su nombre, este lenguaje ha sido diseñado para crecer con las demandas de sus usuarios, por lo que es una buena opción para escribir desde scripts pequeños a grandes sistemas, abordar desafíos actuales como el Big data o proporcionar servicios con gran disponibilidad y robustez. Esta es la principal razón por la que se escoge para este proyecto, dado que la intención es ir ampliándolo.
+\chapter{Introducción a Scala}
+\newthought{SCALA}, (Scalable language) es un lenguaje de programación de propósito general cuya primera versión fue lanzada en 2004, y desde entonces ha ido creciendo enormemente en usuarios. Estas son algunas razones por las que usar Scala \citet{9781491949856}:
+\section*{Es escalable} Tal y como su nombre indica, este lenguaje ha sido diseñado para crecer con las demandas de sus usuarios, por lo que es una buena opción para escribir desde scripts pequeños a grandes sistemas, abordar desafíos actuales como el Big data o proporcionar servicios con gran disponibilidad y robustez. Esta es la principal razón por la que se escoge para este proyecto, dado que la intención es ir ampliándolo.
 
 \section*{Soporta un paradigma mixto} Por una parte \textsf{Scala} soporta programación orientada a objetos (POO), mejorando los objects de Java incluyendo los \textsf{traits}, una forma clara de implementar los tipos usando composiciones mixtas. En \textsf{Scala} todo son objetos realmente, incluso los tipos numéricos. Por otro lado, también soporta totalmente programación funcional (FP),
 herramienta que se ha convertido en la mejor forma de pensar en concurrencia, Big data y corrección del código en general (empleo de inmutabilidad, funciones de primera clase, funciones de alto orden...). 
@@ -98,3 +98,47 @@ val newIterator = new FileAsIterable with Iterable[String]
 newIterator.foreach { line => println(line) }
 \end{minted}
 donde el método \textsf{foreach} al que llama, es de \textsf{Iterable}.
+\section*{Scala y la concurrencia}
+Uno de los grandes problemas de la concurrencia es que si no se coordina bien el acceso a los recursos puede haber cambios inesperados e indeseados en los mismos, por acción de alguna de las hebras. \textsf{Scala} ayuda en esto con la inmutabilidad, de hecho, por defecto lo hace todo inmutable. Aunque en Scala se puede usar cualquier mecanismo de Java, Scala incorpora también sus propias herramientas específicas para concurrencia. Algunas de ellas son: \citet{9781491949856} 
+\subsection{Futures}
+La API \textcolor{SchoolColor}{scala.concurrent.Future} simplifica la concurrencia en código. Los Futures empiezan a correr concurrentemente cuando son creados, aunque lo hacen de forma asíncrona. Se puede hacer que las tareas sean independientes y sin bloqueo o por el contrario, bloquear, y además la API ofrece muchas funcionalidades para manejar los resultados (que pueden ser un Future), como callbacks que pueden ser invocados cuando el resultado esté listo. Veamos un ejemplo simple en el que se lanzan concurrentemente 5 tareas:  
+\begin{minted}
+[frame=lines,
+framesep=1mm,
+fontsize=\footnotesize
+]{java}
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+def sleep(millis: Long) = {
+Thread.sleep(millis)
+}
+// Busy work ;)
+def doWork(index: Int) = {
+sleep((math.random * 1000).toLong)
+index
+}
+(1 to 5) foreach { index =>
+val future = Future {
+doWork(index)
+}
+  future onSuccess {
+    case answer: Int => println(s"Success! returned: $answer")  
+  }
+  future onFailure {
+    case th: Throwable => println(s"FAILURE! returned: $th")
+  }
+}
+sleep(1000) // Wait long enough for the "work" to finish.
+println("Finito!")
+\end{minted}
+Se usa un método \textsc{sleep} para simular la ocupación por un tiempo. El método \textsc{doWork} llama a sleep con un número aleatorio de milisegundos. Se itera con \textsf{foreach} en un rango de enteros (1 a 5 inclusive) y se llama a \textcolor{SchoolColor}{scala.concurrent.Future.apply}. En este caso, \textcolor{SchoolColor}{Future.apply} recibe una función de trabajo a realizar (doWork), y devuelve un nuevo objeto\textcolor{SchoolColor}{Future}, el cual ejecuta el cuerpo de doWork(index) en otra hebra, devolviendo el control inmediatamente al bucle. Finalmente se usan \textcolor{SchoolColor}{onSucess} (si la tarea se completa correctamente) y \textcolor{SchoolColor}{onFailure} (si falla) para registrar los callbacks. 
+\subsection{Modelo de actores}
+Una regla de la concurrencia es: si puedes, no compartas. Los actores son entidades software independientes que no comparten unos con otros información mutable que se pueda alterar. En su lugar se comunican mediante mensajes, eliminando la necesidad de sincronizar el acceso a datos, estados e información mutable. De esta forma es más fácil crear aplicaciones concurrentes robustas. Cada actor cambia su estado según lo necesite, pero sólo si tiene acceso exclusivo a ese estado y sus invocaciones se garantizan seguras. 
+
+\section*{Scala y Big data}
+
+
+
+
+
+
