@@ -65,6 +65,8 @@
 \usepackage{float}
 \usepackage{minted}
 \usemintedstyle{colorful}
+\usepackage{tikz}
+\usepackage{pgfgantt}
 \RequirePackage[width=5.75in, letterpaper]{geometry}
 \usepackage{ragged2e}
 \RaggedRight
