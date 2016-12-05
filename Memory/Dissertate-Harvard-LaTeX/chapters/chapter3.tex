@@ -53,20 +53,23 @@ title height=.75
 
 \chapter*{Análisis de requisitos}
 En esta sección se muestra la especificación de requisitos para el proyecto de manera formal, a través de plantillas que muestran información relevante del requisito, como la descripción, su prioridad, estado o riesgo. Al ser demasiados, se exponen solo los más importantes.
-
+\subsection*{requisitos funcionales}
+%\usepackage{array}
+\newcolumntype{L}{>{\arraybackslash}m{15cm}}
 \begin{table}[H]
-\centering
 %\caption{My caption}
 \label{my-label}
 \begin{tabular}{|l|l|l|l|l|l|l|}
 \hline
-\multicolumn{7}{|l|}{Identificador:}                                 \\ \hline
-\multicolumn{4}{|l|}{Necesidad:} & \multicolumn{3}{l|}{Autor:}         \\ \hline
-\multicolumn{7}{|l|}{Descripción:}                                 \\ \hline
-\multicolumn{4}{|l|}{Prioridad:} & \multicolumn{3}{l|}{Riesgo:}         \\ \hline
-\multicolumn{5}{|l|}{Dependencias:}         & \multicolumn{2}{l|}{Estado:} \\ \hline
+\multicolumn{7}{|l|}{\textcolor{SchoolColor}{Identificador:} RF-01}                                 \\ \hline
+\multicolumn{4}{|l|}{\textcolor{SchoolColor}{Necesidad:} Alta} & \multicolumn{3}{l|}{\textcolor{SchoolColor}{Autor:} Cristina Heredia}         \\ \hline
+\multicolumn{7}{|L|}{\textcolor{SchoolColor}{Descripción:} El sistema incluirá un método de parseado de texto, al que el usuario  especificará una cadena de texto y cual de las tres tareas desea realizar(tokenizado, etiquetado,lematización) mediante parámetros booleanos. Devuelve el resultado de aplicarle al texto especificado la acción solicitada. Si no se especifica opción, devuelve el texto tal como lo especificó el usuario.  }                                 \\ \hline
+\multicolumn{4}{|l|}{\textcolor{SchoolColor}{Prioridad: }Alta} & \multicolumn{3}{l|}{\textcolor{SchoolColor}{Riesgo:} Medio}         \\ \hline
+\multicolumn{5}{|l|}{\textcolor{SchoolColor}{Dependencias: }}         & \multicolumn{2}{l|}{\textcolor{SchoolColor}{Estado:} Hecho} \\ \hline
 \end{tabular}
 \end{table}
+
+
 
 
 

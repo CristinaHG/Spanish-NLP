@@ -62,6 +62,7 @@
     {\endoldenumerate\end{spacing}}
 
 % Text layout.
+\usepackage{array}
 \usepackage{float}
 \usepackage{minted}
 \usemintedstyle{colorful}
