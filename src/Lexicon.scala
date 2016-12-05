@@ -15,7 +15,13 @@ import scala.xml.Comment
 
 class Lexicon {
 
-  var lexiconDict=mutable.Map[String,String]()
+  private[this] var lexiconDict=mutable.Map[String,String]()
+
+
+  //returns the lexicon dictionary member data
+  def getLexDict:mutable.Map[String,String]={
+    return this.lexiconDict
+  }
 
   // Returns a dictironary with readed lexicon over the lines in the file at the given path strippping comments
   def read(path: String, encoding: String, comment: String): Unit = {

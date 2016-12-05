@@ -158,7 +158,7 @@ class PosTagger {
     var taggedCntxt=List[(String,String)]()
     var taggedfin=List[(String,String)]()
     // Tag known words.
-    tokens.foreach(t=> tagged::=(t,lexicon.lexiconDict.getOrElse(t,lexicon.lexiconDict.getOrElse(t.toLowerCase,"None"))))
+    tokens.foreach(t=> tagged::=(t,lexicon.getLexDict.getOrElse(t,lexicon.getLexDict.getOrElse(t.toLowerCase,"None"))))
     //Tag unknow words
     tagged=tagged.reverse
     taggedMorp=tagged.map(t=> {
@@ -174,7 +174,7 @@ class PosTagger {
         //use CD for digits and numbers
         else if (t._1.matches(CD)) (t._1, default(2))
         //use suffix rules (ej, -mente=ADV)
-        else if (!morphology.morphologyList.isEmpty) (t._1,morphology.apply(t._1, default(0), prev, next, morphology.morphologyList, lexicon.lexiconDict))
+        else if (!morphology.morphologyList.isEmpty) (t._1,morphology.apply(t._1, default(0), prev, next, morphology.morphologyList, lexicon.getLexDict))
           // Use most frequent tag (NN).
         else (t._1, default(0))
 
