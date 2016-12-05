@@ -56,6 +56,7 @@ En esta sección se muestra la especificación de requisitos para el proyecto de
 \subsection*{requisitos funcionales}
 %\usepackage{array}
 \newcolumntype{L}{>{\arraybackslash}m{15cm}}
+%RF 1
 \begin{table}[H]
 %\caption{My caption}
 \label{my-label}
@@ -65,9 +66,23 @@ En esta sección se muestra la especificación de requisitos para el proyecto de
 \multicolumn{4}{|l|}{\textcolor{SchoolColor}{Necesidad:} Alta} & \multicolumn{3}{l|}{\textcolor{SchoolColor}{Autor:} Cristina Heredia}         \\ \hline
 \multicolumn{7}{|L|}{\textcolor{SchoolColor}{Descripción:} El sistema incluirá un método de parseado de texto, al que el usuario  especificará una cadena de texto y cual de las tres tareas desea realizar(tokenizado, etiquetado,lematización) mediante parámetros booleanos. Devuelve el resultado de aplicarle al texto especificado la acción solicitada. Si no se especifica opción, devuelve el texto tal como lo especificó el usuario.  }                                 \\ \hline
 \multicolumn{4}{|l|}{\textcolor{SchoolColor}{Prioridad: }Alta} & \multicolumn{3}{l|}{\textcolor{SchoolColor}{Riesgo:} Medio}         \\ \hline
+\multicolumn{5}{|l|}{\textcolor{SchoolColor}{Dependencias: RF-02}}         & \multicolumn{2}{l|}{\textcolor{SchoolColor}{Estado:} Hecho} \\ \hline
+\end{tabular}
+\end{table}
+%RF 2
+\begin{table}[H]
+%\caption{My caption}
+\label{my-label}
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+\multicolumn{7}{|l|}{\textcolor{SchoolColor}{Identificador:} RF-02}                                 \\ \hline
+\multicolumn{4}{|l|}{\textcolor{SchoolColor}{Necesidad:} Alta} & \multicolumn{3}{l|}{\textcolor{SchoolColor}{Autor:} Cristina Heredia}         \\ \hline
+\multicolumn{7}{|L|}{\textcolor{SchoolColor}{Descripción:} El sistema incluirá un método de procedimiento de tokenización de texto, que separará el texto en sus unidades mínimas; los tokens. Recibe como parámetro una cadena de texto especificada por el usuario. Devuelve una lista de listas de tokens, donde cada lista de tokens se corresponde con una frase del texto del usuario. }                                 \\ \hline
+\multicolumn{4}{|l|}{\textcolor{SchoolColor}{Prioridad: }Alta} & \multicolumn{3}{l|}{\textcolor{SchoolColor}{Riesgo:} Medio}         \\ \hline
 \multicolumn{5}{|l|}{\textcolor{SchoolColor}{Dependencias: }}         & \multicolumn{2}{l|}{\textcolor{SchoolColor}{Estado:} Hecho} \\ \hline
 \end{tabular}
 \end{table}
+
 
 
 
