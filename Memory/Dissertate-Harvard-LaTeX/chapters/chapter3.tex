@@ -93,7 +93,7 @@ En esta sección se muestra la especificación de requisitos para el proyecto de
 \multicolumn{4}{|l|}{\textcolor{SchoolColor}{Necesidad:} Alta} & \multicolumn{3}{l|}{\textcolor{SchoolColor}{Autor:} Cristina Heredia}         \\ \hline
 \multicolumn{7}{|L|}{\textcolor{SchoolColor}{Descripción:} El sistema incluirá un método de procedimiento de etiquetado morfológico de texto (POS Tagger), que etiquetará cada palabra(token) con su categoría morfosintáctica según el léxico, una morfología y un contexto que recibirá como parámetro.  También recibe como parámetro una lista con los tokens del texto introducido por el usario, por lo tanto requiere de una tokenización previamente. Devuelve una lista de pares (token,etiqueta).  }                                 \\ \hline
 \multicolumn{4}{|l|}{\textcolor{SchoolColor}{Prioridad: }Alta} & \multicolumn{3}{l|}{\textcolor{SchoolColor}{Riesgo:} Medio}         \\ \hline
-\multicolumn{5}{|l|}{\textcolor{SchoolColor}{Dependencias: }RF-02}         & \multicolumn{2}{l|}{\textcolor{SchoolColor}{Estado:} Hecho} \\ \hline
+\multicolumn{5}{|l|}{\textcolor{SchoolColor}{Dependencias: }RF-02,RF-04,RF-05}         & \multicolumn{2}{l|}{\textcolor{SchoolColor}{Estado:} Hecho} \\ \hline
 \end{tabular}
 \end{table}
 
@@ -103,11 +103,25 @@ En esta sección se muestra la especificación de requisitos para el proyecto de
 \label{my-label}
 \begin{tabular}{|l|l|l|l|l|l|l|}
 \hline
-\multicolumn{7}{|l|}{\textcolor{SchoolColor}{Identificador:} RF-03}                                 \\ \hline
+\multicolumn{7}{|l|}{\textcolor{SchoolColor}{Identificador:} RF-04}                                 \\ \hline
 \multicolumn{4}{|l|}{\textcolor{SchoolColor}{Necesidad:} Alta} & \multicolumn{3}{l|}{\textcolor{SchoolColor}{Autor:} Cristina Heredia}         \\ \hline
-\multicolumn{7}{|L|}{\textcolor{SchoolColor}{Descripción:} El sistema incluirá un método de procedimiento de etiquetado morfológico de texto (POS Tagger), que etiquetará cada palabra(token) con su categoría morfosintáctica según el léxico, una morfología y un contexto que recibirá como parámetro.  También recibe como parámetro una lista con los tokens del texto introducido por el usario, por lo tanto requiere de una tokenización previamente. Devuelve una lista de pares (token,etiqueta).  }                                 \\ \hline
+\multicolumn{7}{|L|}{\textcolor{SchoolColor}{Descripción:} El sistema incluirá un método de aplicación de un contexto a una lista de tokens ya etiquetados morfosintácticamente, para mejorar el etiquetado de los mismos. Como resultado devuelve una lista con los tokens y sus nuevas etiquetas, en un par (token,tag).}                                 \\ \hline
 \multicolumn{4}{|l|}{\textcolor{SchoolColor}{Prioridad: }Alta} & \multicolumn{3}{l|}{\textcolor{SchoolColor}{Riesgo:} Medio}         \\ \hline
-\multicolumn{5}{|l|}{\textcolor{SchoolColor}{Dependencias: }RF-02}         & \multicolumn{2}{l|}{\textcolor{SchoolColor}{Estado:} Hecho} \\ \hline
+\multicolumn{5}{|l|}{\textcolor{SchoolColor}{Dependencias: } RF-02, RF-05}         & \multicolumn{2}{l|}{\textcolor{SchoolColor}{Estado:} Hecho} \\ \hline
+\end{tabular}
+\end{table}
+
+%RF 5
+\begin{table}[H]
+%\caption{My caption}
+\label{my-label}
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+\multicolumn{7}{|l|}{\textcolor{SchoolColor}{Identificador:} RF-05}                                 \\ \hline
+\multicolumn{4}{|l|}{\textcolor{SchoolColor}{Necesidad:} Alta} & \multicolumn{3}{l|}{\textcolor{SchoolColor}{Autor:} Cristina Heredia}         \\ \hline
+\multicolumn{7}{|L|}{\textcolor{SchoolColor}{Descripción:} El sistema incluirá un método de creación de un diccionario de léxico, a partir de la lectura y manipulación de un fichero de 85877 líneas de reglas léxicas. Éste será usado en el POS tagger para realizar un etiquetado inicial. }                                 \\ \hline
+\multicolumn{4}{|l|}{\textcolor{SchoolColor}{Prioridad: }Alta} & \multicolumn{3}{l|}{\textcolor{SchoolColor}{Riesgo:} Medio}         \\ \hline
+\multicolumn{5}{|l|}{\textcolor{SchoolColor}{Dependencias: } }         & \multicolumn{2}{l|}{\textcolor{SchoolColor}{Estado:} Hecho} \\ \hline
 \end{tabular}
 \end{table}
 
