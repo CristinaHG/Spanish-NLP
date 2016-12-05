@@ -6,7 +6,7 @@ Nulla facilisi. In vel sem. Morbi id urna in diam dignissim feugiat. Proin moles
 
 \chapter{Planificación, análisis y diseño}
 \chapter*{Planificación}
-A continuación se expone mediante un \textcolor{SchoolColor}{diagrama de Gantt} como se ha distribuido el tiempo durante estos 5 meses para cada tarea de este proyecto, desde mediados de Julio a la segunda semana de diciembre.
+A continuación se expone mediante un \textcolor{SchoolColor}{diagrama de Gantt} como se ha distribuido el tiempo durante estos 5 meses para cada tarea de este proyecto, a partir de mediados de Julio hasta la segunda semana de Diciembre.
 \\[\baselineskip]
 %\\[\baselineskip]
 \setganttlinklabel{f-s}{FINISH-TO-START}
@@ -16,7 +16,7 @@ A continuación se expone mediante un \textcolor{SchoolColor}{diagrama de Gantt}
             y unit title=0.7cm,
             y unit chart=0.9cm,
             canvas/.append style={rounded corners=1mm, draw=none, fill=orange!9},
-            bar/.append style={fill=orange!30,rounded corners=1.5mm, draw=none},
+            bar/.append style={fill=orange!40,rounded corners=1.5mm, draw=none},
             milestone/.append style={fill=orange!90,rounded corners=0mm, draw=none},
             link/.append style={-to,black!70},
             title/.style={fill=orange!60, draw=none, rounded corners=2mm},
@@ -36,6 +36,7 @@ title height=.75
 \gantttitle{Diciembre}{5} \\
 %\ganttgroup{Group 1}{1}{7} \\
 \ganttbar{Revisión bibliográfica y documentación}{3}{9} \\
+\ganttmilestone{Fin de bibliografía}{9} \ganttnewline
 \ganttlinkedbar[link type=f-s]{Análisis de requisitos y diseño}{10}{10}\\
 \ganttlinkedbar[link type=f-s]{Implementación y eval. Del Tokenizador}{11}{15}\\
 \ganttlinkedbar[link type=f-s]{Implementación y eval. Del POS Tagger}{16}{20}\\
@@ -46,8 +47,8 @@ title height=.75
 %\ganttmilestone{Informe trimestral 2}{24} \ganttnewline
 %\ganttlinkedbar{Interfaz gráfica}{23}{29}\\
 %\ganttlinkedbar{Entrega final}{29}{30}\\
-%\ganttlink{elem3}{elem4}
-\ganttlink{elem4}{elem5}
+\ganttlink{elem0}{elem1}
+\ganttlink{elem5}{elem6}
 \end{ganttchart}}
 \end{figure} 
 
@@ -199,7 +200,7 @@ inmutabilidad. }                                 \\ \hline
 \end{tabular}
 \end{table}
 
-
+\chapter*{Diseño}
 
 
 
