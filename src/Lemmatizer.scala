@@ -4,27 +4,10 @@
 import scala.io.Source
 
 class Lemmatizer(verbsDict:String) {
-  var lista1 = List(("Los", "DT"), ("gatos", "NNS"),("negros", "JJ"),("son", "VB"),("horribles", "JJ"))
-  var lista2=List(("no","RB"),("podrás","VB"),("vivir","VB"),("eternamente","RB"))
-  var lista3=List(("Los","DT"),("ingenieros","NNS"),("informáticos","JJ"),("son","VB"),("muy","RB"),("inteligentes","JJ"))
-  var lista4=List(("Las","DT"),("atletas","NNS"),("españolas","JJ"),("son","VB"),("muy","RB"),("buenas","JJ"),("deportistas","NNS"))
-  var lista5=List(("Alejandro","NNP"),("quiere","VB"),("a","IN"),("Cristina","NNP"),("más","RB"),("que","IN"),("a","IN"),("nada","DT"),
-    (",",","),("como","IN"),("nunca","RB"),("antes","IN"),("quiso","VB"),("a","IN"),("nadie","DT"),(".","."))
-  var lista6=List(("Los","DT"),("lobos","NNS"),("aullaban","VB"),("desesperadamente","NN"))
-  var lista7=List(("Dijo","VB"),("que","IN"),("lo","DT"),("esperáramos","VB"),("aquí","IN"),("mientras","IN"),("compraba","VB"),("galletas","NNS"))
-  var lista8=List(("Te","PRP"),("advertimos","VB"),("que","WP"),("serían","VB"),("duros","JJ"))
-  var lista9=List(("reconozco","VB"),("que","WP"),("me","PRP"),("comporté","VB"),("mal","RB"))
-  var lista10=List(("todo","DT"),("esfuerzo","NN"),("valdrá","VB"),("la","DT"),("pena","NN"))
-  var lista11=List(("dejaron","VB"),("que","IN"),("murieran","VB"),("de","IN"),("hambre","NN"))
-  var lista12=List(("nos","PRP"),("atracaron","VB"),("a","IN"),("mano","NN"),("armada","VBN"))
-  var lista13=List(("cuando","IN"),("éramos","VB"),("niños","NNS"),("repelíamos","VB"),("muchos","RB"),("bichos","NNS"))
-  var lista14=List(("con","IN"),("tanto","RB"),("calor","NN"),("se","PRP"),("funde","VB"),("el","DT"),("hielo","NN"))
-  var lista15=List(("lo","DT"),("que","WP"),("no","RB"),("queremos","VB"),("es","VB"),("que","IN"),("lo","DT"),("acaparéis","VB"),
-    ("todo","DT"))
 
   //verbs dictionary
-  val mappedVerbs = verbsToDictionaryPair(verbsDict)
-  val irregular_inflections=List(
+  private[this] val mappedVerbs = verbsToDictionaryPair(verbsDict)
+  private[this] val irregular_inflections=List(
     ("yéramos", "ir"   ), ( "cisteis", "cer"   ), ( "tuviera", "tener"), ( "ndieron", "nder" ),
     ( "ndiendo", "nder" ), ("tándose", "tarse" ), ( "ndieran", "nder" ), ( "ndieras", "nder" ),
     ("izaréis", "izar" ), ( "disteis", "der"   ), ( "irtiera", "ertir"), ( "pusiera", "poner"),
@@ -70,9 +53,15 @@ class Lemmatizer(verbsDict:String) {
     (      "ye", "ir"   ), (     "tí", "tir"   ), (     "cé", "zar"  ), (      "ie", "iar"  ),
     (      "id", "ir"   ), (     "ué", "ar"    )
     )
+
+  //get verbsdDictionary
+   def getVerbsDict:Map[String,String]={
+    return mappedVerbs
+  }
+
   //-----------load file and make a dictionary pair[verb form, infinitive] method
 
-  def verbsToDictionaryPair(file: String):Map[String,String]={
+  private def verbsToDictionaryPair(file: String):Map[String,String]={
     var dict=Map[String,String]()
     for (line<-Source.fromFile(file).getLines().filterNot(_.startsWith(";"))){ //not filter comments
       val a=line.split(",")
@@ -83,11 +72,11 @@ class Lemmatizer(verbsDict:String) {
   }
 
   //-----returns the infinitive form of the given verb or none
-  def verb_lemma(verb:String,dictionary:Map[String,String]):String={
+  private def verb_lemma(verb:String):String={
   //if(dictionary.getOrElse(verb," ")!="") return dictionary(verb).toLowerCase
   val v=verb.toLowerCase
-    if(dictionary.keySet.exists(_==v)){
-      return dictionary(v)
+    if( mappedVerbs .keySet.exists(_==v)){
+      return this.mappedVerbs(v)
     }else return find_lemma(v)
   }
 
@@ -218,14 +207,14 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
   }
 
   //--------isVowel
-  def isVowel(char: Char):Boolean={
+  private def isVowel(char: Char):Boolean={
    if (List('a','e','i','o','u').contains(char))
     return true
     else return false
   }
 
   //---------normalize
-  def normalize(char: Char):Char={
+  private def normalize(char: Char):Char={
     char match {
       case 'á' => 'a'
       case 'é' => 'e'
@@ -255,7 +244,7 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
   }
 
 
-  def get_lemmas(l: List[(String,String)],dict:Map[String,String]): List[(String, String,String)] = {
+  def get_lemmas(l: List[(String,String)]): List[(String, String,String)] = {
     var word :String=""
     var lemma:String=""
     var pos:String=""
@@ -265,7 +254,7 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
   if (pos.startsWith("DT")) lemma=singularize(word,"DT")
   if (pos.startsWith("JJ")) lemma=predicative(word)
   if (pos.startsWith("NNS")) lemma=singularize(word,"NNS")
-    if (pos.startsWith("VB") || pos.startsWith("MD")) lemma= verb_lemma(word,dict)
+    if (pos.startsWith("VB") || pos.startsWith("MD")) lemma= verb_lemma(word)
     lemmalist= (word,pos,lemma)::lemmalist
  })
     return lemmalist.reverse

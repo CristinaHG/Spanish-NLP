@@ -57,7 +57,7 @@ def commandLine(comments:String,moduleResult:String)={
       //lematizer and chunks need tags
       tagged = s.map(t => posTagger.find_tags(t, lexicon, model, morphology, context, "", default, posTagger.parole2penntreebank))
       if (lemmatize == true) {
-        var lemmatas = tagged.map(t => this.lematizer.get_lemmas(t, this.lematizer.mappedVerbs)).toList
+        var lemmatas = tagged.map(t => this.lematizer.get_lemmas(t)).toList
         // Collapse raw list.
         // Tags are separated by slashes.
         // Slashes in words are encoded with &slash;

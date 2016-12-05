@@ -182,7 +182,7 @@ import org.junit.Assert.assertArrayEquals
      var i = 0
      var n = 0
      var faults = List[(String, String)]()
-     lemmatizer.mappedVerbs.foreach(u => {
+     lemmatizer.getVerbsDict.foreach(u => {
        if (lemmatizer.find_lemma(u._1) == u._2) i = i + 1 else faults ::= u
        n = n + 1
      })
@@ -209,7 +209,7 @@ import org.junit.Assert.assertArrayEquals
      ("alfombra", "NN", "alfombra"))
 
      assert(lemmatizer.get_lemmas(List(("Los", "DT"), ("gatos", "NNS"), ("negros", "JJ"), ("se", "PRP"), ("sentó", "VB"),
-       ("en", "IN"), ("la", "DT"), ("alfombra", "NN")),lemmatizer.mappedVerbs)==lemmatas)
+       ("en", "IN"), ("la", "DT"), ("alfombra", "NN")))==lemmatas)
    }
 
    test("test parse"){
