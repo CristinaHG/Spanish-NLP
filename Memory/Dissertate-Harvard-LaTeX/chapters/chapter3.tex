@@ -66,7 +66,7 @@ En esta sección se muestra la especificación de requisitos para el proyecto de
 \multicolumn{4}{|l|}{\textcolor{SchoolColor}{Necesidad:} Alta} & \multicolumn{3}{l|}{\textcolor{SchoolColor}{Autor:} Cristina Heredia}         \\ \hline
 \multicolumn{7}{|L|}{\textcolor{SchoolColor}{Descripción:} El sistema incluirá un método de parseado de texto, al que el usuario  especificará una cadena de texto y cual de las tres tareas desea realizar(tokenizado, etiquetado,lematización) mediante parámetros booleanos. Devuelve el resultado de aplicarle al texto especificado la acción solicitada. Si no se especifica opción, devuelve el texto tal como lo especificó el usuario.  }                                 \\ \hline
 \multicolumn{4}{|l|}{\textcolor{SchoolColor}{Prioridad: }Alta} & \multicolumn{3}{l|}{\textcolor{SchoolColor}{Riesgo:} Medio}         \\ \hline
-\multicolumn{5}{|l|}{\textcolor{SchoolColor}{Dependencias: }RF-02, RF-03}         & \multicolumn{2}{l|}{\textcolor{SchoolColor}{Estado:} Hecho} \\ \hline
+\multicolumn{5}{|l|}{\textcolor{SchoolColor}{Dependencias: }RF-02, RF-03, RF-07}         & \multicolumn{2}{l|}{\textcolor{SchoolColor}{Estado:} Hecho} \\ \hline
 \end{tabular}
 \end{table}
 %RF 2
@@ -91,9 +91,9 @@ En esta sección se muestra la especificación de requisitos para el proyecto de
 \hline
 \multicolumn{7}{|l|}{\textcolor{SchoolColor}{Identificador:} RF-03}                                 \\ \hline
 \multicolumn{4}{|l|}{\textcolor{SchoolColor}{Necesidad:} Alta} & \multicolumn{3}{l|}{\textcolor{SchoolColor}{Autor:} Cristina Heredia}         \\ \hline
-\multicolumn{7}{|L|}{\textcolor{SchoolColor}{Descripción:} El sistema incluirá un método de procedimiento de etiquetado morfológico de texto (POS Tagger), que etiquetará cada palabra(token) con su categoría morfosintáctica según el léxico, una morfología y un contexto que recibirá como parámetro.  También recibe como parámetro una lista con los tokens del texto introducido por el usario, por lo tanto requiere de una tokenización previamente. Devuelve una lista de pares (token,etiqueta).  }                                 \\ \hline
+\multicolumn{7}{|L|}{\textcolor{SchoolColor}{Descripción:} El sistema incluirá un método de etiquetado morfosintáctico de texto (POS Tagger), que etiquetará cada palabra(token) con su categoría morfosintáctica según el léxico, una morfología y un contexto que recibirá como parámetro.  También recibe como parámetro una lista con los tokens del texto introducido por el usario, por lo tanto requiere de una tokenización previamente. Devuelve una lista de pares (token,etiqueta).  }                                 \\ \hline
 \multicolumn{4}{|l|}{\textcolor{SchoolColor}{Prioridad: }Alta} & \multicolumn{3}{l|}{\textcolor{SchoolColor}{Riesgo:} Medio}         \\ \hline
-\multicolumn{5}{|l|}{\textcolor{SchoolColor}{Dependencias: }RF-02,RF-04,RF-05}         & \multicolumn{2}{l|}{\textcolor{SchoolColor}{Estado:} Hecho} \\ \hline
+\multicolumn{5}{|l|}{\textcolor{SchoolColor}{Dependencias: }RF-02,RF-04,RF-05, RF-06}         & \multicolumn{2}{l|}{\textcolor{SchoolColor}{Estado:} Hecho} \\ \hline
 \end{tabular}
 \end{table}
 
@@ -125,9 +125,34 @@ En esta sección se muestra la especificación de requisitos para el proyecto de
 \end{tabular}
 \end{table}
 
+%RF 6
+\begin{table}[H]
+%\caption{My caption}
+\label{my-label}
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+\multicolumn{7}{|l|}{\textcolor{SchoolColor}{Identificador:} RF-06}                                 \\ \hline
+\multicolumn{4}{|l|}{\textcolor{SchoolColor}{Necesidad:} Alta} & \multicolumn{3}{l|}{\textcolor{SchoolColor}{Autor:} Cristina Heredia}         \\ \hline
+\multicolumn{7}{|L|}{\textcolor{SchoolColor}{Descripción:} El sistema incluirá un proceso de aplicación  de reglas morfológicas a un token dado con una etiqueta dada, que se reciben como parámetros. Ésto sirve de nuevo para mejorar el etiquetado, esta vez teniendo en cuenta la morfología. }                                 \\ \hline
+\multicolumn{4}{|l|}{\textcolor{SchoolColor}{Prioridad: }Alta} & \multicolumn{3}{l|}{\textcolor{SchoolColor}{Riesgo:} Medio}         \\ \hline
+\multicolumn{5}{|l|}{\textcolor{SchoolColor}{Dependencias: }RF-02, RF-05 }         & \multicolumn{2}{l|}{\textcolor{SchoolColor}{Estado:} Hecho} \\ \hline
+\end{tabular}
+\end{table}
 
-
-
+%RF 7
+\begin{table}[H]
+%\caption{My caption}
+\label{my-label}
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+\multicolumn{7}{|l|}{\textcolor{SchoolColor}{Identificador:} RF-07}                                 \\ \hline
+\multicolumn{4}{|l|}{\textcolor{SchoolColor}{Necesidad:} Alta} & \multicolumn{3}{l|}{\textcolor{SchoolColor}{Autor:} Cristina Heredia}         \\ \hline
+\multicolumn{7}{|L|}{\textcolor{SchoolColor}{Descripción:} El sistema incluirá un proceso de lematización que obtendrá la forma base de la palabra, aplicando un diccionario y varios algoritmos. 
+Requiere de un etiquetado previo de las palabras, por lo que recibe como argumento una lista de (palabra,etiqueta) y devuelve una lista de (palabra,etiqueta,lema). }                                 \\ \hline
+\multicolumn{4}{|l|}{\textcolor{SchoolColor}{Prioridad: }Alta} & \multicolumn{3}{l|}{\textcolor{SchoolColor}{Riesgo:} Medio}         \\ \hline
+\multicolumn{5}{|l|}{\textcolor{SchoolColor}{Dependencias: }RF-03 }         & \multicolumn{2}{l|}{\textcolor{SchoolColor}{Estado:} Hecho} \\ \hline
+\end{tabular}
+\end{table}
 
 
 
