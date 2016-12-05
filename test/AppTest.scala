@@ -196,6 +196,7 @@ import org.junit.Assert.assertArrayEquals
 //     })
 
   assert(i.toFloat/n > 0.80)
+  print("accuracy lematization: " + i.toFloat/n )
 }
    test("test get lemmas"){
      val lemmatas=List(("Los", "DT", "el"),
@@ -244,5 +245,6 @@ import org.junit.Assert.assertArrayEquals
        })
      })
      assert(i.toFloat/n>0.91)
+     print("accuracy tagger:" + i.toFloat/n)
    }
 }
