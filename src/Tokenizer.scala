@@ -9,18 +9,18 @@ import scala.util.control.Breaks._
 
 
  class Tokenizer{
-  val punctuation = ".,;:!?()[]{}`'\"@#$^&*+-|=~_"
-  val abbreviations=List("a.C.", "a.m.", "apdo.", "aprox.", "Av.", "Avda.", "c.c.", "D.", "Da.", "d.C.",
+  private[this] val punctuation = ".,;:!?()[]{}`'\"@#$^&*+-|=~_"
+  private[this] val abbreviations=List("a.C.", "a.m.", "apdo.", "aprox.", "Av.", "Avda.", "c.c.", "D.", "Da.", "d.C.",
     "d.j.C.", "dna.", "Dr.", "Dra.", "esq.", "etc.", "Gob.", "h.", "m.n.", "no.",
     "núm.", "pág.", "P.D.", "P.S.", "p.ej.", "p.m.", "Profa.", "q.e.p.d.", "S.A.",
     "S.L.", "Sr.", "Sra.", "Srta.", "s.s.s.", "tel.", "Ud.", "Vd.", "Uds.", "Vds.",
     "v.", "vol.", "W.C.")
 
-  val re_abbr1="""^[A-Za-z]\.$""".r // single letter , "D."
-  val re_abbr2="""^([A-Za-z]\.)+$""".r //alternating letters, "U.S. , apdo."
-  val re_abbr3="""^[A-Z][ + "|".concat("bcdfghjklmnpqrstvwxz") + "]+.$ """.r //# capital followed by consonants, "Mr."
-  val re_sarcasm="""\( ?\! ?\)""".r //handle sarcasm punctuation (!)
-  val emoticons= mutable.Map[(String,Double),List[String]]()
+  private[this] val re_abbr1="""^[A-Za-z]\.$""".r // single letter , "D."
+  private[this] val re_abbr2="""^([A-Za-z]\.)+$""".r //alternating letters, "U.S. , apdo."
+  private[this] val re_abbr3="""^[A-Z][ + "|".concat("bcdfghjklmnpqrstvwxz") + "]+.$ """.r //# capital followed by consonants, "Mr."
+  private[this] val re_sarcasm="""\( ?\! ?\)""".r //handle sarcasm punctuation (!)
+  private[this] val emoticons= mutable.Map[(String,Double),List[String]]()
   emoticons+=(("love" , 1.00) ->List("<3","♥"))
   emoticons+=(("grin" , 1.00)->List(">:D", ":-D", ":D", "=-D", "=D", "X-D", "x-D", "XD", "xD", "8-D"))
   emoticons+=(("taunt", +0.75)->List(">:P", ":-P", ":P", ":-p", ":p", ":-b", ":b", ":c)", ":o)", ":^)"))
@@ -31,10 +31,10 @@ import scala.util.control.Breaks._
   emoticons+=(("frown", -0.75)->List(">:[", ":-(", ":(", "=(", ":-[", ":[", ":{", ":-<", ":c", ":-c", "=/"))
   emoticons+=(("cry"  , -1.00)->List(":'(", ":'''(", ";'("))
 
-var re_emoticons=""::Nil
+  private[this] var re_emoticons=""::Nil
   //separating emojis by "|"
   emoticons.values.foreach(list=>re_emoticons:::=list.flatMap(elem=> if(elem.compareTo(list.last)!=0) "|"::elem::Nil else "|"::elem::"|"::Nil).tail)
-  var re1_emoticons=""::Nil
+  private[this] var re1_emoticons=""::Nil
   //scaping each char in icons
   re_emoticons.foreach(icon=>if(!(icon.equals("|"))) re1_emoticons::=icon.mkString("?".concat("""\""")) else re1_emoticons::=icon )
   // if letters= "D" "S" "s" "b" or "c" do not scape
@@ -49,10 +49,10 @@ var re_emoticons=""::Nil
   // scape first char in emoji
   re1_emoticons=re1_emoticons.reverse.tail.map(t => if(!(t.equals("|"))) """\"""+t else t )  //important to reserve and to eliminate the first
   //create emoji regex
-  var RE_EMOTICONS=Pattern.quote(re1_emoticons.dropRight(2).mkString).r
+  private[this] var RE_EMOTICONS=Pattern.quote(re1_emoticons.dropRight(2).mkString).r
   print(RE_EMOTICONS)
-  val EOS = "END-OF-SENTENCE"
-  var TOKEN="""(\S+)\s""".r
+  private[this] val EOS = "END-OF-SENTENCE"
+  private[this] var TOKEN="""(\S+)\s""".r
 
 
   //return a list of sentences. Each sentence is a space-separated string of tokens.

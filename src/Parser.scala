@@ -19,7 +19,9 @@ class Parser(lex: String,model: String,morph: String, contx: String, lemma:Strin
   val context = new Context
   val default = omission
   val posTagger = new PosTagger
-  val lematizer = new Lemmatizer(lemma)
+  val lematizer = new Lemmatizer
+  //set dictionary of verbs for lemmatize
+  lematizer.setVerbsDict(lemma)
   //Load data
   if (!lex.isEmpty) lexicon.read(lex, enc, comm)
   if (!morph.isEmpty) morphology.read(morph, enc, comm)

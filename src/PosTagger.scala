@@ -8,16 +8,14 @@ class PosTagger {
   //lexicon uses the Parole tagset
   // http://www.lsi.upc.edu/~nlp/SVMTool/parole.html
   // http://nlp.lsi.upc.edu/freeling/doc/tagsets/tagset-es.html
-  val lexicon=""
-  val morphology=""
-  val context=""
-  var tagset="parole"
+
+  private[this] var tagset="parole"
   //val PAROLE="parole"
 
   //Unknow words are recognized as numbers if they contain only digits and -,.:/%$
-  val CD = """^[0-9\-\,\.\:\/\%\$]+$"""
+  private[this] val CD = """^[0-9\-\,\.\:\/\%\$]+$"""
 
-  val parole=mutable.Map[String,String]()
+  private[this] val parole=mutable.Map[String,String]()
   parole+=("AO"->"JJ") //primera
   parole+=("AQ"-> "JJ") //absurdo
   parole+=("CC"->"CC") //e
@@ -78,22 +76,22 @@ class PosTagger {
   parole+=("Zp"-> "CD")   // 1,7%
 
 
-  val UNIVERSAL = "universal"
+  private[this] val UNIVERSAL = "universal"
 
-  val NOUN="NN"
-  val VERB="VB"
-  val ADJ="JJ"
-  val ADV="RB"
-  val PRON="PR"
-  val DET="DT"
-  val PREP="PP"
-  val ADP="PP"
-  val NUM="NO"
-  val CONJ="CJ"
-  val INTJ="UH"
-  val PRT="PT"
-  val PUNC="."
-  val X = "X"
+  private[this] val NOUN="NN"
+  private[this] val VERB="VB"
+  private[this] val ADJ="JJ"
+  private[this] val ADV="RB"
+  private[this] val PRON="PR"
+  private[this] val DET="DT"
+  private[this] val PREP="PP"
+  private[this] val ADP="PP"
+  private[this] val NUM="NO"
+  private[this] val CONJ="CJ"
+  private[this] val INTJ="UH"
+  private[this] val PRT="PT"
+  private[this] val PUNC="."
+  private[this] val X = "X"
 
 
   //set tagset val
@@ -174,14 +172,14 @@ class PosTagger {
         //use CD for digits and numbers
         else if (t._1.matches(CD)) (t._1, default(2))
         //use suffix rules (ej, -mente=ADV)
-        else if (!morphology.morphologyList.isEmpty) (t._1,morphology.apply(t._1, default(0), prev, next, morphology.morphologyList, lexicon.getLexDict))
+        else if (!morphology.getMorphology.isEmpty) (t._1,morphology.apply(t._1, default(0), prev, next, morphology.getMorphology, lexicon.getLexDict))
           // Use most frequent tag (NN).
         else (t._1, default(0))
 
       } else (t._1,t._2)
     })
     //Tag words by context
-    if(!context.contextList.isEmpty && model.isEmpty) taggedCntxt=context.apply(taggedMorp)
+    if(!context.getContextList.isEmpty && model.isEmpty) taggedCntxt=context.apply(taggedMorp)
     else taggedCntxt=taggedMorp
     //Map tag with a custom function
     if(mapCall != null){

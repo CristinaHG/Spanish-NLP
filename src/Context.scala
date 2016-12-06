@@ -8,10 +8,10 @@ import scala.collection.mutable
 class Context {
   // Brill's algorithm generates contextual rules in the following format:
   // VBD VB PREVTAG TO => unknown word tagged VBD changes to VB if preceded by a word tagged TO.
-  var contextList=List[List[String]]()
+ private[this] var contextList=List[List[String]]()
 
   //a set of rles based on the preceding and following words(context)
-  var rulesSet= Set(
+ private[this] var rulesSet= Set(
     "prevtag", // Preceding word is tagged x.
     "nexttag", // Following word is tagged x.
     "prev2tag", // Word 2 before is tagged x.
@@ -41,8 +41,13 @@ class Context {
     "nextbigram" // Following word is tagged x and word after is tagged y.
   )
 
+  //getter of contextList
+  def getContextList:List[List[String]]={
+    return this.contextList
+  }
+
   //read file and transcript to class data List which rows as ["VBD", "VB", "PREVTAG", "TO"]
-  def read(path: String, encoding: String, comment: String): Unit = {
+ def read(path: String, encoding: String, comment: String): Unit = {
     var context=List[List[String]]()
 
     if (!path.isEmpty) {

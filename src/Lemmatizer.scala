@@ -3,10 +3,10 @@
   */
 import scala.io.Source
 
-class Lemmatizer(verbsDict:String) {
+class Lemmatizer {
 
   //verbs dictionary
-  private[this] val mappedVerbs = verbsToDictionaryPair(verbsDict)
+  private[this] var mappedVerbs = Map[String, String]()
   private[this] val irregular_inflections=List(
     ("yéramos", "ir"   ), ( "cisteis", "cer"   ), ( "tuviera", "tener"), ( "ndieron", "nder" ),
     ( "ndiendo", "nder" ), ("tándose", "tarse" ), ( "ndieran", "nder" ), ( "ndieras", "nder" ),
@@ -69,6 +69,11 @@ class Lemmatizer(verbsDict:String) {
       a.filter(p=>p!="").foreach(u=>if(!dict.contains(u)) dict+=(u->a(0)))
     }
     return dict
+  }
+
+  //---------changes intern verbs dictionary to a given one or a given path
+  def setVerbsDict(dictionaryPath:String)={
+    mappedVerbs=verbsToDictionaryPair(dictionaryPath)
   }
 
   //-----returns the infinitive form of the given verb or none

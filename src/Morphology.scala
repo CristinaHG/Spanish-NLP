@@ -14,9 +14,9 @@ import scala.collection.mutable
 class Morphology {
 
   //val knowLexicon=new Lexicon
-  var morphologyList=List[List[String]]()
+  private[this] var morphologyList=List[List[String]]()
   //set of rules, based on word morphology (prefix,suffix)
-  var rulesSet= Set(
+  private var rulesSet= Set(
     "word", // Word is x.
     "char", // Word contains x.
     "haspref", // Word starts with x.
@@ -30,7 +30,10 @@ class Morphology {
   )
   rulesSet.foreach(r=> rulesSet.+=("f"+r.mkString))
 
-
+//Returns morphologyList
+  def getMorphology:List[List[String]]={
+    return this.morphologyList
+  }
   // Returns a list of lists as the result of readed morphology.txt rules
   def read(path: String, encoding: String, comment: String): Unit = {
     var morphology=List[List[String]]()

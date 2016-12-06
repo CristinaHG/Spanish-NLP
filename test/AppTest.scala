@@ -37,10 +37,11 @@ import org.junit.Assert.assertArrayEquals
    val lexiconPath="../Spanish_Lematizer/data/es-lexicon.txt"
    val morphologyPath="../Spanish_Lematizer/data/es-morphology.txt"
    val contextPath="../Spanish_Lematizer/data/es-context.txt"
-      val myParser=new Parser(lexiconPath,"",morphologyPath,contextPath,verbsPath,List("NCS","NP","Z"),"utf-8",";;;")
+   val myParser=new Parser(lexiconPath,"",morphologyPath,contextPath,verbsPath,List("NCS","NP","Z"),"utf-8",";;;")
    val tokenizer = new Tokenizer
    val tagger = new PosTagger
-   val lemmatizer = new Lemmatizer(verbsPath)
+   val lemmatizer = new Lemmatizer
+   lemmatizer.setVerbsDict(verbsPath)
    val Lexicon= new Lexicon
    val context=new Context
    val morphology=new Morphology
