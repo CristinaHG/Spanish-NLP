@@ -50,7 +50,7 @@ import scala.util.control.Breaks._
   re1_emoticons=re1_emoticons.reverse.tail.map(t => if(!(t.equals("|"))) """\"""+t else t )  //important to reserve and to eliminate the first
   //create emoji regex
   private[this] var RE_EMOTICONS=Pattern.quote(re1_emoticons.dropRight(2).mkString).r
-  print(RE_EMOTICONS)
+  //print(RE_EMOTICONS)
   private[this] val EOS = "END-OF-SENTENCE"
   private[this] var TOKEN="""(\S+)\s""".r
 

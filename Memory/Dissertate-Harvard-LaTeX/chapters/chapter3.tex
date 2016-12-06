@@ -221,12 +221,12 @@ El siguiente paso es implementar el método \textsf{find\_tokens}. Una vez imple
 \subsection*{Diseño de clases}
 Se ha intentado mantener privados todos los datos miembro así como todos los métodos que no fuera necesarios de ser accedidos fuera de la clase que los implementa. A continuación se expone el diagrama de clases:
 \newpage
-\newgeometry{top=1cm,left=0.5cm,right=1cm}
+\newgeometry{left=1cm}
 \begin{figure}[h!]
 \begin{tikzpicture}
 %\umlsimpleclass{Contex}
 %\umlsimpleclass[x=3]{Lemmatizer}
-\umlclass[x=0]{Contex}{
+\umlclass{Context}{
 - contextList : List[List[String]] \\ 
 - rulesSet : Set
 }{
@@ -235,16 +235,14 @@ Se ha intentado mantener privados todos los datos miembro así como todos los m�
 + apply(tokensTags:List[(String,String)]):List[(String,String)]
 }
 
-\umlclass[x=10]{Lexicon}{
-- lexiconDict:mutable.Map[String,String]
-}{
-+ getLexDict:mutable.Map[String,String] \\ 
-+ read(path: String, encoding: String, comment: String): Unit
-}
-
-\umlclass[x=0,y=-6]{Lemmatizer}{
-- mappedVerbs : Map[String, String] \\ 
-- irregular\_inflections : List
+\umlclass[x=-7,y=-7]{Lemmatizer}{
+- tokenizer : Tokenizer \\ 
+- lexicon : Lexicon \\
+- morphology : Morphology \\
+- context : Context \\
+- default : String \\
+- posTagger : PosTagger \\
+- lematizer : Lemmatizer \\
 }{
 + getVerbsDict:Map[String,String] \\ 
 - verbsToDictionaryPair(file: String):Map[String,String] \\
@@ -255,16 +253,70 @@ Se ha intentado mantener privados todos los datos miembro así como todos los m�
 - isVowel(char: Char):Boolean \\
 - normalize(char: Char):Char \\
 + predicative(word:String):String \\
-+ get\_lemmas(l: List[(String,String)]): List[(String, String,String)]
++ get\_lemmas(l: List[(String,String)]):\\ List[(String, String,String)]
 }
-\umlclass[x=5,y=-20]{Morphology}{
+\umlclass[x=3, y =-9]{Lexicon}{
+- lexiconDict:Map[String,String]
+}{
++ getLexDict:Map[String,String] \\ 
++ read(path: String, encoding: String, comment: String): Unit
+}
+
+\umlclass[x=-6,y=-15]{Tokenizer}{
+- punctuation:String ,abbreviations:List,re\_sarcasm: String \\
+- emoticons : Map[(String,Double),List[String]], \\
+- RE\_EMOTICONS: Regex ,re\_abbr1 :String, re\_abbr2 :String \\
+- re\_abbr3 : String, EOS: String \\
+- re\_emoticons : List, re\_emoticons1:List, TOKEN: Regex
+}{
++ find\_tokens(string:String):List[List[String]] \\ 
++ get\_sentences(sentences:List[String]) \\
++ count\_sentences(sentences:List[List[String]])
+}
+
+
+\umlclass[x=3, y =-5]{Parser}{
+- lexiconDict:Map[String,String]
+}{
++ Parser(lex: String,model: String,morph: String, contx: String,\\
+ lemma:String, default: List[String],enc:String,comm:String) \\
++ commandLine(comments:String,moduleResult:String) \\ 
++  parse(text: String, tokenize: Boolean, tags: Boolean,\\
+lemmatize: Boolean ,mapCall:Function): String
+}
+
+
+\end{tikzpicture}
+\end{figure}
+\restoregeometry
+\begin{figure}[h!]
+\begin{tikzpicture}
+
+\umlclass{PosTagger}{
+- tagset:String, UNIVERSAL : String, NOUN : String\\
+- CD: Regex, X : String\\
+- parole: mutable.Map[String,String]\\
+- VERB : String, ADJ : String, ADV : String\\
+- PRON : String, DET : String, PREP : String\\
+- ADP : String, NUM : String, CONJ : String\\
+- INTJ : String, PRT : String, PUNC : String\\
+}{
++ setTagset(tagsetname:String) \\ 
++ parole$2$penntreebank(token:String,tag:String):(String, String) \\
++ penntreebank$2$universal(token: String, tag: String):(String,String)\\ 
++ parole$2$universal(token:String, tag:String):(String,String)\\
++ find\_tags(tokens:List[String], lexicon:Lexicon, model:String,\\
+ morphology:Morphology, context:Context, entities:String,\\ default:List[String],
+                mapCall:(String,String)=>(String,String)):\\ List[(String,String)]
+}
+
+\umlclass[y=-7]{Morphology}{
 - morphologyList:List[List[String]] \\ 
 - rulesSet: Set
 }{
 + getMorphology:List[List[String]] \\ 
 + read(path: String, encoding: String, comment: String) \\
-+ apply(token:String, tag:String, previus:(String,String), next:(String,String), morphology:List[List[String]],\\ lexicon:mutable.Map[String,String]): String
++ apply(token:String, tag:String, previus:(String,String), next:(String,String), morphology:List[List[String]],\\ lexicon:Map[String,String]): String
 }
 \end{tikzpicture}
 \end{figure}
-\restoregeometry

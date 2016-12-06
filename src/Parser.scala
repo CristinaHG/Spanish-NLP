@@ -11,13 +11,12 @@ import scala.util.hashing.Hashing.Default
 //Unknown words that contain only digits and punctuation are tagged CD.
 //  Optionally, morphological and contextual rules (or a language model) can be used
 //  to improve the tags of unknown words.
-class Parser(lex: String,model: String,morph: String, contx: String, lemma:String, omission: List[String],enc:String,comm:String) {
+class Parser(lex: String,model: String,morph: String, contx: String, lemma:String,private val default: List[String],enc:String,comm:String) {
 
   private val tokenizer = new Tokenizer
   private val lexicon = new Lexicon
   private val morphology = new Morphology
   private val context = new Context
-  private val default = omission
   private val posTagger = new PosTagger
   private val lematizer = new Lemmatizer
   //set dictionary of verbs for lemmatize
@@ -48,7 +47,7 @@ def commandLine(comments:String,moduleResult:String)={
   //  With lemmata=True, word lemmata are parsed.
   //Optional parameters are passed to
   //the tokenizer, tagger, chunker, labeler and lemmatizer
-  def parse(text: String, tokenize: Boolean, tags: Boolean, chunks: Boolean, lemmatize: Boolean ,mapCall:(String,String)=>(String,String)): String = {
+  def parse(text: String, tokenize: Boolean, tags: Boolean, lemmatize: Boolean ,mapCall:(String,String)=>(String,String)): String = {
 
     if (tokenize == true || tags == true || lemmatize == true) {
       //Tagger (needed by chunker,labeler and lemmatizer)
@@ -57,7 +56,7 @@ def commandLine(comments:String,moduleResult:String)={
       var s = tokenizer.find_tokens(text)
 
       //lematizer and chunks need tags
-      tagged = s.map(t => posTagger.find_tags(t, lexicon, model, morphology, context, "", default, mapCall))
+      tagged = s.map(t => posTagger.find_tags(t, lexicon, model, morphology, context, "",default, mapCall))
       if (lemmatize == true) {
         var lemmatas = tagged.map(t => this.lematizer.get_lemmas(t)).toList
         // Collapse raw list.

@@ -54,9 +54,9 @@ object ScalaApp {
     val contextPath="../Spanish_Lematizer/data/es-context.txt"
     val verbsPath="/home/cris/mrcrstnherediagmez@gmail.com/Spanish_Lematizer/data/es-verbs.txt"
     val myParser=new Parser(lexiconPath,"",morphologyPath,contextPath,verbsPath,List("NCS","NP","Z"),"utf-8",";;;")
-    myParser.parse("el gato negro.",true,true,true,true, posTagged.parole2penntreebank)
-    myParser.parse("el sedentarismo físico es la carencia de actividad física fuerte. Yo no hago deporte.",true,true,true,true,posTagged.parole2penntreebank)
-    myParser.parse("El sedentarismo físico se presenta con mayor frecuencia en la vida moderna urbana, en sociedades altamente tecnificadas en donde todo está pensado para evitar grandes esfuerzos físicos, en las clases altas y en los círculos intelectuales en donde las personas se dedican más a actividades cerebrales.",true,true,true,true,
+    myParser.parse("el gato negro.",true,true,true, posTagged.parole2penntreebank)
+    myParser.parse("el sedentarismo físico es la carencia de actividad física fuerte. Yo no hago deporte.",true,true,true,posTagged.parole2penntreebank)
+    myParser.parse("El sedentarismo físico se presenta con mayor frecuencia en la vida moderna urbana, en sociedades altamente tecnificadas en donde todo está pensado para evitar grandes esfuerzos físicos, en las clases altas y en los círculos intelectuales en donde las personas se dedican más a actividades cerebrales.",true,true,true,
       posTagged.parole2penntreebank)
   }
 }
