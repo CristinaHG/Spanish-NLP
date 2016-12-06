@@ -12,7 +12,7 @@ import org.junit.Test
 import org.junit.Assert.assertArrayEquals
 
 
- class TokenizerTest extends FunSuite {
+ class AppTest extends FunSuite {
 
 
    //create trait containing Strings to be used to test
@@ -220,7 +220,7 @@ import org.junit.Assert.assertArrayEquals
      var i=0
      var n=0
      //print(myParser.parse(sentence, true, true, true, true))
-     assert(myParser.parse(sentence, true, true, true, true)==listSol.mkString("\n"))
+     assert(myParser.parse(sentence, true, true, true, true,tagger.parole2penntreebank)==listSol.mkString("\n"))
 
      // Assert the accuracy of the Spanish tagger.
 
