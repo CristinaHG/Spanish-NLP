@@ -219,11 +219,14 @@ breaklines=true
 \end{minted}
 El siguiente paso es implementar el método \textsf{find\_tokens}. Una vez implementado, se vuelve a ejecutar el test, y si lo pasa se refactoriza y se vuelve a ejecutar el test. Después se toma otra funcionalidad y se repite el proceso.
 \subsection*{Diseño de clases}
+Se ha intentado mantener privados todos los datos miembro así como todos los métodos que no fuera necesarios de ser accedidos fuera de la clase que los implementa. A continuación se expone el diagrama de clases:
+\newpage
+\newgeometry{top=1cm,left=0.5cm,right=1cm}
 \begin{figure}[h!]
 \begin{tikzpicture}
 %\umlsimpleclass{Contex}
 %\umlsimpleclass[x=3]{Lemmatizer}
-\umlclass{Contex}{
+\umlclass[x=0]{Contex}{
 - contextList : List[List[String]] \\ 
 - rulesSet : Set
 }{
@@ -232,7 +235,14 @@ El siguiente paso es implementar el método \textsf{find\_tokens}. Una vez imple
 + apply(tokensTags:List[(String,String)]):List[(String,String)]
 }
 
-\umlclass[x=5]{Lemmatizer}{
+\umlclass[x=10]{Lexicon}{
+- lexiconDict:mutable.Map[String,String]
+}{
++ getLexDict:mutable.Map[String,String] \\ 
++ read(path: String, encoding: String, comment: String): Unit
+}
+
+\umlclass[x=0,y=-6]{Lemmatizer}{
 - mappedVerbs : Map[String, String] \\ 
 - irregular\_inflections : List
 }{
@@ -247,5 +257,14 @@ El siguiente paso es implementar el método \textsf{find\_tokens}. Una vez imple
 + predicative(word:String):String \\
 + get\_lemmas(l: List[(String,String)]): List[(String, String,String)]
 }
+\umlclass[x=5,y=-20]{Morphology}{
+- morphologyList:List[List[String]] \\ 
+- rulesSet: Set
+}{
++ getMorphology:List[List[String]] \\ 
++ read(path: String, encoding: String, comment: String) \\
++ apply(token:String, tag:String, previus:(String,String), next:(String,String), morphology:List[List[String]],\\ lexicon:mutable.Map[String,String]): String
+}
 \end{tikzpicture}
 \end{figure}
+\restoregeometry
