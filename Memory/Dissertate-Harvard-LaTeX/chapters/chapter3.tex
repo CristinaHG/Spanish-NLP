@@ -217,9 +217,9 @@ breaklines=true
      assert(tokenizer.find_tokens(string2) == List(List("Nadie", "podrá", "vivir", "eternamente")))
      //....
 \end{minted}
-El siguiente paso es implementar el método \textsf{find\_tokens}. Una vez implementado, se vuelve a ejecutar el test, y si lo pasa se refactoriza y se vuelve a ejecutar el test. Después se toma otra funcionalidad y se repite el proceso.
+El siguiente paso es implementar el método \textsf{find\_tokens}. Una vez implementado, se vuelve a ejecutar el test, y si lo pasa se refactoriza y se vuelve a ejecutar el test. Después se toma otra funcionalidad y se repite el proceso hasta que se hayan implementado todas las funcionalidades. Para los test se ha utilizado la librería \textcolor{SchoolColor}{ScalaTest} y el estilo \textcolor{SchoolColor}{FunSuite}.
 \subsection*{Diseño de clases}
-Se ha intentado mantener privados todos los datos miembro así como todos los métodos que no fuera necesarios de ser accedidos fuera de la clase que los implementa. A continuación se expone el diagrama de clases:
+Se ha intentado mantener privados todos los datos miembro así como todos los métodos que no fuera necesarios de ser accedidos fuera de la clase que los implementa. A continuación se expone un diagrama de clases. Aunque las clases no se definen de forma detallada en este digrama por su tamaño, se incluyen detalladas en las siguientes páginas.
 \newpage
 \newgeometry{left=1cm}
 \begin{figure}[h!]
