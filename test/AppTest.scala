@@ -1,5 +1,5 @@
 /**
-  * Created by cris on 08/11/16.
+  * Created by cris on 15/08/16.
   */
 import java.nio.file.{Files, Paths}
 
@@ -69,6 +69,7 @@ import org.junit.Assert.assertArrayEquals
      assert(tokenizer.find_tokens(string15) == List(List("El", "sedentarismo", "físico", "se", "presenta", "con", "mayor", "frecuencia", "en", "la", "vida", "moderna", "urbana", ",", "en", "sociedades", "altamente", "tecnificadas", "en", "donde", "todo", "está", "pensado", "para", "evitar", "grandes", "esfuerzos", "físicos", ",", "en", "las", "clases", "altas", "y", "en", "los", "círculos", "intelectuales", "en", "donde", "las", "personas", "se", "dedican", "más", "a", "actividades", "cerebrales", "."
      )))
    }
+
    test(" count sentences test") {
      assert(tokenizer.count_sentences(tokenizer.find_tokens(string1)) == 1)
      assert(tokenizer.count_sentences(tokenizer.find_tokens(string2)) == 1)

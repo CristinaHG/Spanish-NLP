@@ -67,6 +67,7 @@
 \usepackage{minted}
 \usemintedstyle{colorful}
 \usepackage{tikz}
+\usepackage{tikz-uml} 
 \usepackage{pgfgantt}
 \RequirePackage[width=5.75in, letterpaper]{geometry}
 \usepackage{ragged2e}

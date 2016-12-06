@@ -201,6 +201,51 @@ inmutabilidad. }                                 \\ \hline
 \end{table}
 
 \chapter*{Diseño}
+En este apartado se explica lo relativo al diseño de clases y métodos realizado para este trabajo junto con la metodología que se ha seguido para su implementación. \newline
+\subsection*{Metodología usada}
+En este trabajo se ha tratado de seguir la metodología de \textcolor{SchoolColor}{desarrollo dirigido a documentos} (TDD), un conocido procedimiento de desarrollo cuya idea es hacer las pruebas inicialmente, de forma previa a la implementación. En concreto, se hacen test unitarios para testear las funcionalidades más importantes del trabajo.  \newline
+El procedimiento seguido es el siguiente: en primer lugar se elige una funcionalidad a implementar, por ejemplo, el tokenizado de una cadena de texto. Luego se escribe una prueba para testear si dicha funcionalidad es correcta o no, prueba que inicialmente no pasará al no estar implementada aún dicha funcionalidad: 
+\begin{minted}
+[frame=lines,
+framesep=1mm,
+fontsize=\footnotesize,
+breaklines=true
+]{java}
+ //testing find tokens method
+   test("find tokens test") {
+     assert(tokenizer.find_tokens(string1) == List(List("Los", "gatos", "negros", "son", "bonitos", ".")))
+     assert(tokenizer.find_tokens(string2) == List(List("Nadie", "podrá", "vivir", "eternamente")))
+     //....
+\end{minted}
+El siguiente paso es implementar el método \textsf{find\_tokens}. Una vez implementado, se vuelve a ejecutar el test, y si lo pasa se refactoriza y se vuelve a ejecutar el test. Después se toma otra funcionalidad y se repite el proceso.
+\subsection*{Diseño de clases}
+\begin{figure}[h!]
+\begin{tikzpicture}
+%\umlsimpleclass{Contex}
+%\umlsimpleclass[x=3]{Lemmatizer}
+\umlclass{Contex}{
+- contextList : List[List[String]] \\ 
+- rulesSet : Set
+}{
++ getContextList(): List[List[String]] \\ 
++ read(path: String, encoding: String, comment: String): Unit \\
++ apply(tokensTags:List[(String,String)]):List[(String,String)]
+}
 
-
-
+\umlclass[x=5]{Lemmatizer}{
+- mappedVerbs : Map[String, String] \\ 
+- irregular\_inflections : List
+}{
++ getVerbsDict:Map[String,String] \\ 
+- verbsToDictionaryPair(file: String):Map[String,String] \\
++ setVerbsDict(dictionaryPath:String) \\
+- verb\_lemma(verb:String):String \\
++ find\_lemma(verb:String):String \\
++ singularize(word: String, pos:String ):String \\
+- isVowel(char: Char):Boolean \\
+- normalize(char: Char):Char \\
++ predicative(word:String):String \\
++ get\_lemmas(l: List[(String,String)]): List[(String, String,String)]
+}
+\end{tikzpicture}
+\end{figure}
