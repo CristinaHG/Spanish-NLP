@@ -219,23 +219,29 @@ breaklines=true
 \end{minted}
 El siguiente paso es implementar el método \textsf{find\_tokens}. Una vez implementado, se vuelve a ejecutar el test, y si lo pasa se refactoriza y se vuelve a ejecutar el test. Después se toma otra funcionalidad y se repite el proceso hasta que se hayan implementado todas las funcionalidades. Para los test se ha utilizado la librería \textcolor{SchoolColor}{ScalaTest} y el estilo \textcolor{SchoolColor}{FunSuite}.
 \subsection*{Diseño de clases}
-Se ha intentado mantener privados todos los datos miembro así como todos los métodos que no fueran necesarios de ser accedidos fuera de la clase que los implementa. A continuación se expone un diagrama de clases. Aunque las clases no se definen de forma detallada en este digrama por su tamaño, se incluyen detalladas en las siguientes páginas. \\[\baselineskip]
+Se ha intentado mantener privados todos los datos miembro así como todos los métodos que no fueran necesarios de ser accedidos fuera de la clase que los implementa. A continuación se expone un diagrama de clases. Aunque las clases no se definen de forma detallada en este digrama por su tamaño, se incluyen más detalladas en las siguientes páginas. \\[\baselineskip]
 \begin{figure}[h!]
 \begin{tikzpicture}
 \umlemptyclass{Context}
 \umlemptyclass[x=5]{Lemmatizer}
 \umlemptyclass[x=9]{Tokenizer}
 \umlemptyclass[x=5,y=-7]{Parser}
-\umlemptyclass[x=13,y=-7]{AppTest}
+\umlemptyclass[x=12,y=-7]{AppTest}
 \umlemptyclass[x=-1.8,y=-7]{Lexicon}
 \umlemptyclass[x=-2,y=-13]{PosTagger}
 \umlemptyclass[x=5,y=-13]{Morphology}
+\umlemptyclass[x=12]{Funsuite}
 \umluniassoc[geometry=-|,mult1=1,pos1=1.9,anchor1=30,mult2=*, pos2=0.33]{Parser}{Context}
 \umluniassoc[geometry=--,mult1=1,pos1=0.9,mult2=*, pos2=0.1]{Parser}{Lemmatizer}
 \umluniassoc[geometry=-|-,mult1=1,pos1=1.9,anchor1=30, mult2=*, pos2=0.8]{Parser}{Tokenizer}
 \umluniassoc[geometry=--,mult1=*,pos1=2.3,mult2=1..*, pos2=0.95]{AppTest}{Parser}
 \umluniassoc[geometry=--,mult1=1,pos1=0.9,mult2=*, pos2=0.1]{Parser}{Lexicon}
 \umluniassoc[geometry=--,mult1=1,pos1=0.9,mult2=*, pos2=0.1]{Parser}{Morphology}
+\umluniassoc[geometry=|-|,mult1=1,anchor1=130,anchor2=50, pos1=2.7,mult2=*, pos2=0.5]{Parser}{PosTagger}
+\umldep[geometry=--]{PosTagger}{Morphology}
+\umldep[geometry=--]{PosTagger}{Lexicon}
+\umldep[geometry=|-, anchor1=-220]{PosTagger}{Context}
+\umlinherit[geometry=--]{AppTest}{Funsuite}
 \end{tikzpicture}
 \end{figure}
 
