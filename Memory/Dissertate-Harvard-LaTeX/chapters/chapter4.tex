@@ -1,0 +1,42 @@
+%!TEX root = ../dissertation.tex
+
+\chapter{Material empleado}
+\label{conclusion}
+Anteriormente se mencionaba que los objetivos inicialmente previstos en este trabajo de PLN eran tres: desarrollar un método de tokenizado de texto, otro de POS etiquetado (etiquetado morfosintáctico) y otro de lematización usando el lenguaje \textsf{Scala}. Para ello, se toman como base de referencia las herramientas para Español (Pattern.es) de \textcolor{SchoolColor}{Pattern} \citet{smedt2012pattern}. 
+\\[\baselineskip]
+En este capítulo se detalla como se obtienen los datos que se han usado para la implementación de este proyecto pero que no forman parte de ésta, y que son importantes para el correcto funcionamiento de los algoritmos. Las implementaciones de los algoritmos se detallan en el capítulo siguiente. 
+Vayamos detallando según las fases del proyecto: 
+\section{Tokenizador}
+\textcolor{SchoolColor}{Pattern} presenta un Tokenizador para español basado en reglas, 
+que no necesita más que una cadena de texto a tokenizar.
+\section{Pos Tagger}
+Determinar el tipo de palabra que es cada token de un texto ya no es una tarea que pueda resolverse sólo aplicando algunas reglas consecutivas (al menos obteniendo resultados algo competitivos), dado que la función de las palabras varía según el contexto o su posición en una frase, la morfología...
+\newline
+El método propuesto en \textcolor{SchoolColor}{Pattern} para el tagger español consiste en usar un corpus etiquetado de palabras suficientemente grande y entrenar un algoritmo de machine learning que aprenda reglas y patrones presentes en esos datos. Concretamente, como corpus usa el \textcolor{SchoolColor}{Wikicorpus} \citet{reese2010word} para español, y como algoritmo usa un \textcolor{SchoolColor}{Algoritmo de Brill}:    
+\subsection*{Wikicorpus}
+Existen tres variantes para tres lenguas distintas: Español, Catalán e Inglés. El corpus en su versión actual cuenta con unas 750 millones de palabras en total (120 millones para el español) y está construido a partir de texto de la Wikipedia etiquetado con información lingüística, concretamente de lema y POS tag, usando la librería \textsf{Freeling} \citet{padro2012freeling}.
+\subsection*{Algoritmo de Brill}
+Este método fue propuesto por Eric Brill \citet{brill1992simple}. Es un algoritmo de aprendizaje también conocido como aprendizaje basado en transformación, dado que cada palabra recibe inicialmente una etiqueta que luego va modificándose a menudo que se aplican los pasos del algoritmo. Normalmente, la condición de parada es que alcance una tasa de error inferior a una obtenida por parámetro. También necesita recibir un corpus etiquetado como parámetro, ya que lo usará para el aprendizaje, y un diccionario léxico al que a cada palabra le corresponde su tipo más común (verbo, nombre, etc). \newline
+El funcionamiento es el siguiente:
+\begin{enumerate}
+\item Etiquetado inicial: El algoritmo comienza asignando a cada palabra su etiqueta más común, para ello la busca en el diccionario léxico que recibe como parámetro. En esta etapa se etiquetan mal muchas palabras, pues no se tiene en cuenta para nada el contexto de las mismas. Además, hay palabras que no estarán en el diccionario.
+\item Etiquetar las desconocidas: \citet{padro2012freeling} propone dos procedimientos para ello. En primer lugar se considera que las palabras que no estaban presentes en el diccionario léxico y empiezan por mayúscula son nombres propios. En segundo lugar, se etiquetan las palabras desconocidas restantes asignándoles la etiqueta más común en palabras conocidas con las mismas tres últimas letras. Por ejemplo, \textsf{"roncaba"} se etiqutaría como verbo si \textsf{"cantaba"} fuera conocida.
+\item Aplicación de reglas para mejorar el etiquetado: se cambiará un etiqueta de \textcolor{SchoolColor}{a} a \textcolor{SchoolColor}{b} cuando se cumpla alguna de las siguiente reglas:
+\begin{itemize}
+\item La palabra siguiente(anterior) está etiquetada como \textcolor{SchoolColor}{z}
+\item La segunda palabra previa( posterior) está etiquetada como \textcolor{SchoolColor}{z}
+\item Una de las dos palabras anteriores(siguientes) está etiquetada como \textcolor{SchoolColor}{z}
+\item Una de las tres palabras anteriores(siguientes) está etiquetada como \textcolor{SchoolColor}{z}
+\item La siguiente está etiquetada como \textcolor{SchoolColor}{z} y la posterior como \textcolor{SchoolColor}{w}
+\item La anterior(siguiente) está etiquetada como \textcolor{SchoolColor}{z} y las dos anteriores(posteriores) a ella están etiquetadas como \textcolor{SchoolColor}{w}
+\item La palabra empieza (o no empieza) por mayúscula
+\item La palabra anterior empieza (o no empieza) por mayúscula
+\end{itemize} 
+\end{enumerate}
+donde \textcolor{SchoolColor}{z}, \textcolor{SchoolColor}{w} son dos categorías cualesquiera (VB,NN..).
+Las reglas se expresan con la notación interna del algoritmo:\newline \texttt{"PREVTAG", "NEXTTAG", "PREV1OR2TAG", "NEXT1OR2TAG", "PREV1OR2OR3TAG", "NEXT1OR2OR3TAG", PREV2TAG","NEXT2TAG",
+ "CURWD", "PREVWD", "NEXTWD", "PREV1OR2WD", "NEXT1OR2WD"}.\newline Un ejemlo de regla sería: \textcolor{SchoolColor}{\texttt{TO IN NEXTTAG AT}}, que se interpretaría como que la etiqueta \texttt{"TO"} cambiaría a \texttt{"IN"} si la etiqueta de la palabra anterior es \texttt{"AT"}.
+\item 
+
+
+
