@@ -132,8 +132,51 @@ Aunque en este ejemplo no se aprecia, algunas líneas de estos ficheros son meta
     \caption{Lectura Wikicorpus}
 \end{algorithm}
 \subsection{Obtención del Léxico}
+El método de Pos tagger español propuesto en \citet{smedt2012pattern}, y por lo tanto, el implementado en este proyecto, hace uso de reglas léxicas, morfológicas y contextuales para mejorar la calidad del etiquetado. \textcolor{SchoolColor}{Pattern} usa las herramientas de \textcolor{SchoolColor}{PythonNLTK} para obtener estos ficheros de reglas. En esta sección se explica como se construye el diccionario léxico usado en este trabajo a partir de el corpus leído en la sección anterior. 
+El procedimiento a seguir es el siguiente:
+\begin{enumerate}
+\item Se cuenta la ocurrencia de cada palabra en el Wikicorpus español
+\item Se cuenta la ocurrencia de las etiquetas de las palabras en el mismo corpus. Hay palabras que pueden tener varias etiquetas
+\item Se construye el diccionario tomando las palabras más frecuentes y su etiqueta más frecuente
+\end{enumerate}
+Este diccionario léxico se utilizará luego para etiquetar inicialmente los datos en el algoritmo de Brill. De nuevo, se expone una descripción en pseudocódigo de este proceso:
+\begin{algorithm}[H]
+    \begin{algorithmic}[1]
+    \Procedure{createLexicon(corpus, maxLines=100000)}{}
+    \State $\text{Lexicon} \gets$ \o
+    \State $\text{top} \gets$ \o
+    \For{$\text{sentence in corpus}$}
+            \For{$\text{w, tag in sentence}$}
+            \State $\text{Lexicon(w, tag)} \gets \text{+=1}$
+            \EndFor
+    \EndFor        
+    \For{$\text{w, tags in Lexicon}$} 
+            \State $\text{freq} \gets \text{$\sum$ all ocurrences of tags for w}$
+             \State $\text{tag} \gets \text{the tag with bigger ocurrence for w}$
+             \State $\text{top} \gets \text{top + (freq,w,tag) }$
+            \EndFor
+            
+     \State $\text{get the maxLines with bigger ocurrency}$      
+        \EndProcedure
+    \end{algorithmic}
+    \label{alg:rAP}
+    \caption{Obtención del Léxico}
+\end{algorithm}
+Debido a que son ficheros muy grandes y entrenar los algoritmos para obtener el léxico, el contexto y la morfología cada vez que se quiera usar el Pos Tagger es un proceso muy lento y poco recomendable, los algoritmos se ejecutan una vez, guardando los resultados en ficheros para reutilizarlos posteriormente. El léxico se guarda en el fichero  \textcolor{SchoolColor}{es-lexicon.txt}, y se usa directamente en el Pos tagger que implementa este proyecto.
 
-
-
-
+\begin{minted}
+[frame=lines,
+framesep=1mm,
+fontsize=\footnotesize,
+breaklines=true
+]{java}
+óleos NCP
+ómnibus NC
+ónice NCS
+ópera NCS
+óperas NCP
+óptica AQ
+ópticas AQ
+\end{minted}
+\captionof{listing}*{Líneas de ejemplo de es-lexicon.txt}
 
