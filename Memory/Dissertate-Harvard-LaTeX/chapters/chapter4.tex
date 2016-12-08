@@ -44,14 +44,14 @@ Cabe destacar que las reglas son aplicables tanto a palabras como a etiquetas de
 
 \begin{algorithm}[H]
     \begin{algorithmic}[1]
-    \Procedure{BrillTagger(corpus,lexicon,tasa\_error,rulesTlist)}{}
-    \State $\text{$C_{i}$} \gets \text{etiquetadoInicial(corpus)}$
-\State $\text{errors} \gets \text{errores de $C_{i}$}$
+    \Procedure{BrillTagger(corpus,lexicon,rate\_error,rulesTlist)}{}
+    \State $\text{$C_{i}$} \gets \text{initial tagging of corpus}$
+\State $\text{errors} \gets \text{compute errors of $C_{i}$}$
 \State $\text{Result} \gets$ \o
 \State $\text{i} \gets 0$
-\State $\text{nErrors} \gets \text{size(errors)}$
+\State $\text{nErrors} \gets \text{number of errors}$
 \State $\text{best}  \gets$ \o
-\While{$\text{nErrors} $>$ \text{tasa\_error}$} 
+\While{$\text{nErrors} $>$ \text{rate\_error}$} 
         \For{$\text{each error in errors}$ }
             \For{$\text{each rule in instances(rulesTlist) }$}
             \State $\text{score(rule)} \gets \text{good corrections of rule - bad corrections of rule}$ \text{ in $C_{i}$}
@@ -109,19 +109,19 @@ Aunque en este ejemplo no se aprecia, algunas líneas de estos ficheros son meta
     \begin{algorithmic}[1]
     \Procedure{readWikicorpus(corpusPath="./tagged.es",words=1000000}{}
     \State $\text{S} \gets$ \o
-    \State $\text{i} \gets 0$
+     \State $ \text{i} \gets 0$
     \For{$\text{f in corpusPath}$}
             \For{$\text{line in open(f)}$}
             \If{\text{line $==$ " \escape{n} " or startsWith(metadata)}} \State $\text{continue}$ \EndIf
             \State $\text{w, lemma, tag} \gets \text{line splitted by (" ")}$
-            \If{$\text{tag starts with("Fp")}$ } \State $\text{tag=2 first characters of tag}$  
-            \ElsIf{$\text{tag starts with("V")}$} \State $\text{tag=3 first characters of tag}$
-            \ElsIf{$\text{tag starts with("NC")}$} \State $\text{tag=2 first characters of tag + the third character of tag}$
+            \If{$\text{tag starts with("Fp")}$ }  $\text{tag=2 first characters of tag}$  
+            \ElsIf{$\text{tag starts with("V")}$} $\text{tag=3 first characters of tag}$
+            \ElsIf{$\text{tag starts with("NC")}$}  $\text{tag=2 first characters of tag + $3^{\circ}$ character of tag}$
              \Else $\text{tag=2 first characters of tag}$ \EndIf
             \EndFor
             \For{$\text{w in split tag by ("\_")}$} 
             \State $\text{S} \gets \text{(w,tag)}$
-            \State $\text{i} \gets \text{i+1}$
+             \State $ \text{i} \gets \text{i+1}$
             \EndFor
             \If{\text{tag $==$ "Fp" and w $==$ "."} } \text{$S \gets [ ]$} \EndIf
             \If{$i \geq \text{words}$} \Return S \EndIf
@@ -131,7 +131,7 @@ Aunque en este ejemplo no se aprecia, algunas líneas de estos ficheros son meta
     \label{alg:rAP}
     \caption{Lectura Wikicorpus}
 \end{algorithm}
-
+\subsection{Obtención del Léxico}
 
 
 
