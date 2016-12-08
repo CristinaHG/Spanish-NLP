@@ -16,12 +16,13 @@ El método propuesto en \textcolor{SchoolColor}{Pattern} para el tagger español
 \subsection*{Wikicorpus}
 Existen tres variantes para tres lenguas distintas: Español, Catalán e Inglés. El corpus en su versión actual cuenta con unas 750 millones de palabras en total (120 millones para el español) y está construido a partir de texto de la Wikipedia etiquetado con información lingüística, concretamente de lema y POS tag, usando la librería \textsf{Freeling} \citet{padro2012freeling}.
 \subsection*{Algoritmo de Brill}
-Este método fue propuesto por Eric Brill \citet{brill1992simple}. Es un algoritmo de aprendizaje también conocido como aprendizaje basado en transformación, dado que cada palabra recibe inicialmente una etiqueta que luego va modificándose a menudo que se aplican los pasos del algoritmo. Normalmente, la condición de parada es que alcance una tasa de error inferior a una obtenida por parámetro. También necesita recibir un corpus etiquetado como parámetro, ya que lo usará para el aprendizaje, y un diccionario léxico al que a cada palabra le corresponde su tipo más común (verbo, nombre, etc). \newline
+Este método fue propuesto por Eric Brill \citet{brill1992simple}. Es un algoritmo de aprendizaje también conocido como aprendizaje basado en transformación, dado que cada palabra recibe inicialmente una etiqueta que luego va modificándose a menudo que se aplican los pasos del algoritmo. Normalmente, la condición de parada es que alcance una tasa de error inferior a una obtenida por parámetro. También necesita recibir un corpus etiquetado como parámetro, ya que lo usará para el aprendizaje, un diccionario léxico al que a cada palabra le corresponde su tipo más común (verbo, nombre, etc), y una lista de plantillas de reglas. \newline
 El funcionamiento es el siguiente:
 \begin{enumerate}
 \item Etiquetado inicial: El algoritmo comienza asignando a cada palabra su etiqueta más común, para ello la busca en el diccionario léxico que recibe como parámetro. En esta etapa se etiquetan mal muchas palabras, pues no se tiene en cuenta para nada el contexto de las mismas. Además, hay palabras que no estarán en el diccionario.
 \item Etiquetar las desconocidas: \citet{padro2012freeling} propone dos procedimientos para ello. En primer lugar se considera que las palabras que no estaban presentes en el diccionario léxico y empiezan por mayúscula son nombres propios. En segundo lugar, se etiquetan las palabras desconocidas restantes asignándoles la etiqueta más común en palabras conocidas con las mismas tres últimas letras. Por ejemplo, \textsf{"roncaba"} se etiqutaría como verbo si \textsf{"cantaba"} fuera conocida.
-\item Aplicación de reglas para mejorar el etiquetado: se cambiará un etiqueta de \textcolor{SchoolColor}{a} a \textcolor{SchoolColor}{b} cuando se cumpla alguna de las siguiente reglas:
+
+\item Aplicación de reglas iterativamente para mejorar el etiquetado: Se cambiará una etiqueta de \textcolor{SchoolColor}{a} a \textcolor{SchoolColor}{b} cuando se cumpla alguna de las siguiente reglas de la lista de plantillas de reglas:
 \begin{itemize}
 \item La palabra siguiente(anterior) está etiquetada como \textcolor{SchoolColor}{z}
 \item La segunda palabra previa( posterior) está etiquetada como \textcolor{SchoolColor}{z}
@@ -33,10 +34,38 @@ El funcionamiento es el siguiente:
 \item La palabra anterior empieza (o no empieza) por mayúscula
 \end{itemize} 
 \end{enumerate}
-donde \textcolor{SchoolColor}{z}, \textcolor{SchoolColor}{w} son dos categorías cualesquiera (VB,NN..).
+Donde \textcolor{SchoolColor}{z}, \textcolor{SchoolColor}{w} son dos categorías cualesquiera (VB,NN..).
 Las reglas se expresan con la notación interna del algoritmo:\newline \texttt{"PREVTAG", "NEXTTAG", "PREV1OR2TAG", "NEXT1OR2TAG", "PREV1OR2OR3TAG", "NEXT1OR2OR3TAG", PREV2TAG","NEXT2TAG",
- "CURWD", "PREVWD", "NEXTWD", "PREV1OR2WD", "NEXT1OR2WD"}.\newline Un ejemlo de regla sería: \textcolor{SchoolColor}{\texttt{TO IN NEXTTAG AT}}, que se interpretaría como que la etiqueta \texttt{"TO"} cambiaría a \texttt{"IN"} si la etiqueta de la palabra anterior es \texttt{"AT"}.
-\item 
+ "CURWD", "PREVWD", "NEXTWD", "PREV1OR2WD", "NEXT1OR2WD"}.\newline Un ejemlo de regla sería: \textcolor{SchoolColor}{\texttt{TO IN NEXTTAG AT}}, que se interpretaría como que la etiqueta \texttt{"TO"} cambiaría a \texttt{"IN"} si la etiqueta de la palabra anterior es \texttt{"AT"}. \\[\baselineskip]
+ Tras la fase del etiquetado inicial y etiquetar las desnococidas, se comparan las etiquetas estimadas con las reales, obtieniendo una lista de errores. A continuación, por cada error de esa lista (por cada palabra mal etiquetada) se instancia cada una de las reglas de la lista de plantillas de reglas, y se evalúan, para determinar cuál de ellas reduce más el error. La ganadora se aplica al texto y se añade a la lista de resultados. Después se vuelve a calcular una lista de errores sobre el nuevo corpus . \newline
+ Para determinar cual es la mejor regla, a cada regla se le asigna una puntuación, que se calcula como   
+ los aciertos que tiene menos los fallos.    
 
 
+\begin{algorithm}
+    \begin{algorithmic}[1]
+    \Procedure{BrillTagger(corpus,lexicon,tasa\_error,rulesTlist)}{}
+    \State $\text{$C_{i}$} \gets \text{etiquetadoInicial(corpus)}$
+\State $\text{errors} \gets \text{errores de $C_{i}$}$
+\State $\text{Result}$ $\gets$ $[ ]$
+\State $\text{i} \gets 0$
+\State $\text{nErrors} \gets \text{size(errors)}$
+\State $\text{best}$  $\gets$ $[ ]$
+\While{$\text{nErrors} $>$ \text{tasa\_error}$} 
+        \For{$\text{each error in errors}$ }
+            \For{$\text{each rule in instances(rulesTlist) }$}
+            \State $\text{score(rule)} \gets \text{good corrections of rule - bad corrections of rule}$ \text{ in $C_{i}$}
+            \EndFor
+        \EndFor
+        \State $\text{best} \gets \text{rule with best score}$
+		\State $\text{$C_{i}$+1} \gets \text{Apply(best, $C_{i}$ )}$
+		\State $\text{Results} \gets \text{Results+best}$
+		\State $\text{i} \gets \text{i+1}$
+        \EndWhile
+        \EndProcedure
+        \BState \Return Results
+    \end{algorithmic}
+    \label{alg:rAP}
+    \caption{algorithm}
+\end{algorithm}
 

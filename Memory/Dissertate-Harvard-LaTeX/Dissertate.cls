@@ -62,6 +62,10 @@
     {\endoldenumerate\end{spacing}}
 
 % Text layout.
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\def\BState{\State\hskip-\ALG@thistlm}
+\def\BSState{\State\hskip\hskip-\ALG@thistlm}
 \usepackage{array}
 \usepackage{float}
 \usepackage{minted}
