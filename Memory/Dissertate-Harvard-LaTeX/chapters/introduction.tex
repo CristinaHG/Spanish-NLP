@@ -2,7 +2,7 @@
 \chapter{Introducción y motivación}
 \label{introducción}
 \section{Introducción al PLN}
-El proyecto desarrollado se engloba en el campo del Procesamiento del lenguaje natural. El lenguaje natural es cualquier lenguaje usado por los humanos para comunicarse (Alemán, Inglés, Español, Hindi...). Dado que estos lenguajes se transmiten entre generaciones y van experimentando evoluciones, resulta difícil obtener reglas que los describan. (PLN) es, por tanto, el área de estudio y aplicación que engloba cualquier tipo de manipulación computacional del lenguaje natural.\newline Es decir, PNL abarca desde aplicaciones simples, como contar el número de ocurrencias de las palabras en un texto para comparar diferentes estilos de escritura, a aplicaciones más complejas, como comprender expresiones humanas completas para poder dar respuestas útiles a preguntas. \citet{bird2009natural} Como por ejemplo, el asistente Siri de iPhone. 
+El proyecto desarrollado se engloba en el campo del Procesamiento del lenguaje natural(PLN). El lenguaje natural es cualquier lenguaje usado por los humanos para comunicarse (Alemán, Inglés, Español, Hindi...). Dado que estos lenguajes se transmiten entre generaciones y van experimentando evoluciones, resulta difícil obtener reglas que los describan. PLN es, por tanto, el área de estudio y aplicación que engloba cualquier tipo de manipulación computacional del lenguaje natural.\newline Es decir, PLN abarca desde aplicaciones simples, como contar el número de ocurrencias de las palabras en un texto para comparar diferentes estilos de escritura, a aplicaciones más complejas, como comprender expresiones humanas completas para poder dar respuestas útiles a preguntas. \citet{bird2009natural} Como por ejemplo, el asistente Siri de iPhone. 
 
 La lingüística computacional o PLN comenzó en 1980, sin embargo en los últimos 20 años ha crecido enormemente, despertando un gran interés en el ámbito de la investigación científica pero también en el ámbito práctico, ya que cada vez son más los productos, especialmente los tecnológicos, que incorporan algún tipo de aplicación basada en NLP. Por ejemplo, traductores como el traductor de Skype, o asistentes de voz inteligentes (Cortana de Microsoft, Google Now de Google o el ya mencionado Siri de Apple). \newline
 Este crecimiento en el campo del procesamiento del lenguaje natural se debe principalmente a que en los últimos años, con el uso de redes sociales como Facebook, SnapChat, Twitter, Google plus, Linked in... y de sitios web comerciales como Amazon o Booking, los usuarios han generado una gran cantidad de contenido mayoritariamente subjetivo, el cual se puede aplicar en muchos ámbitos como márketing, política, gestión de crisis, soporte, atención al cliente, etc. También han influido en su crecimiento el aumento de capacidad de procesamiento y cómputo que ha habido en los últimos años y el desarrollo de técnicas de machine learning más complejas y potentes.    
@@ -55,7 +55,7 @@ estropeado"} según \citet{nadkarni2011natural}. \newline
 Es a partir de 1990 cuando el PLN sufre una transformación cuando los investigadores comienzan a tener la posibilidad de obtener grandes cantidades de datos del lenguaje en formado digital y construyen modelos sobre estos. Surge así el PLN estadístico o PLN basado en corpus, lo que supuso un éxito en el uso del "big data", aunque ese término se introduciría más adelante. Con lo anterior surgen métodos que usan el \textsc{Part-Of-Speech} (POS) de las palabras, es decir, su categoría morfosintáctica( si son sustantivo, un adjetivo, un verbo, una preposición...) adquiriendo notables resultados cuando se entrena con un conjunto de datos suficientemente grande. \newline
 Actualmente, muchos clasificadores de texto y sentimientos se basan únicamente en los diferentes conjuntos de palabras que presenta el texto (bolsas de palabras) sin tener en cuenta estructuras a nivel de frase, de documento o de significado. Sin embargo, los mejores enfoques actuales usan técnicas sofisticadas de machine learning y un buen entendimiento de la estructura lingüística subyacente, identificando información sintáctica, semántica y de contexto. Algunos de los sofwares más conocidos acutalmente son:\newline
 \begin{itemize}
-\item Standford CoreNLP \citet{manning2014stanford} es una suite de herramientas de PLN basada en machine learning, que pueden ser incorporadas en aplicaciones con necesidades de procesamiento de texto. Desarrollada en Java y con algunas herramientas disponibles para los lenguajes más hablados, también incluye métodos para entrenar modelos sobre corpus de datos.
+\item Stanford CoreNLP \citet{manning2014stanford} es una suite de herramientas de PLN basada en machine learning, que pueden ser incorporadas en aplicaciones con necesidades de procesamiento de texto. Desarrollada en Java y con algunas herramientas disponibles para los lenguajes más hablados, también incluye métodos para entrenar modelos sobre corpus de datos.
 \item Python NLTK \citet{bird2006nltk} es una suite de PLN de las más completas. Programada en Python, soporta un gran número de librerías para texto que incluyen las herramientas más comunes. Su éxito se debe en parte a que está bien documentada, incluye tutoriales y a su comunidad activa de usuarios. 
 \end{itemize}
 \section{Aproximaciones más comunes en PLN} 
@@ -105,109 +105,3 @@ Si la puntuación final es positiva, entonces la opinión sobre el aspecto $a_{i
 También se han planteado métodos que usan aprendizaje automático en este nivel de análisis, como por ejemplo \citet{jiang2011target} que emplea un árbol de parseo sintáctico para generar un conjunto de características que representen algunas relaciones sintácticas de la entidad o aspecto objetivo, y otras palabras. 
 
 
-\section{El pipeline Genérico}
-El objetivo final de toda suite de PLN es tener un sofware que contenga un conjunto de herramientas para poder realizar análisis de sentimientos o algún tipo de extracción de información. Esto se alcanza a través de varias tareas de procesamiento del texto, empezando por hacer el contenido uniforme y acabando por identificar las funciones de las palabras y como se organizan. Aquí se describen las tareas más comunes del pipeline de un software de PLN junto con las aproximaciones más comunes. \newline
-\subsection{Obtención de datos}
-La obtención de datos es la primera tarea a realizar, mediante la cual se obtendrá el corpus de texto, etiquetado o no (depende de la aproximación a aplicar) que se va a usar para crear la herramienta de PLN, así como los datos sobre los que se quiere hacer el análisis de sentimientos o la extracción de información deseada. \newline
-La forma general de obtener los datos directamente de internet es a través de la propia API de los sitios web de los que se desee descargar información por ejemplo la Api de twitter si queremos descargar tweets, o la api de instagram para imágenes y etiquetas. Sin embargo, a pesar de que hay manuales que explican como consultarlas, estas APIs  han limitado mucho las descargas últimamente, alegando cuestiones de privacidad de los datos de usuario. Otro método es usar arañas web para rastrear la información deseada de forma similar a lo que hace google con su conocida araña \textsc{Googlebot}, con la que visita todas las webs frecuentemente para añadirlas a su índice y percatarse de los cambios. Ahora bien, este último método requiere unos conocimientos necesarios para crear una araña web y ocupa mucho ancho de banda. \newline
-En cuanto a corpus ya etiquetados en inglés se pueden encontrar muchos, entre los más populares están \textsc{The Penn Treebank} \citet{marcus1993building} o \textsc{Wikicorpus} \url{http://www.cs.upc.edu/~nlp/wikicorpus/}, mientras que para español son conocidos \textsc{Wikicorpus}, \textsc{Ancora} \url{http://clic.ub.edu/ancora} o \textsc{SemEval} \citet{marquez2007semeval}. 
-    
-\subsection{Procesamiento del texto}
-Teniendo el texto, se le aplica un procesamiento, separándolo en unidades relevantes, añadiendo información sintáctica y morfológica, extrayendo entidades y relaciones entre estas... En este apartado se describen las fases de procesamiento más comunes según describe \citet{9783319155623}.
-\subsubsection{Tokenización}
-En esta fase se separa el texto del documento en sus unidades atómicas, los tokens (palabras, números, símbolos), por lo que es una fase totalmente necesaria en casi cualquier suite de PLN. Aunque no es una tarea muy compleja para lenguajes que emplean espacios entre palabras, como la mayoría de lenguajes que usan el alfabeto latino, sí que resulta mucho más complicado en lenguajes que no usan espacios entre palabras, como el Chino. \citet{chang2008optimizing}. \newline
-La tokenización se sirve de heurísticas simples, como considerar que todos los strings de caracteres del alfabeto contiguos forman parte del mismo token (igualmente para los números) y que todos los tokens van separados unos de otros por espacios, saltos de línea o por signos de puntuación que no sean abreviaciones. Algunas herramientas actuales que hacen tokenización son \textsf{Freeling} \citet{padro2012freeling}, \textsf{Apache OpenNLP} \citet{baldridge2005opennlp} y los ya citados \textsf{NLTK} y \textsf{StandfordNLP}. No hay ninguna herramienta especialmente dedicada a tokenizar, ya que la tokenización puede ser razonablemente bien hecha usando expresiones regulares cuando se procesan lenguajes que usan el alfabeto latino. Para otros lenguajes más complejos, como el Árabe o el Chino, sí se precisan de tokenizadores más complejos, como el \textsf{Standford Word Segmenter} que aplica segmentación de palabras. 
-\subsubsection{Detección de límites de oraciones}
-En esta fase se aborda el problema de establecer los límites de una oración en el texto. En algunos casos esto se incluye dentro de la fase de tokenización. Encontrar los límites de una oración no es una tarea trivial, ya que las marcas de puntuación que delimitan el final de una frase suelen ser ambiguas en muchos lenguajes. En español lo son, ya que por ejemplo, el punto se puede usar como marcador de final de oración pero también como separador entre parte entera y decimal en números reales o en iniciales y abreviaciones (por ejemplo, Srta.). \newline
-Algunos sisemas que han demostrado buenos resultados en separación de frases sobre diferentes lenguajes naturales, son \textsf{Punkt} \citet{kiss2006unsupervised} e \textsf{iSentenizer}\citet{wong2014isentenizer}.  
-\subsubsection{Lematización}
-Lematización es el proceso mediante el cual se determina el lema de cada palabra. El lexema de una palabra se define como la unidad mínima que es parte común en todas las palabras de una misma familia. Por ejemplo, \textsl{"arte"} , \textsl{"artístico"} o \textsl{"artista"} son tres palabras distintas que comparten el lexema \textsl{"art"}. Lema es la representación de la forma canónica (o forma de diccionario) de los lexemas, y tiene por tanto significado. Por ejemplo, \textsl{"escribían"}, \textsl{"escribieron"} o \textsl{"escribirán"} son palabras derivadas de un mismo lexema cuyo lema es \textsl{"escribir"}.\newline
-Este proceso es importante porque reduce el número de términos a procesar, ya que muchos se reducen al mismo lema, acortando así la complejidad computacional del problema. La dificultad de este proceso varía dependiendo del lenguaje, resultando mucho más sencillo para lenguajes con una morfología inflexiva simple, como el Inglés, y complicándose más para lenguajes morfológicamente más ricos como el Español o el Alemán.  
-\subsubsection{Stemming} 
-Este método es común en lugar de la lematización e incluso en algunos casos se incluye dentro de ésta o como complemento. El Stemming es un proceso simple mediante el cual se trata de reducir la palabra a su forma base eliminando sus sufijos. Se obtiene así una forma de la palabra que no es necesariamente la raíz de la palabra, pero que suele bastar, dado que palabras de la misma familia tienen esa parte en común, o un conjunto reducido de partes en común, si son palabras irregulares.  Por ejemplo: \textsl{"sleep"}, \textsl{"sleeping"}, \textsl{"sleeped"}, \textsl{"sleeps"}... tienen el común el stem \textsl{"sleep"}, que es la forma base del verbo.
-En lenguajes con pocas inflexiones, como el Inglés, es muy probable que el lema y el stem coincidan. Sin embargo, en lenguajes con más inflexiones, como el Español, eso rara vez ocurre.  
-\subsubsection{POS Tagging}
-POS Tagging es un proceso muy importante en tareas de PLN, ya que etiqueta mediante algoritmos cada palabra con su \textsc{part-of-speech}, es decir, con su categoría morfosintáctica (nombre, verbo, preporisición, adjetivo...) junto a otras propiedades que dependen de esta. De hecho es necesario para realizar el parseo sintáctico (el paso posterior).\newline
-
-Aunque lo usual es aplicar un proceso de lematización o stemming antes de esta fase, hay sistemas que aplican primero esta fase, como el desarrollado en este proyecto.\newline
-
-Los principales desafíos que se presentan en esta etapa, son: 
-\begin{itemize}
-\item Tratar la ambigüedad, dado que las palabras pueden desempeñar distinta función morfosintáctica y por tanto, tener diferentes POS tags dependiendo del contexto. 
-\item Asignar una etiqueta morfosintáctica a palabras de las que el sistema no tiene conocimiento
-\end{itemize}  
-Para tratar de solventar los problemas anteriores, normalmente se tiene en cuenta el contexto dentro de la frase de la palabra a etiquetar, y se selecciona la etiqueta morfosintáctica más probable dada esa palabra y su contexto. \newline
-Que sea una tarea muy necesaria hace que esté muy investigada, por lo que actualmente la precisión de etiquetado ronda el 90\%, aunque esto se debe a que la precisión se mide en porcentaje de palabras bien etiquetadas. Si se midiera por porcentaje de frases completamente bien etiquetadas, la cifra descendería al 55\%-57\% de precisión, como manifestaban \citet{giesbrecht2009part}. \newline
-La mayoría de estas herramientas han sido desarrolladas para el Inglés y evaluadas usando los datos de \textsf{Penn Treebank}. Destacan por ejemplo \textsf{Standford POS Tagger} que tiene modelos de etiquetado para 6 lenguajes diferentes, \textsf{SVMTool} \citet{gimenez2004svmtool} que se basa en clasificadores de máquinas de soporte vectorial  y \textsf{TreeTager}, basado en modelos de Markov \citet{schmid1995treetagger}. 
-\subsubsection{Parseo Sintáctico}
-El parseo sintáctico es una tarea que consiste en analizar las oraciones para producir estructuras que representen como se organizan las palabras en las frases, dada una gramática formal. Las gramáticas tienen dos posibles formalismos estructurales: 
-\begin{itemize}
-\item Constituyente: es una unidad dentro de una estructura jerárquica que está compuesta por una palabra o un grupo de palabras. \newline
-\item De dependencia: estas gramáticas desciben la estructura de una frase en términos de los enlaces entre las palabras, ya que cada enlace refleja una relación de dominancia/dependencia entre un término y otro dependiente de él. Estas gramáticas son las que normalmente se emplean para parsear texto. 
-\end{itemize}
-Por ejemplo, para la frase \textsf{"this books has two authors" ("este libro tiene dos autores")} \newline
-\begin{figure}[H]%con el [H] le obligamos a situar aquí la figura
-\centering
-\includegraphics[scale=0.40]{constituency.png}  %el parámetro scale permite agrandar o %achicar la imagen. En el nombre de archivo puede especificar directorios
-\label{}
-\caption{Posible árbol de gramática Constituyente}   
-\end{figure}
-\begin{figure}[H]%con el [H] le obligamos a situar aquí la figura
-\centering
-\includegraphics[scale=0.35]{dependency.png}  %el parámetro scale permite agrandar o %achicar la imagen. En el nombre de archivo puede especificar directorios
-\label{}
-\caption{Posible árbol de gramática de Dependencias}   
-\end{figure}
-
- El parseo sintáctico una tarea computacionalmente muy intensiva, por lo que a veces es deseable sustituirla por otra menos costosa en cómputo que produzca resultados similares, como \textsf{localizar patrones textuales}. Sin embargo, esta sustitución no siempre es posible, dado que deben de tenerse fuentes de información semiestructuradas, estructuradas, o generadas por una máquina. \newline
- Algunas herramientas para parseo sintáctico son \textsf{StandfordParser}, \textsf{MaltParser} \citet{nivre2006maltparser} o \textsf{TurboParser} \url{http://www.cs.cmu.edu/~ark/TurboParser/}, estas dos últimas implementan gramáticas de dependencias.
-\\[\baselineskip]
-Aquí concluye la parte genérica del pipeline. Además del pipeline genérico, hay procesos que se engloban en una parte que se conoce como pipeline dependiente del dominio, algunos de los cuales se detallan en la siguiente sección.
-
-\section{El pipeline de OpenNLP}
-En la sección anterior vimos el pipeline genérico que suelen seguir los softwares de NLP. En esta se describe OpenNLP \url{http://opennlp.apache.org/}, un conocido framework desarrollado por Apache.\newline
-Apache OpenNLP es una librería desarrollada en Java que incorpora un kit de herramientas basadas en aprendizaje automático para hacer procesamiento del texto en lenguaje natural, permitiendo al usuario crear su propio pipeline de PLN, entrenar sus propios modelos o evaluarlos. Como consecuencia, no ofrece soporte para ningún lenguaje específico, sino que ofrece algoritmos bastante genéricos que podrían funcionar con cualquier lenguaje. Sí que tiene algunos modelos pre entrenados para algunos lenguajes. 
-\subsection{Herramientas que incorpora}
-las herramientas de OpenNLP son accesibles a través de su API o por línea de comandos. Estas son las herramientas que incorpora:
-\subsubsection{Detector de frases} 
-Un detector de frases capaz de detectar si un signo de puntuación marca el final de una frase o no. Se entiende por frase la mayor secuencia de caracteres separados por espacios en blanco entre dos signos de puntuación. La frase inicial y final de un texto son excepcionales, los primeros caracteres que no sean caracteres en blanco se asumen como el inicio de una frase, mientras que los últimos caracteres no blancos se asumen como el final de la frase. Una vez que se han detectado correctamente las fronteras de las oraciones, se formatea el texto debidamente. 
-\subsubsection{Tokenizador}
-OpenNLP incorpora tres tokenizadores que segmentan una entrada de cadena de caracteres en tokens (palabras, signos, números..etc).
-\begin{itemize}
-\item Tokenizador de espacios en blanco: toma como tokens toda secuencia que no sean caracteres en blanco.
-\item Tokenizador simple: basado en clases de caracteres, donde las secuencias con la misma clase de caracter se consideran tokens. 
-\item Tokenizador basado en aprendizaje: tokenizador de máxima entropía que detecta las fronteras de los tokens basándose en un modelo probabilístico.
-\end{itemize}
-\subsubsection{Detokenizador}
-esta herramienta hace justo lo contrario que el tokenizador, es decir, construye el texto original no tokenizado a partir de una secuencia de tokens. La implementación se basa en reglas que definen como los tokens deben añadirse a la cadena de caracteres:  \textsl{MERGE\_TO\_LEFT} añade el token por la izquierda, \textsl{MERGE\_TO\_RIGHT} añade el token por la derecha y \textsl{RIGHT\_LEFT\_MATCHING} añade el token a la derecha d la primera ocurrencia y a la izquierda de la segunda ocurrencia.
-\subsubsection{NER}
-(name entity recognition) es la herramienta que se encarga de buscar nombres de entidades y números en el texto. Para ello necesita un modelo que dependerá del lenguaje y el tipo de entidad que se quiera identificar. OpenNLP incluye algunos modelos pre entrenados sobre varios corpus libres disponibles. Para encontrar nombres en filas de texto, el texto debe ser previamente segmentado en frases y tokens.  
-\subsubsection{Categorizador de documento}
-El categorizador de documento de OpenNLP puede clasificar texto dentro de categorías predefinidas. Se basa en un framework de máxima entropía. De nuevo, para clasificar el texto se necesita de un modelo, pero OpenNLP no provee de ninguno pre entrenado, dado que para clasificar se requiere de requisitos específicos. 
-\subsubsection{POS tagger}
-El POS tagger que incorpora OpenNLP marca los tokens con su correspondiente tipo de palabra (según su categoría morfosintáctica) y para ello se basa en información del propio token y del contexto del mismo. Para resolver la ambiguedad que se presenta cuando un token puede tener múltiples etiquetas morfosintácticas, se aplica un modelo de probabilidad para predecir la etiqueta correcta. Para limitar el posible número de etiquetas que puede recibir un token, se emplea un diccionario de etiquetas. \newline
-Un \textsl{diccionario de etiquetas} es un diccionario de palabras donde se especifica qué etiquetas puede tener cada posible token.
-\subsubsection{Chunker}
- Esta herramienta separa el texto en sintagmas correlados, como el sujeto y el predicado de la frase, pero no especifica su estructura interna ni su función en la frase principal. 
-\subsubsection{Parseador}
- OpenNLP tiene dos implementaciones para el parseado: una llamada "chunking parser" que genera como salida el texto parseado separado por espacios, y el "tree insert parser" que genera un árbol como resultado, pero este último está aún en fase experimental. En ambos caso se requiere el entrenamiento de un modelo con datos en formato de OpenNLP (formato Penn treebank pero limitado a una frase por línea).
-\subsubsection{Resolución de coreferencias}
-La resolución de coreferencias es una herramienta que incorpora OpenNLP para linkar las múltiples referencias que se hacen a una misma entidad a lo largo del documento, aunque se limita a menciones de sintagmas nominales, por ejemplo \textsf{"el gato"}. 
-\subsection{Modelos que incorpora}
-Además de las herramientas anteriores, OpenNPL incorpora modelos preentrenados para los siguientes idiomas: Inglés, Alemán, Portugués, Danés, Holandés, Sueco y Español. \url{http://opennlp.sourceforge.net/models-1.5/}. Aunque en algunos enfoques se invierte el orden, todos los modelos aquí son entrenados aplicando primero detección de frases y luego tokenización (además de otras fases). \newline
-Para el Inglés incorpora modelos para todas las fases: tokenizador, detección de frases, pos Tagger, NER, chunker, parser y resolución de Coreferencias. Para el Sueco, Portugués, Alemán o Danés incluye tokenizador, detección de frases y pos Tagger, mientras que para el Holandés incluye los anteriores y además el NER. Para el Español, sólo incluye el NER.
-
-\section{Limitaciones}
-En \citet{hirschberg2015advances} dicen que la mayor limitación de los sistemas de PLN actuales es que dan soporte a los lenguajes más hablados y más extendidos, como el Inglés, Francés, Alemán, Español o Chino, pero otros como el Swahili, Bengali o Indonesio hablados por millones de personas no tienen disponible una herramienta de este tipo. \newline
-Sin embargo, aunque el Español está entre los focos de mira de las suites de PLN más usadas actualmente, rara vez hay un pipeline completo para análisis de sentimientos en español que proporcione resltados similares a los que se obtienen para el Inglés. Por ejemplo, en la sección anterior explicábamos \textcolor{SchoolColor}{Apache OpenNLP}, que directamente no incluye herramientas como lematización o análisis de sentimientos para ningún idioma.\newline
-Quizá la suite de NLP más conocida en la actualidad y referenciada junto con \textcolor{SchoolColor}{Python NLTK} es \textcolor{SchoolColor}{Standford CoreNLP}, debido a que es bastante completa, está bien documentada y tiene módulos para muchos de los idiomas más usados:
-\begin{figure}[H]%con el [H] le obligamos a situar aquí la figura
-\centering
-\includegraphics[scale=0.45]{stanford.png}  %el parámetro scale permite agrandar o %achicar la imagen. En el nombre de archivo puede especificar directorios
-\label{}
-\caption{Disponibilidad de herramientas e idiomas en Standford CoreNLP}   
-\end{figure}
-Pero de nuevo vemos que sólo está completo para Inglés, faltando métodos como la lematización o el análisis de sentimientos para Español. Otro paquete menos conocido que incluye funcionalidad para minería web, procesamiento del lenguaje natural y machine learning es  \textcolor{SchoolColor}{Pattern} \citet{smedt2012pattern}  implementada en Python, que según el benchmark de métodos de análisis de sentimientos que hicieron \citet{ribeiro2016sentibench} da mejores resultados en media que Stanford CoreNLP, aunque el benchmark solo hace comparaciones para el Inglés. \newline
-\textcolor{SchoolColor}{Pattern} incluye una serie de herramientas para Español, pero esta tampoco incluye análisis de sentimientos para este lenguaje. \newline
-Ante estas limitaciones el proyecto desarrollado en este trabajo se centra en implementar las tres primeras etapas  del pipeline de un software NLP para análisis de sentimientos en español: tokenizador, lematizador y POS tagger.\newline
-Teniendo como finalidad a largo plazo construir un software que haga como etapa final análisis de sentimientos en Español. 

@@ -266,7 +266,7 @@
 	\vspace*{35pt}
 	\begin{center}
     	\Large \textcolor{SchoolColor}{\@title} \normalsize \\
-	\large \textcolor{SchoolColor}{\@subtitle} \normalsize \\
+	%\large \textcolor{SchoolColor}{\@subtitle} \normalsize \\
     	\vspace*{20pt}
     	\scshape Resumen \\ \rm
 	\end{center}
@@ -291,7 +291,7 @@
 	\vspace*{35pt}
 	\begin{center}
     	\Large \textcolor{SchoolColor}{\@title} \normalsize \\
-	\large \textcolor{SchoolColor}{\@subtitle} \normalsize \\
+	%\large \textcolor{SchoolColor}{\@subtitle} \normalsize \\
     	\vspace*{20pt}
     	\scshape Abstract \\ \rm
 	\end{center}
