@@ -275,3 +275,19 @@ NC osa fhassuf 3 AQ x
 NC oso fhassuf 3 AQ x
 NV ía fhassuf 2 VMI x
 \end{minted} 
+\section{Lematizador}
+Por último, para el lematizador, se usa un fichero de 576 líneas (\textcolor{SchoolColor}{es-verbs.txt}) con las conjugaciones de 576 verbos españoles obtenidos de la web \url{ http://users.ipfw.edu/jehle/verblist.htm}, para crear un diccionario interno al que a cada verbo conjugado se le asocia su forma base(lema). Ésto se explica en la parte de implementación.
+\captionof{listing}*{Algunas líneas de ejemplo de \textcolor{SchoolColor}{es-verbs.txt}}
+\begin{minted}
+[frame=lines,
+framesep=1mm,
+fontsize=\footnotesize,
+breaklines=true
+]{java}
+abrazar,abrazo,abrazas,abraza,abrazamos,abrazáis,abrazan,abrazando,abracé,abrazaste...
+abrir,abro,abres,abre,abrimos,abrís,abren,abriendo,abrí,abriste,abrió,abrimos...
+aburrir,aburro,aburres,aburre,aburrimos,aburrís,aburren,aburriendo,aburrí...
+\end{minted} 
+
+
+
