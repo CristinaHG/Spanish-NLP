@@ -162,7 +162,7 @@ Este diccionario léxico se utilizará luego para etiquetar inicialmente los dat
     \label{alg:rAP}
     \caption{Obtención del Léxico}
 \end{algorithm}
-Debido a que el resultado que se obtiene es muy grande en tamaño, el léxico se guarda en el fichero  \textcolor{SchoolColor}{es-lexicon.txt}, y se usa directamente en el Pos tagger que implementa este proyecto.\\[\baselineskip]
+Debido a que el resultado que se obtiene es muy grande en tamaño(85877 líneas), el léxico se guarda en el fichero  \textcolor{SchoolColor}{es-lexicon.txt}, y se usa directamente en el Pos tagger que implementa este proyecto.\\[\baselineskip]
  Lo mismo sucede con el contexto y la morfología, ya que entrenar el modelo cada vez que se quiera usar el Pos Tagger es un proceso muy lento y poco recomendable. Por tanto, los algoritmos se ejecutan una vez, guardando los resultados en ficheros para reutilizarlos posteriormente. 
 \captionof{listing}*{Algunas líneas de ejemplo de \textcolor{SchoolColor}{es-lexicon.txt}}
 \begin{minted}
@@ -200,4 +200,29 @@ El procedimiento a seguir es el siguiente: en primer lugar, se anonimizan los no
     \caption{Anonimización de nombres}
 \end{algorithm} 
 
-En segundo lugar, se entrena el algoritmo de brill para aprender las reglas contextuales presentes en el corpus. 
+En segundo lugar, se entrena el algoritmo de Brill para aprender las reglas contextuales presentes en el corpus. El Pos tagger para español de \textcolor{SchoolColor}{Pattern} \citet{smedt2012pattern} no hace una implementación propia de Brill, sino que utiliza el \textsf{FastBrillTaggerTrainer} de \textcolor{SchoolColor}{Python NLTK} \citet{bird2009natural}, utilizando el léxico obtenido en el apartado anterior para hacer la fase de etiquetado inicial del corpus, un conjunto de reglas como las que explicaron en la explicación del algoritmo, y el corpus resultante del proceso anterior de anonimización. El resultado (de 250 líneas) se guarda en \textcolor{SchoolColor}{es-context} para su reutilización.
+\captionof{listing}*{Algunas líneas de ejemplo de \textcolor{SchoolColor}{es-context.txt}}
+\begin{minted}
+[frame=lines,
+framesep=1mm,
+fontsize=\footnotesize,
+breaklines=true
+]{java}
+VMI VMP PREV1OR2WD llevada
+W SP CURWD con
+Zm NCP PREVWD en
+DD PD NEXTTAG PP
+W Z SURROUNDTAG Fpa Fpt
+NCS RG PREVWD on
+SP RG NEXTWD facto
+AQ NCS SURROUNDTAG DI AQ
+DD PD NEXTTAG P0
+NCP Zu PREVTAG Zu
+PR CS SURROUNDTAG VMP DA
+CS PR CURWD donde
+PI DI CURWD una
+RG SP CURWD según
+\end{minted}
+
+
+
