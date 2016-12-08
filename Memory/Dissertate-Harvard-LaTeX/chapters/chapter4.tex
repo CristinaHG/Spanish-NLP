@@ -181,4 +181,23 @@ breaklines=true
 óptico AQ
 \end{minted}
 
+\subsection*{Obtención de reglas contextuales}
+Para obtener las reglas que tienen en cuenta los alrededores de la palabra a etiquetar (el contexto), se usa el léxico obtenido en el apartado anterior y el algoritmo de Brill, ya descrito también anteriormente. \newline
+El procedimiento a seguir es el siguiente: en primer lugar, se anonimizan los nombres propios presentes en el corpus, ya que la intención es aprender reglas generales del tipo "un nombre va seguido de un adjetivo" , y no "Granada va seguido de un adjetivo". Este proceso de describe en pseudocódigo como:
+\begin{algorithm}[H]
+    \begin{algorithmic}[1]
+    \Procedure{Anonimize(corpus)}{}
+    \State $\text{ANONIMOUS} \gets$ \text{"anonymous"}
+     \State $\text{i} \gets$ $0$
+    \For{$\text{sentence in corpus}$}
+            \For{$\text{(w, tag) in sentence}$}
+			\If{\text{tag $==$ "Np" }} \State \text{$s[i] \gets \text{(ANONYMOUS,"NP")}$} \EndIf
+            \EndFor
+    \EndFor            
+        \EndProcedure
+    \end{algorithmic}
+    \label{alg:rAP}
+    \caption{Anonimización de nombres}
+\end{algorithm} 
 
+En segundo lugar, se entrena el algoritmo de brill para aprender las reglas contextuales presentes en el corpus. 
