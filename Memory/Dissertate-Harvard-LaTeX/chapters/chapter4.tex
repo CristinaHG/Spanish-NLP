@@ -35,22 +35,22 @@ El funcionamiento es el siguiente:
 \end{itemize} 
 \end{enumerate}
 Donde \textcolor{SchoolColor}{z}, \textcolor{SchoolColor}{w} son dos categorías cualesquiera (VB,NN..).
-Las reglas se expresan con la notación interna del algoritmo:\newline \texttt{"PREVTAG", "NEXTTAG", "PREV1OR2TAG", "NEXT1OR2TAG", "PREV1OR2OR3TAG", "NEXT1OR2OR3TAG", PREV2TAG","NEXT2TAG",
- "CURWD", "PREVWD", "NEXTWD", "PREV1OR2WD", "NEXT1OR2WD"}.\newline Un ejemlo de regla sería: \textcolor{SchoolColor}{\texttt{TO IN NEXTTAG AT}}, que se interpretaría como que la etiqueta \texttt{"TO"} cambiaría a \texttt{"IN"} si la etiqueta de la palabra anterior es \texttt{"AT"}. \\[\baselineskip]
- Tras la fase del etiquetado inicial y etiquetar las desnococidas, se comparan las etiquetas estimadas con las reales, obtieniendo una lista de errores. A continuación, por cada error de esa lista (por cada palabra mal etiquetada) se instancia cada una de las reglas de la lista de plantillas de reglas, y se evalúan, para determinar cuál de ellas reduce más el error. La ganadora se aplica al texto y se añade a la lista de resultados. Después se vuelve a calcular una lista de errores sobre el nuevo corpus . \newline
+Cabe destacar que las reglas son aplicables tanto a palabras como a etiquetas de las mismas, y se expresan con la notación interna del algoritmo:\newline \texttt{"PREVTAG", "NEXTTAG", "PREV1OR2TAG", "NEXT1OR2TAG", "PREV1OR2OR3TAG", "NEXT1OR2OR3TAG", PREV2TAG","NEXT2TAG",
+ "CURWD", "PREVWD", "NEXTWD", "PREV1OR2WD", "NEXT1OR2WD"}.\newline Un ejemlo de instancia de una regla sería: \textcolor{SchoolColor}{\texttt{TO IN NEXTTAG AT}}, que se interpretaría como que la etiqueta \texttt{"TO"} cambiaría a \texttt{"IN"} si la etiqueta de la palabra anterior es \texttt{"AT"}. \\[\baselineskip]
+ Tras la fase del etiquetado inicial y etiquetar las desnococidas, se comparan las etiquetas estimadas con las reales, obtieniendo una lista de errores. A continuación, por cada error de esa lista (por cada palabra mal etiquetada) se instancia cada una de las reglas de la lista de plantillas de reglas, y se evalúan, para determinar cuál de ellas reduce más el error. La ganadora se aplica al texto y se añade a la lista de resultados. Después se vuelve a calcular una lista de errores sobre el nuevo corpus resultante de haber aplicado la mejor regla. \newline
  Para determinar cual es la mejor regla, a cada regla se le asigna una puntuación, que se calcula como   
  los aciertos que tiene menos los fallos.    
 
 
-\begin{algorithm}
+\begin{algorithm}[H]
     \begin{algorithmic}[1]
     \Procedure{BrillTagger(corpus,lexicon,tasa\_error,rulesTlist)}{}
     \State $\text{$C_{i}$} \gets \text{etiquetadoInicial(corpus)}$
 \State $\text{errors} \gets \text{errores de $C_{i}$}$
-\State $\text{Result}$ $\gets$ $[ ]$
+\State $\text{Result} \gets$ \o
 \State $\text{i} \gets 0$
 \State $\text{nErrors} \gets \text{size(errors)}$
-\State $\text{best}$  $\gets$ $[ ]$
+\State $\text{best}  \gets$ \o
 \While{$\text{nErrors} $>$ \text{tasa\_error}$} 
         \For{$\text{each error in errors}$ }
             \For{$\text{each rule in instances(rulesTlist) }$}
@@ -58,7 +58,7 @@ Las reglas se expresan con la notación interna del algoritmo:\newline \texttt{"
             \EndFor
         \EndFor
         \State $\text{best} \gets \text{rule with best score}$
-		\State $\text{$C_{i}$+1} \gets \text{Apply(best, $C_{i}$ )}$
+		\State $\text{$C_{i+1}$} \gets \text{Apply(best, $C_{i}$ )}$
 		\State $\text{Results} \gets \text{Results+best}$
 		\State $\text{i} \gets \text{i+1}$
         \EndWhile
@@ -66,6 +66,74 @@ Las reglas se expresan con la notación interna del algoritmo:\newline \texttt{"
         \BState \Return Results
     \end{algorithmic}
     \label{alg:rAP}
-    \caption{algorithm}
+    \caption{Algoritmo de Brill}
 \end{algorithm}
+
+\subsection{Lectura del corpus}
+El Wikicorpus para español contiene unos 50 ficheros de texto. Cada uno pesa entre 25MB y 102MB y cada línea de cada uno de ellos es una palabra con su lema y su POS etiqueta en notación \textcolor{SchoolColor}{Parole} \url{http://www.cs.upc.edu/~nlp/SVMTool/parole.html}. 
+Un fragmento de ejemplo:
+\begin{minted}
+[frame=lines,
+framesep=1mm,
+fontsize=\footnotesize,
+breaklines=true
+]{java}
+ Ibiševi ibiševi NP00000 0
+, , Fc 0
+nacido nacer VMP00SM 00249716
+el el DA0MS0 0
+6_de_agosto_de_1984 [??:6/8/1984:??.??:??] W 0
+en en SPS00 0
+Vlasenica vlasenica NP00000 0
+, , Fc 0
+Yugoslavia yugoslavia NP00000 0
+( ( Fpa 0
+actual actual AQ0CS0 01667781
+Bosnia bosnia NP00000 0
+y y CC 0
+Herzegovina herzegovina NP00000 0
+) ) Fpt 0
+es ser VSIP3S0 01775973
+un uno DI0MS0 0
+futbolista futbolista NCCS000 0
+bosnio bosnio AQ0MS0 02731920
+que que PR0CN000 0
+juega jugar VMIP3S0 00727813
+como como CS 0
+delantero delantero NCMS000 00466114
+\end{minted}
+
+Aunque en este ejemplo no se aprecia, algunas líneas de estos ficheros son metadatos("<doc>", "</doc>", "ENDOFARTICLE", "REDIRECT"...), por lo que deben ser ignoradas. A continuación se muestra un pseudocódigo de la lectura de este corpus, obteniendo finalmente una lista de pares (palabra, etiqueta). El código en python que emplea \textcolor{SchoolColor}{Pattern} se puede encontrar en la web de \textcolor{SchoolColor}{CLiPS} (\url{http://www.clips.ua.ac.be/}). 
+
+\begin{algorithm}[H]
+    \begin{algorithmic}[1]
+    \Procedure{readWikicorpus(corpusPath="./tagged.es",words=1000000}{}
+    \State $\text{S} \gets$ \o
+    \State $\text{i} \gets 0$
+    \For{$\text{f in corpusPath}$}
+            \For{$\text{line in open(f)}$}
+            \If{\text{line $==$ " \escape{n} " or startsWith(metadata)}} \State $\text{continue}$ \EndIf
+            \State $\text{w, lemma, tag} \gets \text{line splitted by (" ")}$
+            \If{$\text{tag starts with("Fp")}$ } \State $\text{tag=2 first characters of tag}$  
+            \ElsIf{$\text{tag starts with("V")}$} \State $\text{tag=3 first characters of tag}$
+            \ElsIf{$\text{tag starts with("NC")}$} \State $\text{tag=2 first characters of tag + the third character of tag}$
+             \Else $\text{tag=2 first characters of tag}$ \EndIf
+            \EndFor
+            \For{$\text{w in split tag by ("\_")}$} 
+            \State $\text{S} \gets \text{(w,tag)}$
+            \State $\text{i} \gets \text{i+1}$
+            \EndFor
+            \If{\text{tag $==$ "Fp" and w $==$ "."} } \text{$S \gets [ ]$} \EndIf
+            \If{$i \geq \text{words}$} \Return S \EndIf
+        \EndFor
+        \EndProcedure
+    \end{algorithmic}
+    \label{alg:rAP}
+    \caption{Lectura Wikicorpus}
+\end{algorithm}
+
+
+
+
+
 

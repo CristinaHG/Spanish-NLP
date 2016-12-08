@@ -66,6 +66,7 @@
 \usepackage[noend]{algpseudocode}
 \def\BState{\State\hskip-\ALG@thistlm}
 \def\BSState{\State\hskip\hskip-\ALG@thistlm}
+\newcommand*{\escape}[1]{\texttt{\textbackslash#1}}
 \usepackage{array}
 \usepackage{float}
 \usepackage{minted}
