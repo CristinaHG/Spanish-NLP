@@ -139,14 +139,13 @@ class PosTagger {
 
 
   // Returns a list of (token, tag)-items for the given list of tokens:
-  //  ["The", "cat", "purs"] => [("El", "DT"), ("gato", "NN"), ("ronronea", "VB")]
+  //  ["El", "gato", "ronronea"] => [("El", "DT"), ("gato", "NN"), ("ronronea", "VB")]
   //Words are tagged using the given lexicon of (word, tag)-items.
   //  Unknown words are tagged NN by default.
-  //  Unknown words that start with a capital letter are tagged NNP (unless language="de").
+  //  Unknown words that start with a capital letter are tagged NNP
   //  Unknown words that consist only of digits and punctuation marks are tagged CD.
   //  Unknown words are then improved with morphological rules.
   //All words are improved with contextual rules.
-  //If a model is given, uses model for unknown words instead of morphology and context.
   //  If map is a function, it is applied to each (token, tag) after applying all rules.
   def find_tags(tokens:List[String], lexicon:Lexicon, model:String, morphology:Morphology, context:Context, entities:String, default:List[String],
                 mapCall:(String,String)=>(String,String)):List[(String,String)]={
@@ -165,8 +164,6 @@ class PosTagger {
       if (tagged.indexOf(t) > 0) prev = tagged(tagged.indexOf(t) - 1)
       if (tagged.indexOf(t) < (tagged.length - 1)) next = tagged(tagged.indexOf(t) + 1)
       if (t._2 == "None") {
-        //use language model
-        //  if(model.compareTo("None")==false) entrenar usando modelo
         //use NNP for capitalized words
         if (t._1.matches("""^[A-Z][a-z]+.$""")) (t._1, default(1))
         //use CD for digits and numbers

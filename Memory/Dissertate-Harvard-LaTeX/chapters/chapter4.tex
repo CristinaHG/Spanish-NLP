@@ -147,7 +147,7 @@ Este diccionario léxico se utilizará luego para etiquetar inicialmente los dat
     \State $\text{top} \gets$ \o
     \For{$\text{sentence in corpus}$}
             \For{$\text{w, tag in sentence}$}
-            \State $\text{Lexicon(w, tag)} \gets \text{+=1}$
+            \State $\text{increase ocurrences of Lexicon(w, tag)} $
             \EndFor
     \EndFor        
     \For{$\text{w, tags in Lexicon}$} 
@@ -156,7 +156,8 @@ Este diccionario léxico se utilizará luego para etiquetar inicialmente los dat
              \State $\text{top} \gets \text{top + (freq,w,tag) }$
             \EndFor
             
-     \State $\text{get the maxLines with bigger ocurrency}$      
+     \State $\text{get the maxLines with bigger ocurrency}$ 
+     \State $\text{write to file}$      
         \EndProcedure
     \end{algorithmic}
     \label{alg:rAP}
@@ -225,5 +226,52 @@ RG SP CURWD según
 \end{minted}
 \subsection*{Obtención de reglas morfológicas}
 Las reglas morfológicas son aquellas basadas en los prefijos y sufijos de las palabras. Por ejemplo, 
-palabras acabadas en \textsf{-mente} son advervios en Español. En \textcolor{SchoolColor}{Pattern.es} se propone su uso para mejorar la precisión del algoritmo de Pos etiquetado, concretamente,para las palabras desconocidas que se etiquetan como nombres por defecto.  
+palabras acabadas en \textsf{-mente} son advervios en Español. En \textcolor{SchoolColor}{Pattern.es} se propone su uso para mejorar la precisión del algoritmo de Pos etiquetado, concretamente, para las palabras desconocidas que se etiquetan como nombres por defecto.\\[\baselineskip]
+El primer paso es detectar los sufijos y contar su ocurrencia en las palabras que no estén etiquetados como nombres propios. Para detectar si es un sufijo, se toman las 5 últimas letras de la palabra, y se comprueba si son menos letras que las de la palabra original. Por ejemplo: dada la palabra "flor" sabremos que no es un sufijo porque sus últimas 5 letras (y 4) son "flor", y eso mide igual que la palabra inicial. Dicho de otra forma, la palabra en sí no puede ser un sufijo.\newline
+Una vez tenemos los sufijos, el segundo paso es calcular la frecuencia de la etiqueta que más aparece con el mismo, creando una nueva regla. Por último, se filtran las reglas, descartando las que no casen al menos con 10 palabras y las que tengan como etiqueta más frecuente una que no se dé al menos en un 80\%. También se descartan aquellas cuya etiqueta sea \textsf{"NCS"} (nombre común singular). A continuación se presenta un pseudocódigo del proceso. El código en python se puede consultar en la web de \textcolor{SchoolColor}{CLiPS}.
+\begin{algorithm}[H]
+    \begin{algorithmic}[1]
+    \Procedure{createMorphology(corpus, maxLines=125)}{}
+    \State $\text{suffix} \gets$ \o
+    \State $\text{f1} \gets$ \o
+    \State $\text{f2} \gets$ \o 
+    \For{$\text{sentence in corpus}$}
+            \For{$\text{w, tag in sentence}$}
+            \State $\text{x} \gets \text{last 5 words of w}$
+            \If{\text{length(x) $<$ length(w) and tag $\neq$ "NP" }} \State \text{increase occurrences of suffix(x,tag)} \EndIf
+            \EndFor
+    \EndFor        
+    \For{$\text{x, tags in suffix}$} 
+    		\State $\text{tag} \gets \text{the tag with bigger ocurrence for x}$
+            \State $\text{f1} \gets \text{$\sum$ all ocurrences of tags for words ending in x}$
+            \State $\text{f2} \gets \text{ (number of ocurrences of tag)/f1}$ 
+            \State $\text{top} \gets \text{top + (f1,f2,x,tag) }$
+    \EndFor
+            
+     \State $\text{top} \gets \text{order rules by descendent ocurrency}$
+     \State $\text{top} \gets \text{filter (f1,f2,x,tag) which f1 $\geq$ 10 and f2 > 0.8 }$
+     \State $\text{top} \gets \text{get the top maxLines rules}$
+     \State $\text{top} \gets \text{format top}$
+     \State $\text{write to file}$     
+        \EndProcedure
+    \end{algorithmic}
+    \label{alg:rAP}
+    \caption{Obtención de las reglas morfológicas}
+\end{algorithm}       
 
+El resultado son reglas formateadas como \texttt{ [x fhassuf y tag]}, donde \textsf{x} es cualquier sufijo e \textsf{y} es la longitud del mismo. El resultado se guarda en \textcolor{SchoolColor}{es-morphology.txt}
+\captionof{listing}*{Algunas líneas de ejemplo de \textcolor{SchoolColor}{es-morphology.txt}}
+\begin{minted}
+[frame=lines,
+framesep=1mm,
+fontsize=\footnotesize,
+breaklines=true
+]{java}
+NC ado fhassuf 3 VMP x
+NC ido fhassuf 3 VMP x
+NC ico fhassuf 3 AQ x
+NC ivo fhassuf 3 AQ x
+NC osa fhassuf 3 AQ x
+NC oso fhassuf 3 AQ x
+NV ía fhassuf 2 VMI x
+\end{minted} 
