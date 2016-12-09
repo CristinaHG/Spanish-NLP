@@ -164,13 +164,13 @@ class PosTagger {
       if (tagged.indexOf(t) > 0) prev = tagged(tagged.indexOf(t) - 1)
       if (tagged.indexOf(t) < (tagged.length - 1)) next = tagged(tagged.indexOf(t) + 1)
       if (t._2 == "None") {
-        //use NNP for capitalized words
+        //use NP for capitalized words
         if (t._1.matches("""^[A-Z][a-z]+.$""")) (t._1, default(1))
         //use CD for digits and numbers
         else if (t._1.matches(CD)) (t._1, default(2))
         //use suffix rules (ej, -mente=ADV)
-        else if (!morphology.getMorphology.isEmpty) (t._1,morphology.apply(t._1, default(0), prev, next, morphology.getMorphology, lexicon.getLexDict))
-          // Use most frequent tag (NN).
+        else if (!morphology.getMorphology.isEmpty) (t._1,morphology.apply(t._1, default(0), prev, next, lexicon.getLexDict))
+          // Use most frequent tag (NCS).
         else (t._1, default(0))
 
       } else (t._1,t._2)

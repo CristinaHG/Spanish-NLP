@@ -253,16 +253,79 @@ def get_sentences(sentences:List[String]): Unit ={
  }
 \end{minted} 
 \section{POS Tagger}
-El algoritmo de Pos tagger realiza el etiquetado morfosintáctico del texto. Para ello recibe una lista de tokens y devuelve una lista de tuplas (token, etiqueta) de los mismos. Para el etiquetado se usan etiquetas en el formato de \textsc{Parole} \url{http://www.lsi.upc.edu/~nlp/SVMTool/parole.html} , pero es posible especificar una función que las mapee a otro formato como PennTreebank o el formato universal. \newline
+El algoritmo de Pos tagger realiza el etiquetado morfosintáctico del texto. Para ello recibe una lista de tokens y devuelve una lista de tuplas (token, etiqueta) de los mismos. Para el etiquetado se usan etiquetas en el formato de \textsc{Parole} \url{http://www.lsi.upc.edu/~nlp/SVMTool/parole.html} , pero se añade opción de especificar una función que las mapee a otro formato como PennTreebank o el formato universal. \newline
 Los parámetros que recibe el algoritmo son: 
 \begin{itemize}
 \item una lista de tokens
 \item un objeto de la clase léxico
 \item un objeto de la clase morfología
-\item un objeto de la clase coontexto
+\item un objeto de la clase contexto
+\item una lista de string con tres etiquetas por defecto("NCS","NP","Z")
+\item una función para mapear el formato de las etiquetas a otro formato(opcional)
 \end{itemize}
 
+El funcionamiento es el siguiente: 
+\begin{enumerate}
+\item Etiquetado inicial: se itera sobre los tokens, etiquetando las palabras conocidas. Para ello se buscan en el diccionario de léxico que se especifica por parámetro, asignándole la etiqueta que dicha palabra tenga el diccionario léxico. Si no se encuentra la palabra en el diccionario, esta se etiqueta como \texttt{"None"} en esta primera fase del algoritmo.
+\item Etiquetar las desconocidas: para ello se itera sobre la colección obtenida en el paso anterior. Si una palabra tiene etiqueta desconocida pero es una palabra que empieza por mayúscula, se cambia su etiqueta a \texttt{"NP"} (nombre propio). Si por el contrario, casa con la expresión regular:
+\begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+ private[this] val CD = """^[0-9\-\,\.\:\/\%\$]+\$"""
+ \end{minted}
+ es decir, es un dígito, símbolo o combinación de ambos, se etiqueta como \texttt{"Z"} (dígito). Si se ha proporcionado una morfología al algoritmo, se aplican las reglas morfológicas presentes en la misma para cambiar la etiqueta de la palabra. Por último, si ninguna de las anteriores aplica, se etiqueta como \texttt{"NCS"}.
+ \item Aplicación de reglas contextuales: Si se ha especificado un contexto, éste se aplica para mejorar el etiquetado anterior de todas las palabras.
+ \item Si se ha especificado una función para mapear las etiquetas a otro formato, ésta se aplica sobre el resultado anterior.   
+\end{enumerate} 
+El algoritmo en código se encuentra dentro de la clase \textcolor{SchoolColor}{PosTagger} y es el siguiente:
+\begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+def find_tags(tokens:List[String], lexicon:Lexicon, morphology:Morphology, context:Context, default:List[String],
+                mapCall:(String,String)=>(String,String)):List[(String,String)]={
 
+    var tagged=List[(String,String)]()
+    var taggedMorp=List[(String,String)]()
+    var taggedCntxt=List[(String,String)]()
+    var taggedfin=List[(String,String)]()
+    // Tag known words.
+    tokens.foreach(t=> tagged::=(t,lexicon.getLexDict.getOrElse(t,lexicon.getLexDict.getOrElse(t.toLowerCase,"None"))))
+    //Tag unknow words
+    tagged=tagged.reverse
+    taggedMorp=tagged.map(t=> {
+      var prev = ("None", "None")
+      var next = ("None", "None")
+      if (tagged.indexOf(t) > 0) prev = tagged(tagged.indexOf(t) - 1)
+      if (tagged.indexOf(t) < (tagged.length - 1)) next = tagged(tagged.indexOf(t) + 1)
+      if (t._2 == "None") {
+        //use NP for capitalized words
+        if (t._1.matches("""^[A-Z][a-z]+.\$""")) (t._1, default(1))
+        //use CD for digits and numbers
+        else if (t._1.matches(CD)) (t._1, default(2))
+        //use suffix rules (ej, -mente=ADV)
+        else if (!morphology.getMorphology.isEmpty) (t._1,morphology.apply(t._1, default(0), prev, next, lexicon.getLexDict))
+          // Use most frequent tag (NCS).
+        else (t._1, default(0))
+
+      } else (t._1,t._2)
+    })
+    //Tag words by context
+    if(!context.getContextList.isEmpty ) taggedCntxt=context.apply(taggedMorp)
+    else taggedCntxt=taggedMorp
+    //Map tag with a custom function
+    if(mapCall != null){
+      taggedCntxt.foreach(t => taggedfin ::= mapCall(t._1, t._2))
+      taggedfin=taggedfin.reverse
+    } else taggedfin=taggedCntxt
+    return taggedfin
+  }
+\end{minted}
 
 
 
