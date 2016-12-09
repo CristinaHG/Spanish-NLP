@@ -62,3 +62,61 @@ breaklines=true
   private[this] val EOS = "END-OF-SENTENCE"
 \end{minted}
 
+\subsection{Obtención de los tokens}
+Para obtener los tokens se define el token con una expresión regular de la siguiente forma:
+\begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+private[this] var TOKEN="""(\S+)\s""".r
+\end{minted}
+Es decir, uno o más caracteres que no sean espacios en blanco seguidos de un espacio en blanco. Ésta expresión regular se usa para encontrar todas las coincididencias de palabras seguidas de un espacio en blanco en el texto (s). Luego, se itera sobre cada una de las coincidencias encontradas de la siguiente manera: \newline
+Se comienza eliminando el espacio en blanco final de la palabra: por ejemplo \textsf{"gatos "} $\Rightarrow$ \textsf{"gatos"}, y se comprueba si la primera letra de la palabra es un signo de puntuación distinto del punto. Si lo es, se quita la primera letra de la palabra y se mete en la lista de tokens, repitiendo el mecanismo hasta que la primera letra de la palabra no sea un signo de puntuación. 
+
+\end{itemize} 
+\begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+ //find words
+    var tokens=List[String]()
+  TOKEN.findAllIn(s+" ").foreach(t => if(t.length>0){
+                        var tail=mutable.MutableList[String]()
+                        var t2=t.stripSuffix(" ")
+                        while (punc.contains(t2.head)){
+                          tokens::=t2.head.toString
+                          t2=t2.tail
+                        }
+                        while (punc.contains(t2.last) || t2.endsWith(".")) {
+                          if (t2.endsWith("...")) {
+                            tail+=("...")
+                            t2 = t2.substring(0, t2.length - 3)
+                          }
+                          else if (punc.contains(t2.last)) {
+                            tail+=(t2.substring(t2.length - 1))
+                            t2 = t2.substring(0,t2.length-1)
+                          } //split elipsis (...) before splitting period
+
+                          //split period(if not an abbreviation)
+                          if (t2.endsWith(".")) {
+                            if ((abbreviations.contains(t2) || re_abbr1.findAllMatchIn(t2).length > 0 || re_abbr2.findAllMatchIn(t2).length > 0 ||
+                              re_abbr3.findAllMatchIn(t2).length > 0)!=true) {
+
+                              tail+=(t2.substring(t2.length-1))
+                              t2 = t2.substring(0,t2.length-1)
+                            }
+                          }
+                        }
+                        if( t2.compareTo("")!=0){
+                          tokens::=t2
+                        }
+                        if(!tail.isEmpty) {
+                          tail.foreach(u=> tokens::=u.toString )
+                        }
+    })
+\end{minted}
+ 
