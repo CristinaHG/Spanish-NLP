@@ -107,43 +107,78 @@ breaklines=true
 ]{scala}
 var tokens=List[String]()
 
-    //get tokens and handle punctuation marks
-    TOKEN.findAllIn(s+" ").foreach(t => if(t.length>0){
-                        var tail=mutable.MutableList[String]()
-                        var t2=t.stripSuffix(" ")
-                        while (punc.contains(t2.head)){
-                         tokens::=t2.head.toString
-                         //tokens=tokens.reverse
-                          t2=t2.tail
-                        }
-                        breakable {
-                          while (punc.contains(t2.last) || t2.endsWith(".")) {
-                            if (t2.endsWith("...")) {
-                              tail += ("...")
-                              t2 = t2.substring(0, t2.length - 3)
-                            }
-                            else if (punc.contains(t2.last)) {
-                              tail += (t2.substring(t2.length - 1))
-                              t2 = t2.substring(0, t2.length - 1)
-                            } //split elipsis (...) before splitting period
+  //get tokens and handle punctuation marks
+  TOKEN.findAllIn(s+" ").foreach(t => if(t.length>0){
+   var tail=mutable.MutableList[String]()
+   var t2=t.stripSuffix(" ")
+   while (punc.contains(t2.head)){
+    tokens::=t2.head.toString
+    //tokens=tokens.reverse
+    t2=t2.tail
+   }
+   breakable {
+    while (punc.contains(t2.last) || t2.endsWith(".")) {
+     if (t2.endsWith("...")) {
+      tail += ("...")
+      t2 = t2.substring(0, t2.length - 3)
+     }
+     else if (punc.contains(t2.last)) {
+      tail += (t2.substring(t2.length - 1))
+      t2 = t2.substring(0, t2.length - 1)
+     } //split elipsis (...) before splitting period
 
-                            //split period(if not an abbreviation)
-                            if (t2.endsWith(".")) {
-                              if ((abbreviations.contains(t2) || re_abbr1.findAllMatchIn(t2).length > 0 || re_abbr2.findAllMatchIn(t2).length > 0) != true) {
-                                tail += (t2.substring(t2.length - 1))
-                                t2 = t2.substring(0, t2.length - 1)
-                              }else break()
-                              }
-                            }
-                          }
+     //split period(if not an abbreviation)
+     if (t2.endsWith(".")) {
+      if ((abbreviations.contains(t2) || re_abbr1.findAllMatchIn(t2).length > 0 || re_abbr2.findAllMatchIn(t2).length > 0) != true) {
+       tail += (t2.substring(t2.length - 1))
+       t2 = t2.substring(0, t2.length - 1)
+      }else break()
+     }
+    }
+   }
 
-                        if( t2.compareTo("")!=0){
-                          tokens::=t2
-                        }
-                        if(!tail.isEmpty) {
-                          tail.foreach(u=> tokens::=u.toString )
-                        }
-    })
+   if( t2.compareTo("")!=0){
+    tokens::=t2
+   }
+   if(!tail.isEmpty) {
+    tail.foreach(u=> tokens::=u.toString )
+   }
+  })
 \end{minted}
- 
+ Puesto que en el código se ha ido insertando por la cola, sólo quedaría invertir la lista para tener los tokens:
+ \begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+ tokens=tokens.reverse
+\end{minted}
 \subsection{Separación de frases} 
+Obtenida la lista de tokens, queda segmentarla por frases. El procedimiento es el siguiente: se itera sobre la lista de tokens obtenida, comprobando si el token es algún signo de fin de sentencia \textsf{("...",".","!","?","EOS")}. Cuando se encuentra un signo de fin de sentencia, se toman todos los tokens leídos (incluído el de final de sentencia) como una frase. A partir de aquí empieza a considerarse que empieza la frase siguiente. El proceso termina cuando se ha iterado sobre todos los tokens. Su descripción en código, es:
+\begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+  var j=0
+  var i=0
+  var sentences=List[String]()
+
+   while (j < tokens.length) {
+
+    if (tokens(j) == "..." || tokens(j) == "." || tokens(j) == "!" || tokens(j) == "?" || tokens(j) == EOS) {
+
+     j += 1
+     sentences ::= tokens.slice(i, j).filter(t => t != EOS).mkString(" ")
+     i = j
+    }
+    j += 1
+   }
+  sentences::=tokens.slice(i,j).filter(t=>t!=EOS).mkString(" ")
+\end{minted}
+
+
+
+

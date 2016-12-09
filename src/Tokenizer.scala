@@ -58,102 +58,103 @@ import scala.util.control.Breaks._
   //return a list of sentences. Each sentence is a space-separated string of tokens.
   //handles common abreviations.Punctuation marks are split fron other words. Periods or ?! mark the end of a sentence.
   //Headings without ending period are inferred by line breaks.
-  def find_tokens(string:String):List[List[String]]={
-    var s=string
-    val punc=punctuation.replace(".","").toCharArray
-//    var lista=Nil
-//    punc.foreach(p=>(p)::lista)
-//    //lista=lista.reverse
+ def find_tokens(string:String):List[List[String]]={
+  var s=string
+  val punc=punctuation.replace(".","").toCharArray
+  //    var lista=Nil
+  //    punc.foreach(p=>(p)::lista)
+  //    //lista=lista.reverse
   //handle unicode quotes
-    if(s.contains("“")) s.replace("“"," “ ")
-    if(s.contains("”")) s.replace("”"," ” ")
-    if(s.contains("‘")) s.replace("‘"," ‘ ")
-    if(s.contains("’")) s.replace("’"," ’ ")
-   //collapse whitespace
-    s="""\r\n""".r.replaceAllIn(s,"\n")
-    s="""\n{2,}""".r.replaceAllIn(s,EOS)
-    s="""\s+""".r.replaceAllIn(s," ")
+  if(s.contains("“")) s.replace("“"," “ ")
+  if(s.contains("”")) s.replace("”"," ” ")
+  if(s.contains("‘")) s.replace("‘"," ‘ ")
+  if(s.contains("’")) s.replace("’"," ’ ")
+  //collapse whitespace
+  s="""\r\n""".r.replaceAllIn(s,"\n")
+  s="""\n{2,}""".r.replaceAllIn(s,EOS)
+  s="""\s+""".r.replaceAllIn(s," ")
 
-    //find token words
-    var tokens=List[String]()
+  //find token words
+  var tokens=List[String]()
 
-    //get tokens and handle punctuation marks
-    TOKEN.findAllIn(s+" ").foreach(t => if(t.length>0){
-                        var tail=mutable.MutableList[String]()
-                        var t2=t.stripSuffix(" ")
-                        while (punc.contains(t2.head)){
-                         tokens::=t2.head.toString
-                         //tokens=tokens.reverse
-                          t2=t2.tail
-                        }
-                        breakable {
-                          while (punc.contains(t2.last) || t2.endsWith(".")) {
-                            if (t2.endsWith("...")) {
-                              tail += ("...")
-                              t2 = t2.substring(0, t2.length - 3)
-                            }
-                            else if (punc.contains(t2.last)) {
-                              tail += (t2.substring(t2.length - 1))
-                              t2 = t2.substring(0, t2.length - 1)
-                            } //split elipsis (...) before splitting period
+  //get tokens and handle punctuation marks
+  TOKEN.findAllIn(s+" ").foreach(t => if(t.length>0){
+   var tail=mutable.MutableList[String]()
+   var t2=t.stripSuffix(" ")
+   while (punc.contains(t2.head)){
+    tokens::=t2.head.toString
+    //tokens=tokens.reverse
+    t2=t2.tail
+   }
+   breakable {
+    while (punc.contains(t2.last) || t2.endsWith(".")) {
+     if (t2.endsWith("...")) {
+      tail += ("...")
+      t2 = t2.substring(0, t2.length - 3)
+     }
+     else if (punc.contains(t2.last)) {
+      tail += (t2.substring(t2.length - 1))
+      t2 = t2.substring(0, t2.length - 1)
+     } //split elipsis (...) before splitting period
 
-                            //split period(if not an abbreviation)
-                            if (t2.endsWith(".")) {
-                              if ((abbreviations.contains(t2) || re_abbr1.findAllMatchIn(t2).length > 0 || re_abbr2.findAllMatchIn(t2).length > 0) != true) {
-                                tail += (t2.substring(t2.length - 1))
-                                t2 = t2.substring(0, t2.length - 1)
-                              }else break()
-                              }
-                            }
-                          }
-
-                        if( t2.compareTo("")!=0){
-                          tokens::=t2
-                        }
-                        if(!tail.isEmpty) {
-                          tail.foreach(u=> tokens::=u.toString )
-                        }
-    })
-    //handle sentence breaks (periods,quotes,parenthesis)
-    tokens=tokens.reverse
-    var j=0
-    var i=0
-    var sentences=List[String]()
-
-    breakable {
-      while (j < tokens.length) {
-
-        if (tokens(j) == "..." || tokens(j) == "." || tokens(j) == "!" || tokens(j) == "?" || tokens(j) == EOS) {
-          while (j < tokens.length && (tokens(j) == "'" || tokens(j) == "\"" || tokens(j) == "”" || tokens(j) == "’" || tokens(j) == "..."
-            || tokens(j) == "." || tokens(j) == "!" || tokens(j) == "?" || tokens(j) == ")" || tokens(j) == EOS)) {
-            if ((tokens(j) == "'" || tokens(j) == "\"") && (sentences.last.count(_ == tokens(j)) % 2 == 0)) {
-              break()
-            }
-            j += 1
-          }
-
-          sentences ::= tokens.slice(i, j).filter(t => t != EOS).mkString(" ")
-          //sentences ::= ""
-          i = j
-        }
-        j += 1
-      }
+     //split period(if not an abbreviation)
+     if (t2.endsWith(".")) {
+      if ((abbreviations.contains(t2) || re_abbr1.findAllMatchIn(t2).length > 0 || re_abbr2.findAllMatchIn(t2).length > 0) != true) {
+       tail += (t2.substring(t2.length - 1))
+       t2 = t2.substring(0, t2.length - 1)
+      }else break()
+     }
     }
-    sentences::=tokens.slice(i,j).filter(t=>t!=EOS).mkString(" ")
-      //handle emoticons
-      sentences=sentences.map(s=>re_sarcasm.replaceAllIn(s,"(!)"))
-      sentences=sentences.map(s=> RE_EMOTICONS.replaceAllIn(s, m=> s"${m.group(1).replace(" ","")+m.group(2)}"))
-    return sentences.reverse.filter(s=> !s.isEmpty).map(t => t.split(" ").toList)
+   }
 
-  }
+   if( t2.compareTo("")!=0){
+    tokens::=t2
+   }
+   if(!tail.isEmpty) {
+    tail.foreach(u=> tokens::=u.toString )
+   }
+  })
+  //handle sentence breaks (periods,quotes,parenthesis)
+  tokens=tokens.reverse
+  var j=0
+  var i=0
+  var sentences=List[String]()
 
-  def get_sentences(sentences:List[String]): Unit ={
-      sentences.foreach(p=>print(p+"\n"))
-  }
+  //breakable {
+   while (j < tokens.length) {
 
-  def count_sentences(sentences:List[List[String]]): Int ={
-    return sentences.length
-  }
+    if (tokens(j) == "..." || tokens(j) == "." || tokens(j) == "!" || tokens(j) == "?" || tokens(j) == EOS) {
+//     while (j < tokens.length && (tokens(j) == "'" || tokens(j) == "\"" || tokens(j) == "”" || tokens(j) == "’" || tokens(j) == "..."
+//       || tokens(j) == "." || tokens(j) == "!" || tokens(j) == "?" || tokens(j) == ")" || tokens(j) == EOS)) {
+//      while (j < tokens.length && ( tokens(j) == "..." || tokens(j) == "." || tokens(j) == "!" || tokens(j) == "?" || tokens(j) == ")" || tokens(j) == EOS)) {
+      //if ((tokens(j) == "'" || tokens(j) == "\"") && (sentences.last.count(_ == tokens(j)) % 2 == 0)) {
+       //break()
+      //}
+      j += 1
+    // }
 
+     sentences ::= tokens.slice(i, j).filter(t => t != EOS).mkString(" ")
+     //sentences ::= ""
+     i = j
+    }
+    j += 1
+   }
+  //}
+  sentences::=tokens.slice(i,j).filter(t=>t!=EOS).mkString(" ")
+  //handle emoticons
+  sentences=sentences.map(s=>re_sarcasm.replaceAllIn(s,"(!)"))
+  sentences=sentences.map(s=> RE_EMOTICONS.replaceAllIn(s, m=> s"${m.group(1).replace(" ","")+m.group(2)}"))
+  return sentences.reverse.filter(s=> !s.isEmpty).map(t => t.split(" ").toList)
+
+ }
+
+
+ def get_sentences(sentences:List[String]): Unit ={
+  sentences.foreach(p=>print(p+"\n"))
+ }
+
+ def count_sentences(sentences:List[List[String]]): Int ={
+  return sentences.length
+ }
 
 }
