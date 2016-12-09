@@ -1,0 +1,64 @@
+%!TEX root = ../dissertation.tex
+\chapter{Implementación y pruebas}
+\label{conclusion}
+
+En este capítulo se explican la implementaciones llevadas a cabo en este trabajo y las pruebas que se han realizado sobre las mismas. Los algoritmos por se describen por orden en el pipeline. 
+\section{Tokenizador}
+El proceso de tokenización implementado recibe como entrada una cadena de texto y da como salida los tokens de la cadena. Si la cadena se compone de varias frases, entonces da como salida el texto segmentado en frases tokenizado. Por ejemplo, si recibe como entrada: \newline
+\begin{center}\texttt{"El cielo es azul. El agua es transparente y las amapolas son rojas."}
+\end{center}
+Dará como salida:
+ \texttt{["El", "cielo", "es", "azul", "."]} \newline
+\texttt{["El", "agua", "es", "transparente", "y", "las", "amapolas", "son", "rojas", "."]}\newline
+El algoritmo de tokenizado se puede dividir en 4 fases:
+\begin{enumerate}
+\item Preprocesado el string: manejo de comillas (simples y dobles), espacios en blanco, retornos de carro, saltos de línea.
+\item Obtención de los tokens del texto
+\item Separación de frases
+\item Manejo de sarcasmo y emoticonos
+\end{enumerate}
+
+Tanto el algoritmo como las estructuras usadas por éste se implementan en una clase \textcolor{SchoolColor}{Tokenizer}. Igual se ha hecho con el resto de clases, pretendiendo así aislar todo la funcionalidad relativa a una clase en la implementación de la misma. Veamos el algoritmo en detalle:
+\subsection{Preprocesado del texto recibido}
+\begin{minted}
+[frame=lines,
+framesep=1mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+def find_tokens(string:String):List[List[String]]={
+    var s=string
+    val punc=punctuation.replace(".","").toCharArray
+
+  //handle unicode quotes
+    if(s.contains("“")) s.replace("“"," “ ")
+    if(s.contains("”")) s.replace("”"," ” ")
+    if(s.contains("‘")) s.replace("‘"," ‘ ")
+    if(s.contains("’")) s.replace("’"," ’ ")
+   //collapse whitespace
+    s="""\r\n""".r.replaceAllIn(s,"\n")
+    s="""\n{2,}""".r.replaceAllIn(s,EOS)
+    s="""\s+""".r.replaceAllIn(s," ")
+\end{minted}
+Donde \textsf{punctuation} es una cadena con signos de puntuación, que se define dentro de la clase como: 
+\begin{minted}
+[frame=lines,
+framesep=1.2mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+  private[this] val punctuation = ".,;:!?()[]{}`'\"@#\$^&*+-|=~_"
+\end{minted}
+En la segunda línea de la función se elimina el punto de entre los signos de puntuación, dado que el punto lo manejaremos aparte, para evitar confusiones como creer que \textsf{"..."} es un final de frase al leer su primer punto. Con eso se construye un array de caracteres \textsf{punc}. \newline
+El siguiente paso es espaciar las comillas del texto, ya que el tokenizador busca tokens entre espacios en blanco. Por ejemplo, la frase:  \texttt{Como dice la canción,"vive y sé feliz".} Quedaría:  
+\texttt{Como dice la canción, " vive y sé feliz " .} \newline
+Finalmente se hace uso de expresiones regulares para sustituir la presencia de \textsf{\escape{r}\escape{n}}, que es el separador de línea que suele usar Windows por un salto de línea, así como cambiar uno o más caracteres en blanco por uno solo y dos o más saltos de línea por \textsf{EOS}, definida anteriormente dentro de la clase como:
+\begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+  private[this] val EOS = "END-OF-SENTENCE"
+\end{minted}
+

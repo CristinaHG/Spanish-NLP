@@ -70,14 +70,14 @@ import scala.util.control.Breaks._
     if(s.contains("‘")) s.replace("‘"," ‘ ")
     if(s.contains("’")) s.replace("’"," ’ ")
    //collapse whitespace
-    s="\r\n".r.replaceAllIn(s,"\n")
-    s="\n{2,}".r.replaceAllIn(s,EOS)
+    s="""\r\n""".r.replaceAllIn(s,"\n")
+    s="""\n{2,}""".r.replaceAllIn(s,EOS)
     s="""\s+""".r.replaceAllIn(s," ")
 
     //find words
     var tokens=List[String]()
 
-    //handle punctuation marks
+    //get tokens and handle punctuation marks
     TOKEN.findAllIn(s+" ").foreach(t => if(t.length>0){
                         var tail=mutable.MutableList[String]()
                         var t2=t.stripSuffix(" ")
@@ -132,13 +132,12 @@ import scala.util.control.Breaks._
           }
 
           sentences ::= tokens.slice(i, j).filter(t => t != EOS).mkString(" ")
-          sentences ::= ""
+          //sentences ::= ""
           i = j
         }
         j += 1
       }
     }
-
     sentences::=tokens.slice(i,j).filter(t=>t!=EOS).mkString(" ")
       //handle emoticons
       sentences=sentences.map(s=>re_sarcasm.replaceAllIn(s,"(!)"))

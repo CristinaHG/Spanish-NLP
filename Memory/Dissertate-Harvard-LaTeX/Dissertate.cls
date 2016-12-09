@@ -70,7 +70,7 @@
 \usepackage{array}
 \usepackage{float}
 \usepackage{minted}
-\usemintedstyle{colorful}
+\usemintedstyle{pastie}
 \usepackage{tikz}
 \usepackage{tikz-uml} 
 \usepackage{pgfgantt}
