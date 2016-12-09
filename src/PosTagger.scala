@@ -147,7 +147,7 @@ class PosTagger {
   //  Unknown words are then improved with morphological rules.
   //All words are improved with contextual rules.
   //  If map is a function, it is applied to each (token, tag) after applying all rules.
-  def find_tags(tokens:List[String], lexicon:Lexicon, model:String, morphology:Morphology, context:Context, entities:String, default:List[String],
+  def find_tags(tokens:List[String], lexicon:Lexicon, morphology:Morphology, context:Context, default:List[String],
                 mapCall:(String,String)=>(String,String)):List[(String,String)]={
 
     var tagged=List[(String,String)]()
@@ -176,7 +176,7 @@ class PosTagger {
       } else (t._1,t._2)
     })
     //Tag words by context
-    if(!context.getContextList.isEmpty && model.isEmpty) taggedCntxt=context.apply(taggedMorp)
+    if(!context.getContextList.isEmpty ) taggedCntxt=context.apply(taggedMorp)
     else taggedCntxt=taggedMorp
     //Map tag with a custom function
     if(mapCall != null){

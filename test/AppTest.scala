@@ -241,7 +241,7 @@ import org.junit.Assert.assertArrayEquals
        var s1ToTag=List[String]()
        s1.foreach(f=> s1ToTag::=f(0))
        s1ToTag=s1ToTag.reverse
-       val tagged=tagger.find_tags(s1ToTag, Lexicon, "", morphology,context,"", List("NCS","NP","Z"), null)//:List[(String,String)]
+       val tagged=tagger.find_tags(s1ToTag, Lexicon, morphology,context, List("NCS","NP","Z"), null)//:List[(String,String)]
 
        var j=0
        s1.foreach(s=>{

@@ -252,3 +252,22 @@ def get_sentences(sentences:List[String]): Unit ={
   return sentences.length
  }
 \end{minted} 
+\section{POS Tagger}
+El algoritmo de Pos tagger realiza el etiquetado morfosintáctico del texto. Para ello recibe una lista de tokens y devuelve una lista de tuplas (token, etiqueta) de los mismos. Para el etiquetado se usan etiquetas en el formato de \textsc{Parole} \url{http://www.lsi.upc.edu/~nlp/SVMTool/parole.html} , pero es posible especificar una función que las mapee a otro formato como PennTreebank o el formato universal. \newline
+Los parámetros que recibe el algoritmo son: 
+\begin{itemize}
+\item una lista de tokens
+\item un objeto de la clase léxico
+\item un objeto de la clase morfología
+\item un objeto de la clase coontexto
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
