@@ -327,8 +327,18 @@ def find_tags(tokens:List[String], lexicon:Lexicon, morphology:Morphology, conte
   }
 \end{minted}
 
-
-
+\subsection{Aplicación del léxico}
+En la clase \textcolor{SchoolColor}{Lexicon} se implementa un método que lee el fichero \textcolor{SchoolColor}{es-lexicon.txt} y crea un Diccionario Léxico como dato miembro de la clase. La cabecera del método de lectura es la siguiente:
+\begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+ def read(path: String, encoding: String, comment: String): Unit
+\end{minted}
+recibiendo como parámetros la ruta del fichero, la codificación y el formato de los comentarios del mismo. La aplicación del léxico en el método anterior es trivial, pues no es más que consultar un diccionario.
+\subsection{Aplicación de la morfología}
 
 
 
