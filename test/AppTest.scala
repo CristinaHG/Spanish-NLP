@@ -16,7 +16,7 @@ import org.junit.Assert.assertArrayEquals
 
 
    //create trait containing Strings to be used to test
-
+   val stringAbbr="Srta. y Sr."
    val string1 = "Los gatos negros son bonitos."
    val string2 = "Nadie podrá vivir eternamente"
    val string3 = "Los ingenieros informáticos son muy inteligentes"
@@ -51,7 +51,7 @@ import org.junit.Assert.assertArrayEquals
 
    //testing find tokens method
    test("find tokens test") {
-     tokenizer.find_tokens(string1)
+     assert(tokenizer.find_tokens(stringAbbr) == List(List("Srta.",  "y", "Sr.")))
      assert(tokenizer.find_tokens(string1) == List(List("Los", "gatos", "negros", "son", "bonitos", ".")))
      assert(tokenizer.find_tokens(string2) == List(List("Nadie", "podrá", "vivir", "eternamente")))
      assert(tokenizer.find_tokens(string3) == List(List("Los", "ingenieros", "informáticos", "son", "muy", "inteligentes")))
@@ -71,6 +71,7 @@ import org.junit.Assert.assertArrayEquals
    }
 
    test(" count sentences test") {
+     assert(tokenizer.count_sentences(tokenizer.find_tokens(stringAbbr)) == 1)
      assert(tokenizer.count_sentences(tokenizer.find_tokens(string1)) == 1)
      assert(tokenizer.count_sentences(tokenizer.find_tokens(string2)) == 1)
      assert(tokenizer.count_sentences(tokenizer.find_tokens(string3)) == 1)

@@ -16,9 +16,9 @@ import scala.util.control.Breaks._
     "S.L.", "Sr.", "Sra.", "Srta.", "s.s.s.", "tel.", "Ud.", "Vd.", "Uds.", "Vds.",
     "v.", "vol.", "W.C.")
 
-  private[this] val re_abbr1="""^[A-Za-z]\.$""".r // single letter , "D."
-  private[this] val re_abbr2="""^([A-Za-z]\.)+$""".r //alternating letters, "U.S. , apdo."
-  private[this] val re_abbr3="""^[A-Z][ + "|".concat("bcdfghjklmnpqrstvwxz") + "]+.$ """.r //# capital followed by consonants, "Mr."
+ // private[this] val re_abbr1="""^[A-Za-z]\.$""".r // single letter , "D."
+  private[this] val re_abbr1="""^([A-Za-z]\.)+$""".r //single and alternating letters, "U.S. , D."
+  private[this] val re_abbr2="""^[A-Z][a-z]{1,3}\.$""".r // capital followed by consonants, "Mr."
   private[this] val re_sarcasm="""\( ?\! ?\)""".r //handle sarcasm punctuation (!)
   private[this] val emoticons= mutable.Map[(String,Double),List[String]]()
   emoticons+=(("love" , 1.00) ->List("<3","♥"))
@@ -74,7 +74,7 @@ import scala.util.control.Breaks._
     s="""\n{2,}""".r.replaceAllIn(s,EOS)
     s="""\s+""".r.replaceAllIn(s," ")
 
-    //find words
+    //find token words
     var tokens=List[String]()
 
     //get tokens and handle punctuation marks
@@ -86,26 +86,27 @@ import scala.util.control.Breaks._
                          //tokens=tokens.reverse
                           t2=t2.tail
                         }
-                        while (punc.contains(t2.last) || t2.endsWith(".")) {
-                          if (t2.endsWith("...")) {
-                            tail+=("...")
-                            t2 = t2.substring(0, t2.length - 3)
-                          }
-                          else if (punc.contains(t2.last)) {
-                            tail+=(t2.substring(t2.length - 1))
-                            t2 = t2.substring(0,t2.length-1)
-                          } //split elipsis (...) before splitting period
+                        breakable {
+                          while (punc.contains(t2.last) || t2.endsWith(".")) {
+                            if (t2.endsWith("...")) {
+                              tail += ("...")
+                              t2 = t2.substring(0, t2.length - 3)
+                            }
+                            else if (punc.contains(t2.last)) {
+                              tail += (t2.substring(t2.length - 1))
+                              t2 = t2.substring(0, t2.length - 1)
+                            } //split elipsis (...) before splitting period
 
-                          //split period(if not an abbreviation)
-                          if (t2.endsWith(".")) {
-                            if ((abbreviations.contains(t2) || re_abbr1.findAllMatchIn(t2).length > 0 || re_abbr2.findAllMatchIn(t2).length > 0 ||
-                              re_abbr3.findAllMatchIn(t2).length > 0)!=true) {
-
-                              tail+=(t2.substring(t2.length-1))
-                              t2 = t2.substring(0,t2.length-1)
+                            //split period(if not an abbreviation)
+                            if (t2.endsWith(".")) {
+                              if ((abbreviations.contains(t2) || re_abbr1.findAllMatchIn(t2).length > 0 || re_abbr2.findAllMatchIn(t2).length > 0) != true) {
+                                tail += (t2.substring(t2.length - 1))
+                                t2 = t2.substring(0, t2.length - 1)
+                              }else break()
+                              }
                             }
                           }
-                        }
+
                         if( t2.compareTo("")!=0){
                           tokens::=t2
                         }
