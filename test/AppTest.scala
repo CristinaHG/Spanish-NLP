@@ -32,13 +32,13 @@ import org.junit.Assert.assertArrayEquals
    val string13 = "cuando éramos niños cazábamos muchos bichos"
    val string14 = "con tanto calor se funde el hielo"
    val string15 = "El sedentarismo físico se presenta con mayor frecuencia en la vida moderna urbana, en sociedades altamente tecnificadas en donde todo está pensado para evitar grandes esfuerzos físicos, en las clases altas y en los círculos intelectuales en donde las personas se dedican más a actividades cerebrales."
-   val string16 = "Saqué un 1.5 en matemáticas :D"
+   val string16 = "Saqué un 8.5 en matemáticas :D"
    //needed paths
    val verbsPath = "/home/cris/mrcrstnherediagmez@gmail.com/Spanish_Lematizer/data/es-verbs.txt"
    val lexiconPath="../Spanish_Lematizer/data/es-lexicon.txt"
    val morphologyPath="../Spanish_Lematizer/data/es-morphology.txt"
    val contextPath="../Spanish_Lematizer/data/es-context.txt"
-   val myParser=new Parser(lexiconPath,"",morphologyPath,contextPath,verbsPath,List("NCS","NP","Z"),"utf-8",";;;")
+   val myParser=new Parser(lexiconPath,morphologyPath,contextPath,verbsPath,List("NCS","NP","Z"),"utf-8",";;;")
    val tokenizer = new Tokenizer
    val tagger = new PosTagger
    val lemmatizer = new Lemmatizer
