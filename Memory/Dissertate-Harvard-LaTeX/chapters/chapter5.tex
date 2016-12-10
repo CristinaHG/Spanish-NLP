@@ -691,13 +691,130 @@ private[this] val irregular_inflections=List(
     ( "endiste", "ender"), ( "laremos", "lar"   ), ("ndíamos", "nder" ), ("icaréis", "icar" )
     ....
 \end{minted}
-y si coincide algna con el verbo a lematizar, se le aplica.
-\item  Si el verbo a lematizar contiene \texttt{"zco", "zca", "zcá"} ésto se reemplaza por \texttt{"ce"}. Por ejemplo, conozco $\rightarrow$ conoce. Ésto se hace porque luego se tratan con una regla los verbos en $3^{\circle}$ persona.
+y si coincide alguna con el verbo a lematizar, se le aplica.
+\item  Si el verbo a lematizar contiene \texttt{"zco", "zca", "zcá"} ésto se reemplaza por \texttt{"ce"}. Por ejemplo, conozco $\rightarrow$ conoce. Ésto se hace porque luego se tratan con una regla los verbos en $3^{\circ}$ persona.
 \item Si el verbo contiene \texttt{"ldr" o "ndr"}, por ejemplo \textsl{valdrá, contendrá, compondrá, pondrá, mantendrá...} se mantiene la \texttt{"l" o "n"} respectivamente, y el \texttt{"dr"} en adelante se cambiará por \texttt{"er"}. Obteniendo  \textsl{valer, contener, componer, poner, mantener...}.
 \item Muchos verbos cuyo infinitivo acaba en \textsl{-ar} tienen inflexiones regulares. Por ejemplo, \texttt{ cantabas, cantó, presentaremos, invitarás, ahorraríais} cuyas inflexiones son \texttt{"as","ó","aremos","arás","aríais"}. En este paso se define una lista de inflexiones regulares para verbos acabados en \textsl{-ar} y se aplica. Si coincide alguna, se elimina la inflexión y se añade el infinitivo. 
 \item Parecido al paso anterior pero con una lista de inflexiones regulares para verbos que acaben en \textsl{-er}.
 Sin embargo, muchas de estas inflexiones también son comunes en verbos cuyo infinitivo acaba en \textsl{-ir}. Para detectar de que conjugación es, se comprueba si la palabra sin la inflexión es mayor que dos y si la penúltima letra de ésta es \texttt{"i"}. En ese caso, Se le añade el infinitivo \texttt{"-ir"}. En caso contrario, se le añade \texttt{"-er"}. Por ejemplo, \textsl{"correríais"} quedaría como \textsl{"corr-"} sin inflexión, y eso tiene longitud mayor que 2. Pero como su penúltima letra es una \texttt{"r"}, se lematizaría como \texttt{"correr"}.
-\item Se aplica un proceso esactamente igual al de los infinitivos acabados en \texttt{"-ar"} pero con inflexiones típicas de verbos con infinitivos acabados en  \texttt{"-ir"}.  
-
- 
+\item Se aplica un proceso esactamente igual al de los infinitivos acabados en \texttt{"-ar"} pero con inflexiones típicas de verbos con infinitivos acabados en \texttt{"-ir"}.
+\item Las palabras acabadas en \texttt{"a"} u \texttt{"o"} son consideradas de la primera conjugación, oor lo que se elimina dicha terminación y se les añade \texttt{-ar}.
+\item Igual que el anterior para verbos acabados en  \texttt{"as", "an"}.
+\item Para verbos presente,$3^{\circ}$ persona del singular acabados en \texttt{"-e"} se comprueba si la palabra sin la inflexión es mayor que dos y si la antepenúltima letra de ésta es \texttt{"i"}, y en ese caso se elimina \texttt{"-e"} para añadirle \texttt{"-ir"}. En caso contrario, se eleminiaría \texttt{"-e"} para añadir \texttt{"-er"}.
+\item Se hace un proceso similar a los dos anteriores pero para las terminaciones \texttt{"-es", "-en"}.
+\item Por último se crea una lista de inflecciones verbales de tiempos en presente para $1^{\circ}$ y $2^{\circ}$ personas del plural, asociándole las conjugaciones a las que suelen pertenecer con más frecuencia:
+\begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+  val present_plural_inflection_o=List(
+    ("amos", "áis"),
+    ("emos", "éis"),
+    ("imos", "ís")
+  )
+  val terminations=Array("ar","er","ir")
+\end{minted}
+ y se itera sobre estas inflexiones, aplicando la conjunción correspondiente al verbo a lematizar si éste presenta alguna terminación que case con las de la lista de inflexiones.
 \end{itemize}
+A continuación se ilustra el proceso en código Scala:
+\begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+def find_lemma(verb:String):String={
+  // Spanish has 12,000+ verbs, ending in -ar (85%), -er (8%), -ir (7%).
+  // Over 65% of -ar verbs (6500+) have a regular inflection.
+  var v = verb.toLowerCase
+  if(verb.endsWith("ar") || verb.endsWith("er") || verb.endsWith("ir")) return verb //verb is infinitive
+  //set of rules for irregular inflections +10%
+
+  irregular_inflections.foreach(a=> if(v.endsWith(a._1)) return v.substring(0,v.length-a._1.length).concat(a._2))
+  //reconozco=>reconocer
+  v=v.replace("zco","ce")
+  //reconozcamos=>reconocer
+  v=v.replace("zca","ce")
+  //reconozcáis=>reconocer
+  v=v.replace("zcá","ce")
+  //valdrá => valer
+if(v.contains("ldr")) return v.substring(0,v.indexOf("ldr")+1).concat("er")
+  //contendrá=>contener
+  if(v.contains("ndr")) return v.substring(0,v.indexOf("ndr")+1).concat("er")
+//many verbs end in -ar and have a regular inflection
+val regular_inflection_ar=List (
+  "ando", "ado", "ad",                                // participle
+  "aré", "arás", "ará", "aremos", "aréis", "arán", // future
+  "aría", "arías", "aríamos", "aríais", "arían",    // conditional
+  "aba", "abas", "ábamos", "abais", "aban",         // past imperfective
+    "é", "aste", "ó", "asteis", "aron",               // past perfective
+    "ara", "aras", "áramos", "arais", "aran")       // past subjunctive
+
+regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.length-u.length).concat("ar"))
+//Many verbs end in -er and have a regular inflection
+  val regular_inflection_er=List(
+      "iendo", "ido", "ed",                               // participle
+  "eré", "erás", "erá", "eremos", "eréis", "erán", // future
+  "ería", "erías", "eríamos", "eríais", "erían",    // conditional
+  "ía", "ías", "íamos", "íais", "ían",              // past imperfective
+    "í", "iste", "ió", "imos", "isteis", "ieron",        // past perfective
+    "era", "eras", "éramos", "erais", "eran")       //past subjunctive
+
+  regular_inflection_er.foreach(u=>if(v.endsWith(u)){
+    val difLength=v.length-u.length
+    if(v.substring(0,difLength).length>2 && v.substring(0,difLength).charAt(difLength-2)=='i')
+  return v.substring(0,difLength).concat("ir") else return v.substring(0,difLength).concat("er")} )
+
+  //Many verbs end in -ir and have a regular inflection
+  val regular_inflection_ir=List(
+    "iré", "irás", "irá", "iremos", "iréis", "irán", //future
+  "iría", "irías", "iríamos", "iríais", "irían")  //past subjunctive
+
+  regular_inflection_ir.foreach(u=>if(v.endsWith(u)) return v.substring(0,v.length-u.length).concat("ir"))
+  //Present 1sg -o: yo hablo, como, vivo => hablar, comer, vivir.
+  if(v.endsWith("o")) return v.substring(0,v.length-1).concat("ar")
+  //Present 2sg, 3sg and 3pl: tú hablas.
+  if(v.endsWith("a")) return v.substring(0,v.length-1).concat("ar")
+
+  if(v.endsWith("as") || v.endsWith("an")){
+    if (v.endsWith("as")) v =v.stripSuffix("s").dropRight(1)
+    else if( v.endsWith("an")) v=v.stripSuffix("n").dropRight(1)
+   return v.concat("ar")
+  }
+  // Present 2sg, 3sg and 3pl: tú comes, tú vives.
+  if(v.endsWith("e")){
+    if(v.substring(0,v.length-1).length>2 && v.substring(0,v.length-1).charAt(v.length-3)=='i') return v.substring(0,v.length-1).concat("ir")
+    else return v.substring(0,v.length-1).concat("er")
+  }
+  if(v.endsWith("es") || v.endsWith("en")){
+    if (v.endsWith("es")) v =v.stripSuffix("s").dropRight(1)
+    else if( v.endsWith("en")) v=v.stripSuffix("n").dropRight(1)
+    if(v.length>2 && v.charAt(v.length-2)=='i') return v.concat("ir")
+  else return v.concat("er")
+  }
+  // Present 1pl and 2pl: nosotros hablamos.
+
+  val present_plural_inflection_o=List(
+    ("amos", "áis"),
+    ("emos", "éis"),
+    ("imos", "ís")
+  )
+  val terminations=Array("ar","er","ir")
+  //terminations{1}
+  present_plural_inflection_o.foreach(u=> {
+    if (v.endsWith(u._1)) return v.substring(0, v.length - u._1.length).concat(terminations {
+      present_plural_inflection_o.indexOf(u)
+    })
+
+    if (v.endsWith(u._2)) return v.substring(0, v.length - u._2.length).concat(terminations {
+      present_plural_inflection_o.indexOf(u)
+    })
+
+  })
+
+  return v
+}
+
+\end{minted}
