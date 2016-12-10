@@ -290,7 +290,7 @@
 	\renewcommand{\headrulewidth}{0.0pt}
 	\vspace*{35pt}
 	\begin{center}
-    	\Large \textcolor{SchoolColor}{\@title} \normalsize \\
+    	\Large \textcolor{SchoolColor}{Algorithms for natural language processing in Spanish: Tokenizer, POS tagger and lemmatizer} \normalsize \\
 	%\large \textcolor{SchoolColor}{\@subtitle} \normalsize \\
     	\vspace*{20pt}
     	\scshape Abstract \\ \rm
@@ -340,7 +340,7 @@
     \clearpage
     \begin{spacing}{\dcompressedspacing}
         \bibliography{references}
-        \addcontentsline{toc}{chapter}{References}
+        \addcontentsline{toc}{chapter}{\texorpdfstring{References}{Referencias}}
         \bibliographystyle{apalike2}
         \include{endmatter/colophon}
     \end{spacing}
