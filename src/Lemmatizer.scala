@@ -184,8 +184,8 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
     val w=word.toLowerCase()
     //los gatos=> el gato
     if (pos=="DT"){
-      if(w.compareTo("la")==0 || w.compareTo("las")==0 || w.compareTo("los")==0) return "el"
-      if(w.compareTo("una")==0 || w.compareTo("unas")==0 || w.compareTo("unos")==0) return "un"
+      if(List("la","las","los").contains(w)) return "el"
+      if(List("una","unas","unos").contains(w)) return "un"
     }
     //hombres=>hombre
     if (w.endsWith("es") && (w.substring(0,w.length-2).endsWith("br") || (w.substring(0,w.length-2).endsWith("i")) ||
