@@ -176,66 +176,68 @@ breaklines=true
    }
   sentences::=tokens.slice(i,j).filter(t=>t!=EOS).mkString(" ")
 \end{minted}
-Hay frases que no tienen signo de puntuación final. Se podría considerar que si no tiene signo de puntuación final no está bien estructurada y por lo tanto no es válida, pero se ha preferido considerar que si no tiene signo de puntuación final, la frase se acaba cuando no hay más tokens. Por ejemplo \texttt{"Ese boli negro escribe muy bien"} se entendería como una única frase. Debido a esto, se añade la última línea de código anterior, ya fuera del bucle. Para textos bien estructurados (con frases con una marca de fin) esta sentencia última resulta en añadir un sentencia vacía al conjunto de sentencias, sin embargo esta se filtra antes de devolver el resultado de forma muy cómoda en \texttt{Scala}. \newline   
-\subsection{Manejo de sarcasmo y emoticonos} 
-Finalmente, se aplican las expresiones regulares para señalizar una posible muestra de  sarcasmo y el manejo de emoticonos y se devuelve el resultado como lostas de listas de cadenas, es decir, como una lista de frases.
-\begin{minted}
-[frame=lines,
-framesep=1.3mm,
-fontsize=\footnotesize,
-breaklines=true
-]{scala}
- sentences=sentences.map(s=>re_sarcasm.replaceAllIn(s,"(!)"))
-  sentences=sentences.map(s=> RE_EMOTICONS.replaceAllIn(s, m=> s"\${m.group(1).replace(" ","")+m.group(2)}"))
-  return sentences.reverse.filter(s=> !s.isEmpty).map(t => t.split(" ").toList)
-\end{minted}
-donde \textcolor{SchoolColor}{re\_sarcasm} se define arriba como:
-\begin{minted}
-[frame=lines,
-framesep=1.3mm,
-fontsize=\footnotesize,
-breaklines=true
-]{scala}
-private[this] val re_sarcasm="""\( ?\! ?\)""".r
-\end{minted}
-y \textcolor{SchoolColor}{RE\_EMOTICONS} como:
-\begin{minted}
-[frame=lines,
-framesep=1.3mm,
-fontsize=\footnotesize,
-breaklines=true
-]{scala}
-private[this] val emoticons= mutable.Map[(String,Double),List[String]]()
-  emoticons+=(("love" , 1.00) ->List("<3","♥"))
-  emoticons+=(("grin" , 1.00)->List(">:D", ":-D", ":D", "=-D", "=D", "X-D", "x-D", "XD", "xD", "8-D"))
-  emoticons+=(("taunt", +0.75)->List(">:P", ":-P", ":P", ":-p", ":p", ":-b", ":b", ":c)", ":o)", ":^)"))
-  emoticons+=(("smile", +0.50)->List(">:)", ":-)", ":)", "=)", "=]", ":]", ":}", ":>", ":3", "8)", "8-)"))
-  emoticons+=(("wink" , +0.25)->List(">;]", ";-)", ";)", ";-]", ";]", ";D", ";^)", "*-)", "*)"))
-  emoticons+=(("gasp" , +0.05)->List(">:o", ":-O", ":O", ":o", ":-o", "o_O", "o.O", "°O°", "°o°"))
-  emoticons+=(("worry", -0.25)->List(">:/",  ":-/", ":/", ":\\", ">:\\", ":-.", ":-s", ":s", ":S", ":-S", ">.>"))
-  emoticons+=(("frown", -0.75)->List(">:[", ":-(", ":(", "=(", ":-[", ":[", ":{", ":-<", ":c", ":-c", "=/"))
-  emoticons+=(("cry"  , -1.00)->List(":'(", ":'''(", ";'("))
+Hay frases que no tienen signo de puntuación final. Se podría considerar que si no tiene signo de puntuación final no está bien estructurada y por lo tanto no es válida, pero se ha preferido considerar que si no tiene signo de puntuación final, la frase se acaba cuando no hay más tokens. Por ejemplo \texttt{"Ese boli negro escribe muy bien"} se entendería como una única frase.
+\\[\baselineskip]
+Debido a esto, se añade la última línea de código anterior, ya fuera del bucle. Para textos bien estructurados (con frases con una marca de fin) esta sentencia última resulta en añadir un sentencia vacía al conjunto de sentencias, sin embargo esta se filtra antes de devolver el resultado de forma muy cómoda en \texttt{Scala}. \newline   
+%\subsection{Manejo de sarcasmo y emoticonos} 
+%Finalmente, se aplican las expresiones regulares para señalizar una posible muestra de  sarcasmo y el manejo de %emoticonos y se devuelve el resultado como lostas de listas de cadenas, es decir, como una lista de frases.
+%\begin{minted}
+%[frame=lines,
+%framesep=1.3mm,
+%fontsize=\footnotesize,
+%breaklines=true
+%]{scala}
+ %sentences=sentences.map(s=>re_sarcasm.replaceAllIn(s,"(!)"))
+%  sentences=sentences.map(s=> RE_EMOTICONS.replaceAllIn(s, m=> s"\${m.group(1).replace(" ","")+m.group(2)}"))
+%  return sentences.reverse.filter(s=> !s.isEmpty).map(t => t.split(" ").toList)
+%\end{minted}
+%donde \textcolor{SchoolColor}{re\_sarcasm} se define arriba como:
+%\begin{minted}
+%[frame=lines,
+%framesep=1.3mm,
+%fontsize=\footnotesize,
+%breaklines=true
+%]{scala}
+%private[this] val re_sarcasm="""\( ?\! ?\)""".r
+%\end{minted}
+%y \textcolor{SchoolColor}{RE\_EMOTICONS} como:
+%\begin{minted}
+%[frame=lines,
+%framesep=1.3mm,
+%fontsize=\footnotesize,
+%breaklines=true
+%]{scala}
+%private[this] val emoticons= mutable.Map[(String,Double),List[String]]()
+%  emoticons+=(("love" , 1.00) ->List("<3","♥"))
+%  emoticons+=(("grin" , 1.00)->List(">:D", ":-D", ":D", "=-D", "=D", "X-D", "x-D", "XD", "xD", "8-D"))
+%  emoticons+=(("taunt", +0.75)->List(">:P", ":-P", ":P", ":-p", ":p", ":-b", ":b", ":c)", ":o)", ":^)"))
+%  emoticons+=(("smile", +0.50)->List(">:)", ":-)", ":)", "=)", "=]", ":]", ":}", ":>", ":3", "8)", "8-)"))
+%  emoticons+=(("wink" , +0.25)->List(">;]", ";-)", ";)", ";-]", ";]", ";D", ";^)", "*-)", "*)"))
+%  emoticons+=(("gasp" , +0.05)->List(">:o", ":-O", ":O", ":o", ":-o", "o_O", "o.O", "°O°", "°o°"))
+%  emoticons+=(("worry", -0.25)->List(">:/",  ":-/", ":/", ":\\", ">:\\", ":-.", ":-s", ":s", ":S", ":-S", ">.>"))
+%  emoticons+=(("frown", -0.75)->List(">:[", ":-(", ":(", "=(", ":-[", ":[", ":{", ":-<", ":c", ":-c", "=/"))
+ % emoticons+=(("cry"  , -1.00)->List(":'(", ":'''(", ";'("))
 
-  private[this] var re_emoticons=""::Nil
-  //separating emojis by "|"
-  emoticons.values.foreach(list=>re_emoticons:::=list.flatMap(elem=> if(elem.compareTo(list.last)!=0) "|"::elem::Nil else "|"::elem::"|"::Nil).tail)
-  private[this] var re1_emoticons=""::Nil
-  //scaping each char in icons
-  re_emoticons.foreach(icon=>if(!(icon.equals("|"))) re1_emoticons::=icon.mkString("?".concat("""\""")) else re1_emoticons::=icon )
-  // if letters= "D" "S" "s" "b" or "c" do not scape
-  re1_emoticons=re1_emoticons.map(t=>
-      if( t.contains("D")) t.dropRight(t.length-t.indexOf("D")+1)+t.last
-      else if (t.contains("S")) t.dropRight(t.length-t.indexOf("S")+1)+t.last
-      else if (t.contains("s")) t.dropRight(t.length-t.indexOf("s")+1)+t.last
-      else if (t.contains("b")) t.dropRight(t.length-t.indexOf("b")+1)+t.last
-      else if (t.contains("c")) t.dropRight(t.length-t.indexOf("c")+1)+t.last
-      else t
-  )
-  // scape first char in emoji
-  re1_emoticons=re1_emoticons.reverse.tail.map(t => if(!(t.equals("|"))) """\"""+t else t )  
-  //create emoji regex
-  private[this] var RE_EMOTICONS=Pattern.quote(re1_emoticons.dropRight(2).mkString).r
-\end{minted}
+  %private[this] var re_emoticons=""::Nil
+  %//separating emojis by "|"
+  %emoticons.values.foreach(list=>re_emoticons:::=list.flatMap(elem=> if(elem.compareTo(list.last)!=0) "|"::elem::Nil else "|"::elem::"|"::Nil).tail)
+  %private[this] var re1_emoticons=""::Nil
+  %//scaping each char in icons
+  %re_emoticons.foreach(icon=>if(!(icon.equals("|"))) re1_emoticons::=icon.mkString("?".concat("""\""")) else re1_emoticons::=icon )
+%  // if letters= "D" "S" "s" "b" or "c" do not scape
+ % re1_emoticons=re1_emoticons.map(t=>
+  %    if( t.contains("D")) t.dropRight(t.length-t.indexOf("D")+1)+t.last
+   %   else if (t.contains("S")) t.dropRight(t.length-t.indexOf("S")+1)+t.last
+  %    else if (t.contains("s")) t.dropRight(t.length-t.indexOf("s")+1)+t.last
+    %  else if (t.contains("b")) t.dropRight(t.length-t.indexOf("b")+1)+t.last
+     % else if (t.contains("c")) t.dropRight(t.length-t.indexOf("c")+1)+t.last
+      %else t
+  %)
+  %// scape first char in emoji
+  %re1_emoticons=re1_emoticons.reverse.tail.map(t => if(!(t.equals("|"))) """\"""+t else t )  
+  %//create emoji regex
+  %private[this] var RE_EMOTICONS=Pattern.quote(re1_emoticons.dropRight(2).mkString).r
+%\end{minted}
 
 Por último, en la clase tokenizador también se implementan dos métodos que imprimen las sentencias de tokens y cuentan las sentencias de tokens, respectivamente. 
 %\begin{minted}
