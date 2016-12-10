@@ -238,20 +238,20 @@ private[this] val emoticons= mutable.Map[(String,Double),List[String]]()
 \end{minted}
 
 Por último, en la clase tokenizador también se implementan dos métodos que imprimen las sentencias de tokens y cuentan las sentencias de tokens, respectivamente. 
-\begin{minted}
-[frame=lines,
-framesep=1.3mm,
-fontsize=\footnotesize,
-breaklines=true
-]{scala}
-def get_sentences(sentences:List[String]): Unit ={
-  sentences.foreach(p=>print(p+"\n"))
- }
+%\begin{minted}
+%[frame=lines,
+%framesep=1.3mm,
+%fontsize=\footnotesize,
+%breaklines=true
+%]{scala}
+%def get_sentences(sentences:List[String]): Unit ={
+ % sentences.foreach(p=>print(p+"\n"))
+ %}
 
- def count_sentences(sentences:List[List[String]]): Int ={
-  return sentences.length
- }
-\end{minted} 
+ %def count_sentences(sentences:List[List[String]]): Int ={
+ % return sentences.length
+% }
+%\end{minted} 
 \section{POS Tagger}
 El algoritmo de Pos tagger realiza el etiquetado morfosintáctico del texto. Para ello recibe una lista de tokens y devuelve una lista de tuplas (token, etiqueta) de los mismos. Para el etiquetado se usan etiquetas en el formato de \textsc{Parole} \url{http://www.lsi.upc.edu/~nlp/SVMTool/parole.html} , pero se añade opción de especificar una función que las mapee a otro formato como PennTreebank o el formato universal. \newline
 Los parámetros que recibe el algoritmo son: 
@@ -448,8 +448,8 @@ private[this] var rulesSet= Set(
     "nextbigram" // Following word is tagged x and word after is tagged y.
   )
 \end{minted}
-El procedimiento de aplicación de las reglas contextuales es similar al de las morfológicas: 
-se tiene una lista de tuplas de (token, etiqueta) a la que se le añaden tres delimitadores por cada extremo y se itera sobre ella. En cada elemento de esa lista se itera sobre cada regla de \texttt{contextList} , y si la etiqueta de la tupla (token, etiqueta) actual no es un delimitador y ésta coincide con la primera etiqueta de la regla de \texttt{contextList} sobre la que se itera, se comprueban las reglas contextuales correspondientes a la etiqueta considerada y el comando de la regla actual de \texttt{contextList}. Si empareja alguna, se modifica la etiqueta de la tupla con la etiqueta que indique la regla. Finalmente se eliminan los delimitadores del resultado.
+El procedimiento de aplicación de las reglas contextuales es similar al de las morfológicas: \newline
+se tiene una lista de tuplas de (token, etiqueta) a la que se le añaden tres delimitadores por cada extremo y se itera sobre ella.\newline En cada elemento de esa lista se itera sobre cada regla de \texttt{contextList} , y si la etiqueta de la tupla (token, etiqueta) actual no es un delimitador y ésta coincide con la primera etiqueta de la regla de \texttt{contextList} sobre la que se itera, se comprueban las reglas contextuales correspondientes a la etiqueta considerada y el comando de la regla actual de \texttt{contextList}. Si empareja alguna, se modifica la etiqueta de la tupla con la etiqueta que indique la regla. Finalmente se eliminan los delimitadores del resultado.
 El proceso en código es como sigue:
 \begin{minted}
 [frame=lines,
@@ -546,7 +546,8 @@ def penntreebank2universal(token: String, tag: String):(String,String)def penntr
     if(List("SYM", "LS", ".", "!", "?", ",", ":", "(", ")", "\"", "#", "\$").contains(tag)) return (token, PUNC)
     return (token, X)
   }
-\end{minted} mapea las etiquetas de \textsc{pennTreebank} al  \textsc{universal} y
+\end{minted}
+ mapea las etiquetas de \textsc{pennTreebank} al  \textsc{universal} 
 \begin{minted}
 [frame=lines,
 framesep=1.3mm,
@@ -562,6 +563,7 @@ def parole2universal(token:String, tag:String):(String,String)= {
     var paroletreebank=parole2penntreebank(token, tag)
     return penntreebank2universal(paroletreebank._1,paroletreebank._2)
   }
-\end{minted} mapea de \textsc{parole} al  \textsc{universal}.
+\end{minted}
+mapea de \textsc{parole} al  \textsc{universal}.
 
-
+\section{Lematizador}
