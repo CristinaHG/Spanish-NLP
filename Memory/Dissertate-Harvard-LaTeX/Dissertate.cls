@@ -124,14 +124,14 @@
 \usepackage[titletoc]{appendix}
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
 \renewcommand{\cftchapfont}{\normalsize \scshape}
-\renewcommand\listfigurename{Listing of figures}
+\renewcommand\listfigurename{Lista de figuras}
 \renewcommand\listtablename{Listing of tables}
 
 % Endmatter
 \renewcommand{\setthesection}{\arabic{chapter}.A\arabic{section}}
 
 % References.
-\renewcommand\bibname{References}
+\renewcommand\bibname{Referencias}
 \RequirePackage[square,super,comma,numbers]{natbib}
 \renewcommand{\bibnumfmt}[1]{[#1]}
 \RequirePackage[palatino]{quotchap}
@@ -219,7 +219,7 @@
 	\abstractpage
     \contentspage
 	% \listoffigures % optional
-	\dedicationpage
+	%\dedicationpage
 	\acknowledgments
 }
 
@@ -256,7 +256,7 @@
 }
 
 \newcommand{\abstractpage}{
-    \pdfbookmark{Abstract}{Abstract}
+    \pdfbookmark{Abstract}{Resumen}
 	\newpage
 	\pagenumbering{roman}
 	\setcounter{page}{3}
@@ -296,7 +296,7 @@
     	\scshape Abstract \\ \rm
 	\end{center}
     \begin{spacing}{\dnormalspacing}
-    	\input{frontmatter/abstract}
+    	\input{frontmatter/abstractEn}
 	\vspace*{5pt}
 	\textcolor{SchoolColor}{Keywords:} \text{Natural language processing, Scala, tokenizer, pos tagger, lematizer}
     \end{spacing}
@@ -306,7 +306,7 @@
 }
 
 \newcommand{\contentspage}{
-    \pdfbookmark{\contentsname}{Contents}
+    \pdfbookmark{\contentsname}{Contenidos}
     \tableofcontents
 }
 
@@ -321,7 +321,7 @@
 }
 
 \newcommand{\acknowledgments}{
-	\chapter*{Acknowledgments}
+	\chapter*{Agradecimientos}
 	\noindent
     \begin{spacing}{\dnormalspacing}
     	\input{frontmatter/thanks}
