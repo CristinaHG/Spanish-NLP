@@ -153,8 +153,8 @@ import org.junit.Assert.assertArrayEquals
        if (lemmatizer.singularize((f._2.sortWith(_.length < _.length)).head, "NN") == f._1) i = i + 1
        n = n + 1
      })
-
      assert(i.toFloat / n > 0.93)
+     print("singularize accuracy:" + i.toFloat/n )
    }
 
    test("predicative") {
@@ -179,8 +179,8 @@ import org.junit.Assert.assertArrayEquals
        if (lemmatizer.predicative(f._2.sortWith(_.length < _.length).head) == f._1) i = i + 1
        n = n + 1
      })
-
      assert(i.toFloat / n > 0.92)
+     print("predicative accuracy:" + i.toFloat/n  )
    }
 
 
@@ -193,16 +193,8 @@ import org.junit.Assert.assertArrayEquals
        n = n + 1
      })
 
-     //know the faults
-     //var pyfaults =scala.io.Source.fromFile("../Spanish_Lematizer/data/pyfaults.txt").getLines().toList
-     // var ScalaFaults=faults.filterNot(p=>pyfaults.contains(p._1))
-//     ScalaFaults.foreach(s=>{
-//       if(lemmatizer.find_lemma(s._1)==s._2) i=i+1
-//       n=n+1
-//     })
-
-  assert(i.toFloat/n > 0.80)
-  print("accuracy lematization: " + i.toFloat/n )
+      assert(i.toFloat/n > 0.80)
+      print("accuracy lematization of verbs: " + i.toFloat/n )
 }
    test("test get lemmas"){
      val lemmatas=List(("Los", "DT", "el"),
@@ -218,14 +210,13 @@ import org.junit.Assert.assertArrayEquals
        ("en", "IN"), ("la", "DT"), ("alfombra", "NN")))==lemmatas)
    }
 
-   test("test parse"){
-     val sentence="El gato negro se sentó en la alfombra."
-     val listSol=List("El/DT/el", "gato/NN/gato", "negro/JJ/negro","se/PRP/se","sentó/VB/sentar","en/IN/en", "la/DT/el" ,"alfombra/NN/alfombra","././.")
+   test("test find tags"){
+     //val sentence="El gato negro se sentó en la alfombra."
+     //val listSol=List("El/DT/el", "gato/NN/gato", "negro/JJ/negro","se/PRP/se","sentó/VB/sentar","en/IN/en", "la/DT/el" ,"alfombra/NN/alfombra","././.")
      var wikicorpus=List[List[String]]()
      var i=0
      var n=0
-     //print(myParser.parse(sentence, true, true, true, true))
-     assert(myParser.parse(sentence, true, true,true,tagger.parole2penntreebank)==listSol.mkString("\n"))
+    // assert(myParser.parse(sentence, true, true,true,tagger.parole2penntreebank)==listSol.mkString("\n"))
 
      // Assert the accuracy of the Spanish tagger.
 
@@ -236,12 +227,11 @@ import org.junit.Assert.assertArrayEquals
      scala.io.Source.fromFile("../Spanish_Lematizer/corpus/tagged-es-wikicorpus.txt").getLines().foreach(line => wikicorpus ::= line.split(" ").toList)
      wikicorpus=wikicorpus.reverse
      wikicorpus.foreach(sentenceList=>{
-      var s1= sentenceList.map(f=>f.split("/"))
-     // var sentenceToParse=s1.map(f=>f(0)+" ".mkString)
+       var s1= sentenceList.map(f=>f.split("/"))
        var s1ToTag=List[String]()
        s1.foreach(f=> s1ToTag::=f(0))
        s1ToTag=s1ToTag.reverse
-       val tagged=tagger.find_tags(s1ToTag, Lexicon, morphology,context, List("NCS","NP","Z"), null)//:List[(String,String)]
+       val tagged=tagger.find_tags(s1ToTag, Lexicon, morphology,context, List("NCS","NP","Z"), null)
 
        var j=0
        s1.foreach(s=>{
