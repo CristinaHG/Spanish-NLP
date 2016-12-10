@@ -607,5 +607,68 @@ def get_lemmas(l: List[(String,String)]): List[(String, String,String)] = {
 Veamos a continuación cada una de las funciones con más detalle.
 \subsection{Singularize}
 Pasa nombres y determinantes a su forma singular. Para ello comprueba si es un determinante. Si lo es y es \texttt{"la","las" o "los"} lo pasa a \texttt{"el"}. Análogamente con \texttt{"una","unas" o "unos"} los pasa a \texttt{"un"}.\newline
-Luego se comprueba si la palabra acaba en \texttt{"es"(suele ser nombre plural)} y si la subcadena de la palabra desde el inicio de la misma hasta la antepenúltima palabra acaba en \texttt{"br","i","j","t" o "zn"}, y si es así se quita la última letra (suele ser una \textsl{s}). Posteriormente se itera sobre una lista de terminaciones comunes que son irregulares, por ejemplo, "unes"$\rigtharrow$ ún (comunes $rightarrow$ común) tratando de encontrar si la palabra es uno de esos casos. Finalmente, se añaden cuatro reglas más: \newline
-Si la palabra acaba en \texttt{"esis","osis","isis"} se deja como está (esclerosis, hipótesis, electrólisis...). Si acaba en \texttt{"ces"}, se quitan las tres últimas y se añande \texttt{"z"} (luces $rihtarrow$ luz, perdices $rightarrow$ perdiz, felices $rightarrow$ feliz...). Si la palabra acaba en \texttt{"es"} se elimina ésta terminación de la palabra (hospitales $rigtharrow$ hospital, sociales $rightarrow$ social) y si acaba en \texttt{"s"}, se elimina ésta (datos $rigtharrow$ dato).    
+Luego se comprueba si la palabra acaba en \texttt{"es"(suele ser nombre plural)} y si la subcadena de la palabra desde el inicio de la misma hasta la antepenúltima palabra acaba en \texttt{"br","i","j","t" o "zn"}, y si es así se quita la última letra (suele ser una \textsl{s}). Posteriormente se itera sobre una lista de terminaciones comunes que son irregulares, por ejemplo, "unes" $\rightarrow$ ún (comunes $\rightarrow$ común) tratando de encontrar si la palabra es uno de esos casos. Finalmente, se añaden cuatro reglas más: \newline
+Si la palabra acaba en \texttt{"esis","osis","isis"} se deja como está (esclerosis, hipótesis, electrólisis...). Si acaba en \texttt{"ces"}, se quitan las tres últimas y se añande \texttt{"z"} (luces $\rightarrow$ luz, perdices$\rightarrow$ perdiz, felices $\rightarrow$ feliz...). Si la palabra acaba en \texttt{"es"} se elimina ésta terminación de la palabra (hospitales $\rightarrow$ hospital, caudales $\rightarrow$ caudal) y si acaba en \texttt{"s"}, se elimina ésta (datos $\rightarrow$ dato).     
+El proceso en código es: 
+\begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+def singularize(word: String, pos:String ):String={
+    val w=word.toLowerCase()
+    //los gatos=> el gato
+    if (pos=="DT"){
+      if(List("la","las","los").contains(w)) return "el"
+      if(List("una","unas","unos").contains(w)) return "un"
+    }
+    //hombres=>hombre
+    if (w.endsWith("es") && (w.substring(0,w.length-2).endsWith("br") || (w.substring(0,w.length-2).endsWith("i")) ||
+      (w.substring(0,w.length-2).endsWith("j")) || (w.substring(0,w.length-2).endsWith("t")) || (w.substring(0,w.length-2).endsWith("zn"))))
+      return w.substring(0,w.length-1)
+    //gestiones=>gestión
+    val endings=List(("anes", "án"),
+      ("enes", "én"),
+      ("eses", "és"),
+      ("ines", "ín"),
+      ("ones", "ón"),
+      ("unes", "ún"))
+    endings.foreach(e=> {if(w.endsWith(e._1)) return w.substring(0,w.length-4).concat(e._2)})
+    //hipotesis=>hipotesis
+    if (w.endsWith("esis") || w.endsWith("osis") || w.endsWith("isis")) return w
+    //luces=>luz
+    if(w.endsWith("ces")) return w.substring(0,w.length-3).concat("z")
+    //hospitales=>hospital
+    if (w.endsWith("es")) return w.substring(0,w.length-2)
+    //gatos=>gato
+    if (w.endsWith("s")) return w.substring(0,w.length-1)
+
+   else return w
+  }
+\end{minted}
+
+\subsection{Predicative}
+Éste método singulariza los adjetivos. Para ello se aplican cuatro casos: si la palabra acaba en \texttt{"os","as"}, se elimina la \textsl{s} final (histéricos $\rightarrow$ histérico, agobiados $\rightarrow$ agobiado). Si acaba en \texttt{"o"}, se deja igual, pero si acaba en \texttt{"a"}, ésta se cambia por una   \texttt{"o"} (agobiada $\rightarrow$ agobiado). Por último, si la palabra acaba en \texttt{"es"}, tiene más de 4 letras y las letras en posición $3^{\circ}$ y $4^{\circ}$ por la cola son consonantes se elimina la última letra de la misma (horribles $\rightarrow$ horrible). En caso contrario, se eliminan las dos últimas (humorales $\rightarrow$ humoral, sociales $\rightarrow$ social). El proceso en código se decribe como sigue:
+\begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+def predicative(word:String):String={
+  var w=word.toLowerCase()
+    //histéricos=>histérico
+    if (w.endsWith("os") || w.endsWith("as")) w=w.substring(0,w.length-1)
+    // histérico=>histérico
+    if (w.endsWith("o")) w= w
+    //histérica=>histérico
+    if(w.endsWith("a")) w= w.substring(0,w.length-1).concat("o")
+    //horribles=>horrible, humorales=>humoral
+    if(w.endsWith("es")){
+      if (w.length >= 4 && !(isVowel(normalize(w.charAt(w.length - 3)))) && !(isVowel(normalize(w.charAt(w.length - 4))))) w= w.substring(0, w.length - 1)
+      else w= w.substring(0,w.length-2)
+    }
+    return w
+  }
+\end{minted}
