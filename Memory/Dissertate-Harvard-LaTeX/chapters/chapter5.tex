@@ -672,3 +672,28 @@ def predicative(word:String):String={
     return w
   }
 \end{minted}
+
+\subsection{Lematización de verbos}
+Para lematizar una forma verbal, se comprueba si esta está en el diccionario interno de (forma verbal, lema) de la clase (\textcolor{SchoolColor}{mappedVerbs}). Si se encuentra, se devuelve su lema asociado. Si no se encuentra, se inicia un proceso de lematización del verbo basado en reglas como sigue:
+\begin{itemize}
+\item Si el verbo acaba en \texttt{"ar","er","ir"} es un infinitivo y por tanto esa es la forma base
+\item Se definen en la clase una serie de inflexiones regulares típicas como:
+\begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+private[this] val irregular_inflections=List(
+    ("yéramos", "ir"   ), ( "cisteis", "cer"   ), ( "tuviera", "tener"), ( "ndieron", "nder" ),
+    ( "ndiendo", "nder" ), ("tándose", "tarse" ), ( "ndieran", "nder" ), ( "ndieras", "nder" ),
+    ("izaréis", "izar" ), ( "disteis", "der"   ), ( "irtiera", "ertir"), ( "pusiera", "poner"),
+    ( "endiste", "ender"), ( "laremos", "lar"   ), ("ndíamos", "nder" ), ("icaréis", "icar" )
+    ....
+\end{minted}
+\end{itemize}
+y si coincide algna con el verbo a lematizar, se le aplica.
+\item  Si el verbo a lematizar contiene \texttt{"zco", "zca", "zcá"} ésto se reemplaza por \texttt{"ce"}. Por ejemplo, conozco $\rightarrow$ conoce. Ésto se hace porque luego se tratan con una regla los verbos en $3^{\circle}$ persona.
+\item Si el verbo contiene \texttt{"ldr" o "ndr"}, por ejemplo \textsl{valdrá, contendrá, compondrá, pondrá, mantendrá...} se mantiene la \texttt{"l" o "n"} respectivamente, y el \texttt{"dr"} en adelante se cambiará por \texttt{"er"}. Obteniendo  \textsl{valer, contener, componer, poner, mantener...}.
+\item Muchos verbos cuyo infinitivo acaba en \textsl{-ar} tienen inflexiones regulares. Por ejemplo, \texttt{ cantabas, cantó, presentaremos, invitarás, ahorraríais} cuyas inflexiones son \texttt{"as","ó","aremos","arás","aríais"}. En este paso se define una lista de inflexiones regulares para verbos acabados en \textsl{-ar} y se aplica. Si coincide alguna, se elimina la inflexión y se añade el infinitivo. 
+ 
