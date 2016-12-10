@@ -906,7 +906,7 @@ test("singularize") {
      print("singularize accuracy:" + i.toFloat/n )
    }
 \end{minted} 
-donde se calcula el porcentaje de acierto para el método \textcolor{SchoolColor}{singularize} sobre 3000 palabras etiquetadas con su lema obtenidas del corpus \textsf{wordforms-es-davies.csv} \url{http://www.wordfrequency.info/files/spanish/spanish_lemmas20k.txt}.
+Donde se calcula el porcentaje de acierto para el método \textcolor{SchoolColor}{singularize} sobre 3000 palabras etiquetadas con su lema obtenidas del corpus \textsf{wordforms-es-davies.csv} \url{http://www.wordfrequency.info/files/spanish/spanish_lemmas20k.txt}.
 \begin{minted}
 [frame=lines,
 framesep=1.3mm,
@@ -939,5 +939,25 @@ test("predicative") {
      print("predicative accuracy:" + i.toFloat/n  )
    }
 \end{minted}
-donde se testea el método \textcolor{SchoolColor}{predicative},  obteniendo su porcentaje de acierto sobre el mismo corpus.
- 
+Donde se testea el método \textcolor{SchoolColor}{predicative}, obteniendo su porcentaje de acierto sobre el mismo corpus.
+\begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+test("find lemma") {
+     var i = 0
+     var n = 0
+     var faults = List[(String, String)]()
+     lemmatizer.getVerbsDict.foreach(u => {
+       if (lemmatizer.find_lemma(u._1) == u._2) i = i + 1 else faults ::= u
+       n = n + 1
+     })
+
+      assert(i.toFloat/n > 0.80)
+      print("accuracy lematization of verbs: " + i.toFloat/n )
+}
+\end{minted} 
+Por último, el test donde se comprueba que la implementación de lematización de verbos obtiene la presición de etiquetado deseada. Para ello se testea sobre las 23435 entradas de verbos del diccionario creado a partir de \textsf{es-verbs.txt}.
+Los resultados obtenidos se discuten en el capítulo siguiente.
