@@ -16,7 +16,7 @@ class Morphology {
   //val knowLexicon=new Lexicon
   private[this] var morphologyList=List[List[String]]()
   //set of rules, based on word morphology (prefix,suffix)
-  private var rulesSet= Set(
+  private [this] var rulesSet= Set(
     "word", // Word is x.
     "char", // Word contains x.
     "haspref", // Word starts with x.
@@ -57,7 +57,7 @@ class Morphology {
   }
 
 
-//Applies lexical rules to the given token, which is a [word, tag] list.
+//Applies morphological rules to the given token, which is a [word, tag] list.
   def apply(token:String,tag:String,previus:(String,String), next:(String,String),lexicon:mutable.Map[String,String]): String ={
 
     var f = false

@@ -339,8 +339,73 @@ breaklines=true
 \end{minted}
 recibiendo como parámetros la ruta del fichero, la codificación y el formato de los comentarios del mismo. La aplicación del léxico en el método anterior es trivial, pues no es más que consultar un diccionario.
 \subsection{Aplicación de la morfología}
+En la clase \textcolor{SchoolColor}{Morphology} se implementa un método que lee el fichero \textcolor{SchoolColor}{es-morphology.txt} y crea una lista interna a la clase de reglas morfológicas (\textsf{morphologyList}). La cabecera es igual que la descrita justo arriba. En esta clase se los comandos de las reglas morfológicas, teniendo en cuenta los prefijos-sufijos de las palabras, como: 
+\begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+private [this] var rulesSet= Set(
+    "word", // Word is x.
+    "char", // Word contains x.
+    "haspref", // Word starts with x.
+    "hassuf", // Word end with x.
+    "addpref", // x + word is in lexicon.
+    "addsuf", // Word + x is in lexicon.
+    "deletepref", // Word without x at the start is in lexicon.
+    "deletesuf", // Word without x at the end is in lexicon.
+    "goodleft", // Word preceded by word x.
+    "goodright"// Word followed by word x.
+  )
+   rulesSet.foreach(r=> rulesSet.+=("f"+r.mkString))
+\end{minted}
+Estas reglas se emplean en el método \textcolor{SchoolColor}{apply} de esta clase, que aplica la morfología a un par \newline (palabra,etiqueta), dado el par previo a la misma de (palabra,etiqueta), y el posterior. \newline
+El proceso es éste: se itera sobre la lista de reglas extraídas del fichero (\textsf{morphologyList}), y se comprueba si el comando de la regla está en \textsf{rulesSet}. Las reglas son del tipo:  \texttt{ly hassuf 2 RB x} o  \texttt{NN s fhassuf 1 NNS x}, donde el comando es \textsf{"hassuf y fhassuf"} respectivamente. Luego se aplican las reglas de \textsf{rulesSet} a la palabra que se quiere etiquetar y si se cumple alguna, se cambia la etiqueta de la palabra a la que indique la regla actual de \textsf{morphologyList}.
+El proceso en código es:
+\begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+ def apply(token:String,tag:String,previus:(String,String), next:(String,String),lexicon:mutable.Map[String,String]): String ={
 
+    var f = false
+    var x =""
+    var cmd=""
+    var pos=""
+    var realTag=""
 
-
-
-
+    morphologyList.foreach(l=> {
+      if (rulesSet.contains(l(1))) { // Rule = ly hassuf 2 RB x
+        f = false
+        x = l(0)
+        pos = l(l.length - 2)
+        cmd = l(1).toLowerCase
+      }
+      if (rulesSet.contains(l(2))) { // Rule = NN s fhassuf 1 NNS x
+         f = true
+         x = l(1)
+         pos= l(l.length -2)
+         cmd= l(2).toLowerCase.stripPrefix("f")
+      }
+      if( f==false || tag.compareTo(l(0))==true){
+        if((cmd=="word" && x==token) ||
+          (cmd=="char" && token.contains(x)) ||
+          (cmd=="haspref" && token.startsWith(x)) ||
+          (cmd=="hassuf" && token.endsWith(x)) ||
+          (cmd=="addpref" && lexicon.contains(x+token)) ||
+          (cmd=="addsuf" && lexicon.contains(token+x)) ||
+          (cmd=="deletepref" && token.startsWith(x) && lexicon.contains(token.substring(x.length))) ||
+          (cmd=="deletesuf" && token.endsWith(x) && lexicon.contains(token.substring(0,token.length-x.length))) ||
+          (cmd=="goodleft" && x==next._1) ||
+          (cmd=="goodright" && x==previus._1)
+        ){
+          realTag=pos
+        }
+      } else realTag=tag
+    })
+    return realTag
+  }
+\end{minted}
