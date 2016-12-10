@@ -521,7 +521,8 @@ breaklines=true
 def parole2penntreebank(token:String,tag:String):(String, String)={
    return (token,parole.getOrElse(tag,tag))
   }
-\end{minted} mapea las etiquetas del tagset \textsc{parole} a \textsc{pennTreebank}
+\end{minted}
+mapea las etiquetas del tagset \textsc{parole} a \textsc{pennTreebank}
 
 \begin{minted}
 [frame=lines,
@@ -567,3 +568,41 @@ def parole2universal(token:String, tag:String):(String,String)= {
 mapea de \textsc{parole} al  \textsc{universal}.
 
 \section{Lematizador}
+Aunque en algunos softwares de PLN la lematicación se hace previamente al etiquetado, en este trabajo se realiza después, ya que se hace uso de las etiquetas de los tokens en el algoritmo de lematización. \newline
+En la clase \textcolor{SchoolColor}{Lematizer} se tiene un diccionario de lemas como dato miembro, que se construye a través del fichero \textcolor{SchoolColor}{es-verbs.txt}.
+ \begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+private[this] var mappedVerbs = Map[String, String]()
+  }
+\end{minted}
+
+El mecanismo de lematización en general es el siguiente: se recibe una lista de tuplas (token, etiqueta) y se itera sobre sus elementos. Entonces si la etiqueta es \texttt{"DT"(determinante)} o \texttt{"NNS"(nombre común en plural)} se llama al método \textcolor{SchoolColor}{singularize}, que pasa la palabra a su forma en singular. Si la etiqueta es \texttt{"JJ"(adjetivo)} se llama a \textcolor{SchoolColor}{predicative}, que se encarga de buscar la forma base de los adjetivos y si la etiqueta es \texttt{"VB" o "MD" (verbo o modal)} se llama a \textcolor{SchoolColor}{get\_lemma}, que busca la forma base de los verbos. En código:
+\begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+def get_lemmas(l: List[(String,String)]): List[(String, String,String)] = {
+    var word :String=""
+    var lemma:String=""
+    var pos:String=""
+    var lemmalist: List[(String, String, String)] = List()
+
+  l.foreach( i => {word=i._1;pos=i._2;lemma=i._1;
+  if (pos.startsWith("DT")) lemma=singularize(word,"DT")
+  if (pos.startsWith("JJ")) lemma=predicative(word)
+  if (pos.startsWith("NNS")) lemma=singularize(word,"NNS")
+    if (pos.startsWith("VB") || pos.startsWith("MD")) lemma= verb_lemma(word)
+    lemmalist= (word,pos,lemma)::lemmalist
+ })
+    return lemmalist.reverse
+  }
+  }
+\end{minted}
+Veamos a continuación cada una de las funciones con más detalle.
+\subsection{Singularize}
