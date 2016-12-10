@@ -339,7 +339,7 @@ breaklines=true
 \end{minted}
 recibiendo como parámetros la ruta del fichero, la codificación y el formato de los comentarios del mismo. La aplicación del léxico en el método anterior es trivial, pues no es más que consultar un diccionario.
 \subsection{Aplicación de la morfología}
-En la clase \textcolor{SchoolColor}{Morphology} se implementa un método que lee el fichero \textcolor{SchoolColor}{es-morphology.txt} y crea una lista interna a la clase de reglas morfológicas (\textsf{morphologyList}). La cabecera es igual que la descrita justo arriba. En esta clase se los comandos de las reglas morfológicas, teniendo en cuenta los prefijos-sufijos de las palabras, como: 
+En la clase \textcolor{SchoolColor}{Morphology} se implementa un método que lee el fichero \textcolor{SchoolColor}{es-morphology.txt} y crea una lista interna a la clase de reglas morfológicas (\textsf{morphologyList}). La cabecera es igual que la descrita justo arriba. En esta clase se definen los comandos de las reglas morfológicas, teniendo en cuenta los prefijos-sufijos de las palabras, como: 
 \begin{minted}
 [frame=lines,
 framesep=1.3mm,
@@ -409,3 +409,159 @@ breaklines=true
     return realTag
   }
 \end{minted}
+
+\subsection{Aplicación del contexto}
+En la clase \textcolor{SchoolColor}{Context} se implementa un método que lee el fichero \textcolor{SchoolColor}{es-context.txt} creando una lista de reglas contextuales en la clase (\texttt{ContextList}). Recordemos que el algorito de brill creaba reglas de la forma: \texttt{VBD VB PREVTAG IN => una palabra etiquetada como VBD cambia a  VB si la etiqueta de la anterior a ella es IN.}. Por tanto, en la clase se definen las reglas basadas en contexto como:
+\begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+private[this] var rulesSet= Set(
+    "prevtag", // Preceding word is tagged x.
+    "nexttag", // Following word is tagged x.
+    "prev2tag", // Word 2 before is tagged x.
+    "next2tag", // Word 2 after is tagged x.
+    "prev1or2tag", // One of 2 preceding words is tagged x.
+    "next1or2tag", // One of 2 following words is tagged x.
+    "prev1or2or3tag", // One of 3 preceding words is tagged x.
+    "next1or2or3tag", // One of 3 following words is tagged x.
+    "surroundtag", // Preceding word is tagged x and following word is tagged y.
+    "curwd", // Current word is x.
+    "prevwd", // Preceding word is x.
+    "nextwd", // Following word is x.
+    "prev1or2wd", // One of 2 preceding words is x.
+    "next1or2wd", // One of 2 following words is x.
+    "next1or2or3wd", // One of 3 preceding words is x.
+    "prev1or2or3wd", // One of 3 following words is x.
+    "prevwdtag", // Preceding word is x and tagged y.
+    "nextwdtag", // Following word is x and tagged y.
+    "wdprevtag", // Current word is y and preceding word is tagged x.
+    "wdnexttag", // Current word is x and following word is tagged y.
+    "wdand2aft", // Current word is x and word 2 after is y.
+    "wdand2tagbfr", // Current word is y and word 2 before is tagged x.
+    "wdand2tagaft", // Current word is x and word 2 after is tagged y.
+    "lbigram", // Current word is y and word before is x.
+    "rbigram", // Current word is x and word after is y.
+    "prevbigram", // Preceding word is tagged x and word before is tagged y.
+    "nextbigram" // Following word is tagged x and word after is tagged y.
+  )
+\end{minted}
+El procedimiento de aplicación de las reglas contextuales es similar al de las morfológicas: 
+se tiene una lista de tuplas de (token, etiqueta) a la que se le añaden tres delimitadores por cada extremo y se itera sobre ella. En cada elemento de esa lista se itera sobre cada regla de \texttt{contextList} , y si la etiqueta de la tupla (token, etiqueta) actual no es un delimitador y ésta coincide con la primera etiqueta de la regla de \texttt{contextList} sobre la que se itera, se comprueban las reglas contextuales correspondientes a la etiqueta considerada y el comando de la regla actual de \texttt{contextList}. Si empareja alguna, se modifica la etiqueta de la tupla con la etiqueta que indique la regla. Finalmente se eliminan los delimitadores del resultado.
+El proceso en código es como sigue:
+\begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+def apply(tokensTags:List[(String,String)]):List[(String,String)]={
+    val o=List(("STAART", "STAART"),("STAART", "STAART"),("STAART", "STAART")) //empty delimiters for look ahead/back
+
+   var t=o.++(tokensTags).++(o)
+  // var mapped=mutable.MutableList[(String,String)]()
+  var mapped=List[(String,String)]()
+    var cmd=""
+    var x=""
+    var y=""
+    var r1=""
+    var matches=false
+    var index=0
+
+   t.foreach(token=> { this.contextList.foreach(r=>
+     if ((token._2 != "STAART") && (token._2 == r(0) || r(0) == "*")) {
+       cmd = r(2).toLowerCase
+       x = r(3)
+       y = if (r.length > 4) r(4) else ""
+
+       if ((cmd == "prevtag" && x == t(index - 1)._2) ||
+         (cmd == "nexttag" && x == t(index + 1)._2) ||
+         (cmd == "prev2tag" && x == t(index - 2)._2) ||
+         (cmd == "next2tag" && x == t(index + 2)._2) ||
+         (cmd == "prev1or2tag" && ((t(index - 1)._2, t(index - 2)._2).toString().contains(x))) ||
+         (cmd == "next1or2tag" && ((t(index + 1)._2, t(index + 2)._2).toString().contains(x))) ||
+         (cmd == "prev1or2or3tag" && ((t(index - 1)._2, t(index - 2)._2, t(index - 3)._2).toString().contains(x))) ||
+         (cmd == "next1or2or3tag" && ((t(index + 1)._2, t(index + 2)._2, t(index + 3)._2).toString().contains(x))) ||
+         (cmd == "surroundtag" && (x == t(index - 1)._2 && y == t(index + 1)._2)) ||
+         (cmd == "curwd" && (x == t(index)._1)) ||
+         (cmd == "prevwd" && (x == t(index - 1)._1)) ||
+         (cmd == "nextwd" && (x == t(index + 1)._1)) ||
+         (cmd == "prev1or2wd" && (t(index - 1)._1, t(index - 2)._1).toString().contains(x)) ||
+         (cmd == "next1or2wd" && (t(index + 1)._1, t(index + 2)._1).toString().contains(x)) ||
+         (cmd == "prevwdtag" && (x == t(index - 1)._1 && y == t(index - 1)._2)) ||
+         (cmd == "nextwdtag" && (x == t(index + 1)._1 && y == t(index + 1)._2)) ||
+         (cmd == "wdprevtag" && (x == t(index - 1)._2 && y == t(index)._1)) ||
+         (cmd == "wdnexttag" && (x == t(index)._1 && y == t(index + 1)._2)) ||
+         (cmd == "wdand2aft" && (x == t(index)._1 && y == t(index + 2)._1)) ||
+         (cmd == "wdand2tagbfr" && (x == t(index - 2)._2 && y == t(index)._1)) ||
+         (cmd == "wdand2tagaft" && (x == t(index)._1 && y == t(index + 2)._2)) ||
+         (cmd == "lbigram" && (x == t(index - 1)._1 && y == t(index)._1)) ||
+         (cmd == "rbigram" && (x == t(index)._1 && y == t(index + 1)._1)) ||
+         (cmd == "prevbigram" && (x == t(index - 2)._2 && y == t(index - 1)._2)) ||
+         (cmd == "nextbigram" && (x == t(index + 1)._2 && y == t(index + 2)._2))
+       ) {matches=true ;r1=r(1)}
+     })
+     if(matches){ mapped::=Tuple2(token._1,r1) ; matches=false} else mapped::=token
+   index+=1
+   })
+    return mapped.reverse.filter(p=>p._1!="STAART")
+  }
+\end{minted}
+
+\subsection{Funciones para mapear los tagsets}
+Por último, mencionar que en la clase \textcolor{SchoolColor}{PosTagger} se implementan también algunas funciones que mapean las etiquetas de un tagset a otro, en concreto:
+\begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+def parole2penntreebank(token:String,tag:String):(String, String)={
+   return (token,parole.getOrElse(tag,tag))
+  }
+\end{minted} mapea las etiquetas del tagset \textsc{parole} a \textsc{pennTreebank}
+
+\begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+def penntreebank2universal(token: String, tag: String):(String,String)def penntreebank2universal(token: String, tag: String):(String,String) ={
+    if (tag.startsWith("NNP-") || tag.startsWith("NNPS-")) return (token,(NOUN.concat(tag.split("-").toString.formatted("%s-%s"))))
+      //return (token, "%s-%s" % (NOUN, tag.split("-")[-1]))
+    if(List("NN", "NNS", "NNP", "NNPS", "NP").contains(tag)) return (token, NOUN)
+    if(List("MD", "VB", "VBD", "VBG", "VBN", "VBP", "VBZ").contains(tag)) return (token, VERB)
+    if(List("JJ", "JJR", "JJS").contains(tag)) return (token, ADJ)
+    if(List("RB", "RBR", "RBS", "WRB").contains(tag)) return (token, ADV)
+    if(List("PRP", "PRP\$", "WP", "WP\$").contains(tag)) return (token, PRON)
+    if(List("DT", "PDT", "WDT", "EX").contains(tag)) return (token, DET)
+    if(List("IN").contains(tag)) return (token, PREP)
+    if(List("CD").contains(tag)) return (token, NUM)
+    if(List("CC").contains(tag)) return (token, CONJ)
+    if(List("UH").contains(tag)) return (token, INTJ)
+    if(List("POS", "RP", "TO").contains(tag)) return (token, PRT)
+    if(List("SYM", "LS", ".", "!", "?", ",", ":", "(", ")", "\"", "#", "\$").contains(tag)) return (token, PUNC)
+    return (token, X)
+  }
+\end{minted} mapea las etiquetas de \textsc{pennTreebank} al  \textsc{universal} y
+\begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+def parole2universal(token:String, tag:String):(String,String)= {
+
+    if(tag == "CS") return (token, CONJ)
+    if(tag == "DP") return (token, DET)
+    if(List("P0", "PD", "PI", "PP", "PR", "PT", "PX").contains(tag)) return (token, PRON)
+
+    var paroletreebank=parole2penntreebank(token, tag)
+    return penntreebank2universal(paroletreebank._1,paroletreebank._2)
+  }
+\end{minted} mapea de \textsc{parole} al  \textsc{universal}.
+
+
