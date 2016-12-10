@@ -818,3 +818,17 @@ regular_inflection_ar.foreach(u=> if (v.endsWith(u)) return v.substring(0,v.leng
 }
 
 \end{minted}
+
+\subsection{Parser}
+Por último, estos tres procesos se integran en una clase \textcolor{SchoolColor}{Parser}, donde se define un método \textcolor{SchoolColor}{parse} con la siguiente cabecera:
+\begin{minted}
+[frame=lines,
+framesep=1.3mm,
+fontsize=\footnotesize,
+breaklines=true
+]{scala}
+def parse(text: String, tokenize: Boolean, tags: Boolean, lemmatize: Boolean ,mapCall:(String,String)=>(String,String)): String
+\end{minted}
+Que recibe como parámetros el texto a parsear, tres booleanos indicando si se desea hacer tokenización, Pos etiquetado y lematización y una función para mapear las etiquetas al tagset deseado.
+
+\section{Pruebas}
