@@ -15,7 +15,7 @@ import org.junit.Assert.assertArrayEquals
  class AppTest extends FunSuite {
 
 
-   //create trait containing Strings to be used to test
+   // Strings to be used to test
    val stringAbbr="Srta. y Sr."
    val string1 = "Los gatos negros son bonitos."
    val string2 = "Nadie podrá vivir eternamente"
@@ -32,27 +32,27 @@ import org.junit.Assert.assertArrayEquals
    val string13 = "cuando éramos niños cazábamos muchos bichos"
    val string14 = "con tanto calor se funde el hielo"
    val string15 = "El sedentarismo físico se presenta con mayor frecuencia en la vida moderna urbana, en sociedades altamente tecnificadas en donde todo está pensado para evitar grandes esfuerzos físicos, en las clases altas y en los círculos intelectuales en donde las personas se dedican más a actividades cerebrales."
-   val string16 = "Saqué un 8.5 en matemáticas :D"
    //needed paths
    val verbsPath = "/home/cris/mrcrstnherediagmez@gmail.com/Spanish_Lematizer/data/es-verbs.txt"
    val lexiconPath="../Spanish_Lematizer/data/es-lexicon.txt"
    val morphologyPath="../Spanish_Lematizer/data/es-morphology.txt"
    val contextPath="../Spanish_Lematizer/data/es-context.txt"
+   //needed objects
    val myParser=new Parser(lexiconPath,morphologyPath,contextPath,verbsPath,List("NCS","NP","Z"),"utf-8",";;;")
    val tokenizer = new Tokenizer
    val tagger = new PosTagger
    val lemmatizer = new Lemmatizer
-   lemmatizer.setVerbsDict(verbsPath)
+   lemmatizer.setVerbsDict(verbsPath) //set lemmatizer dict
    val Lexicon= new Lexicon
    val context=new Context
    val morphology=new Morphology
+
    /**
      * Testing Tokenizer
      */
 
    //testing find tokens method
    test("find tokens test") {
-     tokenizer.find_tokens(string16)
      assert(tokenizer.find_tokens(stringAbbr) == List(List("Srta.",  "y", "Sr.")))
      assert(tokenizer.find_tokens(string1) == List(List("Los", "gatos", "negros", "son", "bonitos", ".")))
      assert(tokenizer.find_tokens(string2) == List(List("Nadie", "podrá", "vivir", "eternamente")))
@@ -70,7 +70,6 @@ import org.junit.Assert.assertArrayEquals
      assert(tokenizer.find_tokens(string14) == List(List("con", "tanto", "calor", "se", "funde", "el", "hielo")))
      assert(tokenizer.find_tokens(string15) == List(List("El", "sedentarismo", "físico", "se", "presenta", "con", "mayor", "frecuencia", "en", "la", "vida", "moderna", "urbana", ",", "en", "sociedades", "altamente", "tecnificadas", "en", "donde", "todo", "está", "pensado", "para", "evitar", "grandes", "esfuerzos", "físicos", ",", "en", "las", "clases", "altas", "y", "en", "los", "círculos", "intelectuales", "en", "donde", "las", "personas", "se", "dedican", "más", "a", "actividades", "cerebrales", "."
      )))
-     //assert(tokenizer.find_tokens(string16) ==List(List("Saqué", "un", "8.5", "en", "matemáticas")))
    }
 
    test(" count sentences test") {
@@ -96,6 +95,8 @@ import org.junit.Assert.assertArrayEquals
    /**
      * Testing POSTagger
      */
+
+   //mapping function from parole tagset to penntreebank tagset
    test("parole to penntreebank tag test") {
      assert(tagger.parole2penntreebank("El", "DA") == ("El", "DT"))
      assert(tagger.parole2penntreebank("pájaro", "NC") == ("pájaro", "NN"))
@@ -105,7 +106,7 @@ import org.junit.Assert.assertArrayEquals
      assert(tagger.parole2penntreebank("jaula", "NC") == ("jaula", "NN"))
      assert(tagger.parole2penntreebank(".", "Fp") == (".", "."))
    }
-
+   //mapping function from penntreebank tagset to universal tagset
    test("pentreebank to universal test") {
      assert(tagger.penntreebank2universal("El", "DT") == ("El", "DT"))
      assert(tagger.penntreebank2universal("pájaro", "X") == ("pájaro", "X"))
@@ -115,7 +116,7 @@ import org.junit.Assert.assertArrayEquals
      assert(tagger.parole2penntreebank("jaula", "NC") == ("jaula", "NN"))
      assert(tagger.parole2penntreebank(".", "Fp") == (".", "."))
    }
-
+   //mapping function from parole tagset to universal tagset
    test("parole to universal") {
      assert(tagger.parole2universal("El", "DA") == ("El", "DT"))
      assert(tagger.penntreebank2universal("pájaro", "NC") == ("pájaro", "X"))
@@ -125,6 +126,15 @@ import org.junit.Assert.assertArrayEquals
      assert(tagger.parole2penntreebank("jaula", "NC") == ("jaula", "NN"))
      assert(tagger.parole2penntreebank(".", "Fp") == (".", "."))
    }
+   //testing find tags
+//   test("test find tags"){
+//     val sentence=List("El", "gato","negro", "se", "sentó", "en", "la", "alfombra",".")
+//     val listSol=List(("El","DT"), ("gato","NN"),("negro","JJ"),("se,se"),("sentó,sentar"),("en","en"), ("la","el"),("alfombra","NN"),(".","."))
+//
+//     tagger.find_tags(sentence, Lexicon, morphology,context, List("NCS","NP","Z"), null)
+//   }
+
+
 
    /**
      * Testing Lemmatizer

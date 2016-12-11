@@ -28,8 +28,12 @@ object ScalaApp {
       case 1 => null //is parole by default
       case 2 => tagger.parole2penntreebank
       case 3 => tagger.parole2universal
+      case _ => throw new RuntimeException("Introduzca un número válido [1-3]")
     }
-
+    //if not 3 opcions, add false to not specified ones
+    while(options.length<3){
+      options=options:+false
+    }
 
     //myParser.commandLine("Texto parseado: ",myParser.parse("el gato negro.",true,true,true, tagger.parole2penntreebank))
     myParser.commandLine("Texto parseado: ",myParser.parse(txt,options{0},options{1},options{2},tagsetFunc))
