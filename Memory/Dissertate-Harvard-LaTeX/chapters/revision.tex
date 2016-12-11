@@ -1,9 +1,9 @@
 \chapter*{Resolución del trabajo}
 A partir de aquí el trabajo se estructura como sigue:
 \begin{itemize}
-\item En el \textcolor{SchoolColor}{Capítulo 3} se hace una revisión bibliográfica.
+\item En el \textcolor{SchoolColor}{Capítulo 3} se hace una revisión bibliográfica sobre el pipeline de PLN.
 \item En el \textcolor{SchoolColor}{Capítulo 4} se hace una introducción a Scala, para visualizar el porqué de su elección.
-\item En el \textcolor{SchoolColor}{Capítulo 5} se habla de como se ha planificado el proyecto, análisis de requisitos, diseño y metodología de desarrollo. 
+\item En el \textcolor{SchoolColor}{Capítulo 5} se habla de cómo se ha planificado el proyecto, análisis de requisitos, diseño y metodología de desarrollo. 
 \item En el \textcolor{SchoolColor}{Capítulo 6} se explica el material empleado para la resolución de este trabajo, corpus de datos, ficheros para el contexto, el léxico o la morfología...todo lo que se ha utilizado pero no se ha implementado en este proyecto.
 \item En el \textcolor{SchoolColor}{Capítulo 7} se detalla el proceso de implementación y pruebas de los tres algoritmos desarrollados.
 \item En el \textcolor{SchoolColor}{Capítulo 8} se exponen los resultados del trabajo y marco experimental.
@@ -14,7 +14,7 @@ A partir de aquí el trabajo se estructura como sigue:
 El objetivo final de toda suite de PLN es tener un sofware que contenga un conjunto de herramientas para poder realizar análisis de sentimientos o algún tipo de extracción de información. Esto se alcanza a través de varias tareas de procesamiento del texto, empezando por hacer el contenido uniforme y acabando por identificar las funciones de las palabras y como se organizan. Aquí se describen las tareas más comunes del pipeline de un software de PLN junto con las aproximaciones más comunes. \newline
 \subsection{Obtención de datos}
 La obtención de datos es la primera tarea a realizar, mediante la cual se obtendrá el corpus de texto, etiquetado o no (depende de la aproximación a aplicar) que se va a usar para crear la herramienta de PLN, así como los datos sobre los que se quiere hacer el análisis de sentimientos o la extracción de información deseada. \newline
-La forma general de obtener los datos directamente de internet es a través de la propia API de los sitios web de los que se desee descargar información por ejemplo la Api de twitter si queremos descargar tweets, o la api de instagram para imágenes y etiquetas. Sin embargo, a pesar de que hay manuales que explican como consultarlas, estas APIs  han limitado mucho las descargas últimamente, alegando cuestiones de privacidad de los datos de usuario. Otro método es usar arañas web para rastrear la información deseada de forma similar a lo que hace google con su conocida araña \textsc{Googlebot}, con la que visita todas las webs frecuentemente para añadirlas a su índice y percatarse de los cambios. Ahora bien, este último método requiere unos conocimientos necesarios para crear una araña web y ocupa mucho ancho de banda. \newline
+La forma general de obtener los datos directamente de internet es a través de la propia API de los sitios web de los que se desee descargar información, por ejemplo, la Api de twitter si queremos descargar tweets, o la api de instagram para imágenes y etiquetas. Sin embargo, a pesar de que hay manuales que explican como consultarlas, estas APIs  han limitado mucho las descargas últimamente, alegando cuestiones de privacidad de los datos de usuario. Otro método es usar arañas web para rastrear la información deseada de forma similar a lo que hace google con su conocida araña \textsc{Googlebot}, con la que visita todas las webs frecuentemente para añadirlas a su índice y percatarse de los cambios. Ahora bien, este último método requiere unos conocimientos necesarios para crear una araña web y ocupa mucho ancho de banda. \newline
 En cuanto a corpus ya etiquetados en inglés se pueden encontrar muchos, entre los más populares están \textsc{The Penn Treebank} \citet{marcus1993building} o \textsc{Wikicorpus} \url{http://www.cs.upc.edu/~nlp/wikicorpus/}, mientras que para español son conocidos \textsc{Wikicorpus}, \textsc{Ancora} \url{http://clic.ub.edu/ancora} o \textsc{SemEval} \citet{marquez2007semeval}. 
     
 \subsection{Procesamiento del texto}
@@ -39,7 +39,7 @@ Aunque lo usual es aplicar un proceso de lematización o stemming antes de esta 
 Los principales desafíos que se presentan en esta etapa, son: 
 \begin{itemize}
 \item Tratar la ambigüedad, dado que las palabras pueden desempeñar distinta función morfosintáctica y por tanto, tener diferentes POS tags dependiendo del contexto. 
-\item Asignar una etiqueta morfosintáctica a palabras de las que el sistema no tiene conocimiento
+\item Asignar una etiqueta morfosintáctica a palabras de las que el sistema no tiene conocimiento.
 \end{itemize}  
 Para tratar de solventar los problemas anteriores, normalmente se tiene en cuenta el contexto dentro de la frase de la palabra a etiquetar, y se selecciona la etiqueta morfosintáctica más probable dada esa palabra y su contexto. \newline
 Que sea una tarea muy necesaria hace que esté muy investigada, por lo que actualmente la precisión de etiquetado ronda el 90\%, aunque esto se debe a que la precisión se mide en porcentaje de palabras bien etiquetadas. Si se midiera por porcentaje de frases completamente bien etiquetadas, la cifra descendería al 55\%-57\% de precisión, como manifestaban \citet{giesbrecht2009part}. \newline
@@ -90,17 +90,17 @@ Es la herramienta que se encarga de buscar nombres de entidades y números en el
 \subsubsection{Categorizador de documento}
 El categorizador de documento de OpenNLP puede clasificar texto dentro de categorías predefinidas. Se basa en un framework de máxima entropía. De nuevo, para clasificar el texto se necesita de un modelo, pero OpenNLP no provee de ninguno pre entrenado, dado que para clasificar se requiere de requisitos específicos. 
 \subsubsection{POS tagger}
-El POS tagger que incorpora OpenNLP marca los tokens con su correspondiente tipo de palabra (según su categoría morfosintáctica) y para ello se basa en información del propio token y del contexto del mismo. Para resolver la ambiguedad que se presenta cuando un token puede tener múltiples etiquetas morfosintácticas, se aplica un modelo de probabilidad para predecir la etiqueta correcta. Para limitar el posible número de etiquetas que puede recibir un token, se emplea un diccionario de etiquetas. \newline
+El POS tagger que incorpora OpenNLP marca los tokens con su correspondiente tipo de palabra (según su categoría morfosintáctica) y para ello se basa en información del propio token y del contexto del mismo. Para resolver la ambigüedad que se presenta cuando un token puede tener múltiples etiquetas morfosintácticas, se aplica un modelo de probabilidad para predecir la etiqueta correcta. Para limitar el posible número de etiquetas que puede recibir un token, se emplea un diccionario de etiquetas. \newline
 Un \textsf{diccionario de etiquetas} es un diccionario de palabras donde se especifica qué etiquetas puede tener cada posible token.
 \subsubsection{Chunker}
  Esta herramienta separa el texto en sintagmas correlados, como el sujeto y el predicado de la frase, pero no especifica su estructura interna ni su función en la frase principal. 
 \subsubsection{Parseador}
  OpenNLP tiene dos implementaciones para el parseado: una llamada "chunking parser" que genera como salida el texto parseado separado por espacios, y el "tree insert parser" que genera un árbol como resultado, pero este último está aún en fase experimental. En ambos caso se requiere el entrenamiento de un modelo con datos en formato de OpenNLP (formato Penn treebank pero limitado a una frase por línea).
-\subsubsection{Resolución de coreferencias}
+\subsubsection{Resolución de correferencias}
 La resolución de coreferencias es una herramienta que incorpora OpenNLP para linkar las múltiples referencias que se hacen a una misma entidad a lo largo del documento, aunque se limita a menciones de sintagmas nominales, por ejemplo \textsf{"el gato"}. 
 \subsection{Modelos que incorpora}
 Además de las herramientas anteriores, OpenNPL incorpora modelos preentrenados para los siguientes idiomas: Inglés, Alemán, Portugués, Danés, Holandés, Sueco y Español. \url{http://opennlp.sourceforge.net/models-1.5/}. Aunque en algunos enfoques se invierte el orden, todos los modelos aquí son entrenados aplicando primero detección de frases y luego tokenización (además de otras fases). \newline
-Para el Inglés incorpora modelos para todas las fases: tokenizador, detección de frases, pos Tagger, NER, chunker, parser y resolución de Coreferencias. Para el Sueco, Portugués, Alemán o Danés incluye tokenizador, detección de frases y pos Tagger, mientras que para el Holandés incluye los anteriores y además el NER. Para el Español, sólo incluye el NER.
+Para el Inglés incorpora modelos para todas las fases: tokenizador, detección de frases, pos Tagger, NER, chunker, parser y resolución de correferencias. Para el Sueco, Portugués, Alemán o Danés incluye tokenizador, detección de frases y pos Tagger, mientras que para el Holandés incluye los anteriores y además el NER. Para el Español, sólo incluye el NER.
 
 \section{Limitaciones}
 En \citet{hirschberg2015advances} dicen que la mayor limitación de los sistemas de PLN actuales es que dan soporte a los lenguajes más hablados y más extendidos, como el Inglés, Francés, Alemán, Español o Chino, pero otros como el Swahili, Bengali o Indonesio hablados por millones de personas no tienen disponible una herramienta de este tipo. \newline
@@ -114,5 +114,5 @@ Quizá la suite de NLP más conocida en la actualidad y referenciada junto con \
 \end{figure}
 Pero de nuevo vemos que sólo está completo para Inglés, faltando métodos como la lematización o el análisis de sentimientos para Español. Otro paquete menos conocido que incluye funcionalidad para minería web, procesamiento del lenguaje natural y machine learning es  \textcolor{SchoolColor}{Pattern} \citet{smedt2012pattern}  implementada en Python, que según el benchmark de métodos de análisis de sentimientos que hicieron \citet{ribeiro2016sentibench} da mejores resultados en media que Stanford CoreNLP, aunque el benchmark solo hace comparaciones para el Inglés. \newline
 \textcolor{SchoolColor}{Pattern} incluye una serie de herramientas para Español, pero ésta tampoco incluye análisis de sentimientos para este lenguaje. \newline
-Ante estas limitaciones el proyecto desarrollado en este trabajo se centra en implementar las tres primeras etapas  del pipeline de un software NLP para análisis de sentimientos en español: tokenizador, lematizador y POS tagger.\newline
+Ante estas limitaciones, el proyecto desarrollado en este trabajo se centra en implementar las tres primeras etapas  del pipeline de un software PLN para análisis de sentimientos en español: tokenizador, lematizador y POS tagger.\newline
 Teniendo como finalidad a largo plazo construir un software que haga como etapa final análisis de sentimientos en Español. 

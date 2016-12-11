@@ -72,7 +72,7 @@ breaklines=true
 ]{scala}
 private[this] var TOKEN="""(\S+)\s""".r
 \end{minted}
-Es decir, uno o más caracteres que no sean espacios en blanco seguidos de un espacio en blanco. Ésta expresión regular se usa para encontrar todas las coincididencias de palabras seguidas de un espacio en blanco en el texto, en este caso \textsf{s}. Luego, se itera sobre cada una de las coincidencias encontradas de la siguiente manera: \newline
+Es decir, uno o más caracteres que no sean espacios en blanco seguidos de un espacio en blanco. Esta expresión regular se usa para encontrar todas las coincidencias de palabras seguidas de un espacio en blanco en el texto, en este caso \textsf{s}. Luego, se itera sobre cada una de las coincidencias encontradas de la siguiente manera: \newline
 Se comienza eliminando el espacio en blanco final de la palabra: por ejemplo \textsf{"gatos "} $\Rightarrow$ \textsf{"gatos"}, y se comprueba si la primera letra de la palabra es un signo de puntuación distinto del punto. Si lo es, se quita la primera letra de la palabra y se mete en la lista de tokens, repitiendo el mecanismo hasta que la primera letra de la palabra no sea un signo de puntuación. Después comienza de nuevo un proceso iterativo, en el que se comprueba si la última letra de la palabra es un signo de puntuación, incluido el punto. Aquí pueden darse tres casos:
 \begin{itemize}
 \item Si el final de la palabra son puntos suspensivos: Por ejemplo \textsf{"cantaba..."} en este caso  se quitan los tres puntos finales y se añaden a una lista para ser añadidos después.
@@ -96,7 +96,7 @@ private[this] val re_abbr2="""^[A-Z][a-z]{1,3}\.\$""".r
 donde \textcolor{SchoolColor}{re\_abbr1} empareja abreviaciones como \textsf{D.,U.S.,c.c.}, 
 y \textcolor{SchoolColor}{re\_abbr2} empareja abreviaciones como \textsf{Dr.,Sr.,Dra.,Uds.}.
 Si se reconoce como abreviación, se mete en la lista de tokens, mientras que si no es una abreviación se quita el punto y se añade a una la lista, para ser añadido después.
-\item finalmente se añaden tanto la palabra como el signo de puntuación que se ha ido guardando para después en la lista de tokens. La descripción en código es la siguiente:
+\item Finalmente se añaden tanto la palabra como el signo de puntuación que se ha ido guardando para después en la lista de tokens. La descripción en código es la siguiente:
 \end{itemize}   
 
 \begin{minted}
@@ -155,7 +155,7 @@ breaklines=true
  tokens=tokens.reverse
 \end{minted}
 \subsection{Separación de frases} 
-Obtenida la lista de tokens, queda segmentarla por frases. El procedimiento es el siguiente: se \newline itera sobre la lista de tokens obtenida, comprobando si el token es algún signo de fin de sentencia \textsf{("...",".","!","?","EOS")}. Cuando se encuentra un signo de fin de sentencia, se toman todos los tokens \newline leídos (incluído el de final de sentencia) como una frase. A partir de aquí empieza a considerarse que empieza la frase siguiente. El proceso termina cuando se ha iterado sobre todos los tokens. Su descripción en código, es:
+Obtenida la lista de tokens, queda segmentarla por frases. El procedimiento es el siguiente: se \newline itera sobre la lista de tokens obtenida, comprobando si el token es algún signo de fin de sentencia \textsf{("...",".","!","?","EOS")}. Cuando se encuentra un signo de fin de sentencia, se toman todos los tokens \newline leídos (incluido el de final de sentencia) como una frase. A partir de aquí empieza a considerarse que empieza la frase siguiente. El proceso termina cuando se ha iterado sobre todos los tokens. Su descripción en código, es:
 \begin{minted}
 [frame=lines,
 framesep=1.3mm,
@@ -263,7 +263,7 @@ Los parámetros que recibe el algoritmo son:
 \item un objeto de la clase morfología
 \item un objeto de la clase contexto
 \item una lista de string con tres etiquetas por defecto("NCS","NP","Z")
-\item una función para mapear el formato de las etiquetas a otro formato(opcional)
+\item una función para mapear el formato de las etiquetas a otro formato (opcional)
 \end{itemize}
 
 El funcionamiento es el siguiente: 
@@ -570,7 +570,7 @@ def parole2universal(token:String, tag:String):(String,String)= {
 mapea de \textsc{parole} al  \textsc{universal}.
 
 \section{Lematizador}
-Aunque en algunos softwares de PLN la lematicación se hace previamente al etiquetado, en este trabajo se realiza después, ya que se hace uso de las etiquetas de los tokens en el algoritmo de lematización. \newline
+Aunque en algunos softwares de PLN la lematización se hace previamente al etiquetado, en este trabajo se realiza después, ya que se hace uso de las etiquetas de los tokens en el algoritmo de lematización. \newline
 En la clase \textcolor{SchoolColor}{Lematizer} se tiene un diccionario de lemas como dato miembro, que se construye a través del fichero \textcolor{SchoolColor}{es-verbs.txt}.
  \begin{minted}
 [frame=lines,
@@ -698,11 +698,11 @@ y si coincide alguna con el verbo a lematizar, se le aplica.
 \item Si el verbo contiene \texttt{"ldr" o "ndr"}, por ejemplo \textsl{valdrá, contendrá, compondrá, pondrá, mantendrá...} se mantiene la \texttt{"l" o "n"} respectivamente, y el \texttt{"dr"} en adelante se cambiará por \texttt{"er"}. Obteniendo  \textsl{valer, contener, componer, poner, mantener...}.
 \item Muchos verbos cuyo infinitivo acaba en \textsl{-ar} tienen inflexiones regulares. Por ejemplo, \texttt{ cantabas, cantó, presentaremos, invitarás, ahorraríais...} cuyas inflexiones son \texttt{"as","ó","aremos","arás","aríais"}. En este paso se define una lista de inflexiones regulares para verbos acabados en \textsl{-ar} y se aplica. Si coincide alguna, se elimina la inflexión y se añade el infinitivo. 
 \item Parecido al paso anterior pero con una lista de inflexiones regulares para verbos que acaben en \textsl{-er}.
-Sin embargo, muchas de estas inflexiones también son comunes en verbos cuyo infinitivo acaba en \textsl{-ir}. Para detectar de que conjugación es, se comprueba si la palabra sin la inflexión es mayor que dos y si la penúltima letra de ésta es \texttt{"i"}. En ese caso, Se le añade el infinitivo \texttt{"-ir"}. En caso contrario, se le añade \texttt{"-er"}. Por ejemplo, \textsl{"correríais"} quedaría como \textsl{"corr-"} sin inflexión, y eso tiene longitud mayor que 2. Pero como su penúltima letra es una \texttt{"r"}, se lematizaría como \texttt{"correr"}.
-\item Se aplica un proceso esactamente igual al de los infinitivos acabados en \texttt{"-ar"} pero con inflexiones típicas de verbos con infinitivos acabados en \texttt{"-ir"}.
+Sin embargo, muchas de estas inflexiones también son comunes en verbos cuyo infinitivo acaba en \textsl{-ir}. Para detectar de que conjugación es, se comprueba si la palabra sin la inflexión es mayor que dos y si la penúltima letra de ésta es \texttt{"i"}. En ese caso, Se le añade el infinitivo \texttt{"-ir"}. En caso contrario, se le añade \texttt{"-er"}. Por ejemplo, \textsl{"correríais"} quedaría como \textsl{"corr-"} sin inflexión, y eso tiene longitud mayor que dos. Pero como su penúltima letra es una \texttt{"r"}, se lematizaría como \texttt{"correr"}.
+\item Se aplica un proceso exactamente igual al de los infinitivos acabados en \texttt{"-ar"} pero con inflexiones típicas de verbos con infinitivos acabados en \texttt{"-ir"}.
 \item Las palabras acabadas en \texttt{"a"} u \texttt{"o"} son consideradas de la primera conjugación, por lo que se elimina dicha terminación y se les añade \texttt{-ar}.
 \item Igual que el anterior para verbos acabados en  \texttt{"as", "an"}.
-\item Para verbos presente,$3^{\circ}$ persona del singular acabados en \texttt{"-e"} se comprueba si la palabra sin la inflexión es mayor que dos y si la antepenúltima letra de ésta es \texttt{"i"}, y en ese caso se elimina \texttt{"-e"} para añadirle \texttt{"-ir"}. En caso contrario, se eleminiaría \texttt{"-e"} para añadir \texttt{"-er"}.
+\item Para verbos presente, $3^{\circ}$ persona del singular acabados en \texttt{"-e"} se comprueba si la palabra sin la inflexión es mayor que dos y si la antepenúltima letra de ésta es \texttt{"i"}, y en ese caso se elimina \texttt{"-e"} para añadirle \texttt{"-ir"}. En caso contrario, se eliminaría \texttt{"-e"} para añadir \texttt{"-er"}.
 \item Se hace un proceso similar a los dos anteriores pero para las terminaciones \texttt{"-es", "-en"}.
 \item Por último se crea una lista de inflecciones verbales de tiempos en presente para $1^{\circ}$ y $2^{\circ}$ personas del plural, asociándole las conjugaciones a las que suelen pertenecer con más frecuencia:
 \begin{minted}
@@ -831,10 +831,10 @@ breaklines=true
 ]{scala}
 def parse(text: String, tokenize: Boolean, tags: Boolean, lemmatize: Boolean ,mapCall:(String,String)=>(String,String)): String
 \end{minted}
-Que recibe como parámetros el texto a parsear, tres booleanos indicando si se desea hacer \newline tokenización, pos etiquetado y lematización y una función para mapear las etiquetas al tagset \newline deseado.
+Recibe como parámetros el texto a parsear, tres booleanos indicando si se desea hacer \newline tokenización, pos etiquetado y lematización y una función para mapear las etiquetas al tagset \newline deseado.
 
 \section{Pruebas}
-Las pruebas realizadas son todos los test unitarios incluídos en la clase \textcolor{SchoolColor}{AppTest}. Para los test se usa la librería \textsf{ScalaSuite} y el estilo de test \textsf{FunSuite}. En los test se emplean aserciones generales para hacer las comprobaciones(assert). En la clase \textcolor{SchoolColor}{AppTest} se incluyen toda la declaración de variables necesarias para los test y test implementados. Se implementan test sólo para los métodos más importantes, implementando un test por cada funcionalidad relevante. Los test más destacados son:
+Las pruebas realizadas son todos los test unitarios incluidos en la clase \textcolor{SchoolColor}{AppTest}. Para los Test se usa la librería \textsf{ScalaSuite} y el estilo de test \textsf{FunSuite}. En los Test se emplean aserciones generales para hacer las comprobaciones (assert). En la clase \textcolor{SchoolColor}{AppTest} se incluyen toda la declaración de variables necesarias para los Test y Test implementados. Se implementan test sólo para los métodos más importantes, implementando un test por cada funcionalidad relevante. Los test más destacados son:
 \begin{minted}
 [frame=lines,
 framesep=1.3mm,
@@ -961,5 +961,5 @@ test("find lemma") {
       print("accuracy lematization of verbs: " + i.toFloat/n )
 }
 \end{minted} 
-Por último, el test donde se comprueba que la implementación de lematización de verbos obtiene la presición de etiquetado deseada. Para ello se testea sobre las 23435 entradas de verbos del diccionario creado a partir de \textsf{es-verbs.txt}.
+Por último, el test donde se comprueba que la implementación de lematización de verbos obtiene la precisión de etiquetado deseada. Para ello se testea sobre las 23435 entradas de verbos del diccionario creado a partir de \textsf{es-verbs.txt}.
 Los resultados obtenidos se discuten en el capítulo siguiente.

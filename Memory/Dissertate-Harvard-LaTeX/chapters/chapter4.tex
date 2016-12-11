@@ -12,7 +12,7 @@ que no necesita más que una cadena de texto a tokenizar.
 \section{Pos Tagger}
 Determinar el tipo de palabra que es cada token de un texto ya no es una tarea que pueda resolverse sólo aplicando algunas reglas consecutivas (al menos obteniendo resultados algo competitivos), dado que la función de las palabras varía según el contexto o su posición en una frase, la morfología...
 \newline
-El método propuesto en \textcolor{SchoolColor}{Pattern} para el tagger español consiste en usar un corpus etiquetado de palabras suficientemente grande y entrenar un algoritmo de machine learning que aprenda reglas y patrones presentes en esos datos. Concretamente, como corpus usa el \textcolor{SchoolColor}{Wikicorpus} \citet{reese2010word} para español, y como algoritmo usa un \textcolor{SchoolColor}{Algoritmo de Brill}:    
+El método propuesto en \textcolor{SchoolColor}{Pattern} para el tagger español consiste en usar un corpus etiquetado de palabras suficientemente grande y entrenar un algoritmo de machine learning que aprenda reglas y patrones presentes en esos datos. Concretamente, como corpus usa el \textcolor{SchoolColor}{Wikicorpus} \citet{reese2010word} para español, y como algoritmo usa un \textcolor{SchoolColor}{Algoritmo de Brill}.    
 \subsection*{Wikicorpus}
 Existen tres variantes para tres lenguas distintas: Español, Catalán e Inglés. El corpus en su versión actual cuenta con unas 750 millones de palabras en total (120 millones para el español) y está construido a partir de texto de la Wikipedia etiquetado con información lingüística, concretamente de lema y POS tag, usando la librería \textsf{Freeling} \citet{padro2012freeling}.
 \subsection*{Algoritmo de Brill}
@@ -20,14 +20,14 @@ Este método fue propuesto por Eric Brill \citet{brill1992simple}. Es un algorit
 El funcionamiento es el siguiente:
 \begin{enumerate}
 \item Etiquetado inicial: El algoritmo comienza asignando a cada palabra su etiqueta más común, para ello la busca en el diccionario léxico que recibe como parámetro. En esta etapa se etiquetan mal muchas palabras, pues no se tiene en cuenta para nada el contexto de las mismas. Además, hay palabras que no estarán en el diccionario.
-\item Etiquetar las desconocidas: \citet{padro2012freeling} propone dos procedimientos para ello. En primer lugar se considera que las palabras que no estaban presentes en el diccionario léxico y empiezan por mayúscula son nombres propios. En segundo lugar, se etiquetan las palabras desconocidas restantes asignándoles la etiqueta más común en palabras conocidas con las mismas tres últimas letras. Por ejemplo, \textsf{"roncaba"} se etiqutaría como verbo si \textsf{"cantaba"} fuera conocida.
+\item Etiquetar las desconocidas: \citet{padro2012freeling} propone dos procedimientos para ello. En primer lugar se considera que las palabras que no estaban presentes en el diccionario léxico y empiezan por mayúscula son nombres propios. En segundo lugar, se etiquetan las palabras desconocidas restantes asignándoles la etiqueta más común en palabras conocidas con las mismas tres últimas letras. Por ejemplo, \textsf{"roncaba"} se etiquetaría como verbo si \textsf{"cantaba"} fuera conocida.
 
-\item Aplicación de reglas iterativamente para mejorar el etiquetado: Se cambiará una etiqueta de \textcolor{SchoolColor}{a} a \textcolor{SchoolColor}{b} cuando se cumpla alguna de las siguiente reglas de la lista de plantillas de reglas:
+\item Aplicación de reglas iterativamente para mejorar el etiquetado: Se cambiará una etiqueta de \textcolor{SchoolColor}{a} a \textcolor{SchoolColor}{b} cuando se cumpla alguna de las siguientes reglas de la lista de plantillas de reglas:
 \begin{itemize}
-\item La palabra siguiente(anterior) está etiquetada como \textcolor{SchoolColor}{z}
-\item La segunda palabra previa( posterior) está etiquetada como \textcolor{SchoolColor}{z}
-\item Una de las dos palabras anteriores(siguientes) está etiquetada como \textcolor{SchoolColor}{z}
-\item Una de las tres palabras anteriores(siguientes) está etiquetada como \textcolor{SchoolColor}{z}
+\item La palabra siguiente (anterior) está etiquetada como \textcolor{SchoolColor}{z}
+\item La segunda palabra previa (posterior) está etiquetada como \textcolor{SchoolColor}{z}
+\item Una de las dos palabras anteriores (siguientes) está etiquetada como \textcolor{SchoolColor}{z}
+\item Una de las tres palabras anteriores (siguientes) está etiquetada como \textcolor{SchoolColor}{z}
 \item La siguiente está etiquetada como \textcolor{SchoolColor}{z} y la posterior como \textcolor{SchoolColor}{w}
 \item La anterior(siguiente) está etiquetada como \textcolor{SchoolColor}{z} y las dos anteriores(posteriores) a ella están etiquetadas como \textcolor{SchoolColor}{w}
 \item La palabra empieza (o no empieza) por mayúscula
@@ -36,8 +36,8 @@ El funcionamiento es el siguiente:
 \end{enumerate}
 Donde \textcolor{SchoolColor}{z}, \textcolor{SchoolColor}{w} son dos categorías cualesquiera (VB,NN..).
 Cabe destacar que las reglas son aplicables tanto a palabras como a etiquetas de las mismas, y se expresan con la notación interna del algoritmo:\newline \texttt{"PREVTAG", "NEXTTAG", "PREV1OR2TAG", "NEXT1OR2TAG", "PREV1OR2OR3TAG", "NEXT1OR2OR3TAG", PREV2TAG","NEXT2TAG",
- "CURWD", "PREVWD", "NEXTWD", "PREV1OR2WD", "NEXT1OR2WD"}.\newline Un ejemlo de instancia de una regla sería: \textcolor{SchoolColor}{\texttt{TO IN NEXTTAG AT}}, que se interpretaría como que la etiqueta \texttt{"TO"} cambiaría a \texttt{"IN"} si la etiqueta de la palabra anterior es \texttt{"AT"}. \\[\baselineskip]
- Tras la fase del etiquetado inicial y etiquetar las desnococidas, se comparan las etiquetas estimadas con las reales, obtieniendo una lista de errores. A continuación, por cada error de esa lista (por cada palabra mal etiquetada) se instancia cada una de las reglas de la lista de plantillas de reglas, y se evalúan, para determinar cuál de ellas reduce más el error. La ganadora se aplica al texto y se añade a la lista de resultados. Después se vuelve a calcular una lista de errores sobre el nuevo corpus resultante de haber aplicado la mejor regla. \newline
+ "CURWD", "PREVWD", "NEXTWD", "PREV1OR2WD", "NEXT1OR2WD"}.\newline Un ejemplo de instancia de una regla sería: \textcolor{SchoolColor}{\texttt{TO IN NEXTTAG AT}}, que se interpretaría como que la etiqueta \texttt{"TO"} cambiaría a \texttt{"IN"} si la etiqueta de la palabra anterior es \texttt{"AT"}. \\[\baselineskip]
+ Tras la fase del etiquetado inicial y etiquetar las desconocidas, se comparan las etiquetas estimadas con las reales, obtieniendo una lista de errores. A continuación, por cada error de esa lista (por cada palabra mal etiquetada) se instancia cada una de las reglas de la lista de plantillas de reglas, y se evalúan, para determinar cuál de ellas reduce más el error. La ganadora se aplica al texto y se añade a la lista de resultados. Después se vuelve a calcular una lista de errores sobre el nuevo corpus resultante de haber aplicado la mejor regla. \newline
  Para determinar cual es la mejor regla, a cada regla se le asigna una puntuación, que se calcula como   
  los aciertos que tiene menos los fallos.    
 
@@ -103,7 +103,7 @@ como como CS 0
 delantero delantero NCMS000 00466114
 \end{minted}
 
-Aunque en este ejemplo no se aprecia, algunas líneas de estos ficheros son metadatos("<doc>", "</doc>", "ENDOFARTICLE", "REDIRECT"...), por lo que deben ser ignoradas. A continuación se muestra un pseudocódigo de la lectura de este corpus, obteniendo finalmente una lista de pares (palabra, etiqueta). El código en python que emplea \textcolor{SchoolColor}{Pattern} se puede encontrar en la web de \textcolor{SchoolColor}{CLiPS} (\url{http://www.clips.ua.ac.be/}). 
+Aunque en este ejemplo no se aprecia, algunas líneas de estos ficheros son metadatos ("<doc>", "</doc>", "ENDOFARTICLE", "REDIRECT"...), por lo que deben ser ignoradas. A continuación se muestra un pseudocódigo de la lectura de este corpus, obteniendo finalmente una lista de pares (palabra, etiqueta). El código en python que emplea \textcolor{SchoolColor}{Pattern} se puede encontrar en la web de \textcolor{SchoolColor}{CLiPS} (\url{http://www.clips.ua.ac.be/}). 
 
 \begin{algorithm}[H]
     \begin{algorithmic}[1]
@@ -163,7 +163,7 @@ Este diccionario léxico se utilizará luego para etiquetar inicialmente los dat
     \label{alg:rAP}
     \caption{Obtención del Léxico}
 \end{algorithm}
-Debido a que el resultado que se obtiene es muy grande en tamaño(85877 líneas), el léxico se guarda en el fichero  \textcolor{SchoolColor}{es-lexicon.txt}, y se usa directamente en el Pos tagger que implementa este proyecto.\\[\baselineskip]
+Debido a que el resultado que se obtiene es muy grande en tamaño (85877 líneas), el léxico se guarda en el fichero  \textcolor{SchoolColor}{es-lexicon.txt}, y se usa directamente en el Pos tagger que implementa este proyecto.\\[\baselineskip]
  Lo mismo sucede con el contexto y la morfología, ya que entrenar el modelo cada vez que se quiera usar el Pos Tagger es un proceso muy lento y poco recomendable. Por tanto, los algoritmos se ejecutan una vez, guardando los resultados en ficheros para reutilizarlos posteriormente. 
 \captionof{listing}*{Algunas líneas de ejemplo de \textcolor{SchoolColor}{es-lexicon.txt}}
 \begin{minted}
@@ -226,9 +226,9 @@ RG SP CURWD según
 \end{minted}
 \subsection*{Obtención de reglas morfológicas}
 Las reglas morfológicas son aquellas basadas en los prefijos y sufijos de las palabras. Por ejemplo, 
-palabras acabadas en \textsf{-mente} son advervios en Español. En \textcolor{SchoolColor}{Pattern.es} se propone su uso para mejorar la precisión del algoritmo de Pos etiquetado, concretamente, para las palabras desconocidas que se etiquetan como nombres por defecto.\\[\baselineskip]
+palabras acabadas en \textsf{-mente} son adverbios en Español. En \textcolor{SchoolColor}{Pattern.es} se propone su uso para mejorar la precisión del algoritmo de Pos etiquetado, concretamente, para las palabras desconocidas que se etiquetan como nombres por defecto.\\[\baselineskip]
 El primer paso es detectar los sufijos y contar su ocurrencia en las palabras que no estén etiquetadas como nombres propios. Para detectar si es un sufijo, se toman las 5 últimas letras de la palabra, y se comprueba si son menos letras que las de la palabra original. Por ejemplo: dada la palabra "flor" sabremos que no es un sufijo porque sus últimas 5 letras (y 4) son "flor", y eso mide igual que la \newline palabra inicial. Dicho de otra forma, la palabra en sí no puede ser un sufijo.\newline
-Una vez tenemos los sufijos, el segundo paso es calcular la frecuencia de la etiqueta que más aparece con el mismo, creando una nueva regla. Por último, se filtran las reglas, descartando las que no casen al menos con 10 palabras y las que tengan como etiqueta más frecuente una que no se dé al menos en un 80\%. También se descartan aquellas cuya etiqueta sea \textsf{"NCS"} (nombre común singular). A continuación se presenta un pseudocódigo del proceso. El código en python se puede consultar en la web de \textcolor{SchoolColor}{CLiPS}.
+Una vez tenemos los sufijos, el segundo paso es calcular la frecuencia de la etiqueta que más aparece con el mismo, creando una nueva regla. Por último, se filtran las reglas, descartando las que no casen al menos con diez palabras y las que tengan como etiqueta más frecuente una que no se dé al menos en un 80\%. También se descartan aquellas cuya etiqueta sea \textsf{"NCS"} (nombre común singular). A continuación se presenta un pseudocódigo del proceso. El código en python se puede consultar en la web de \textcolor{SchoolColor}{CLiPS}.
 \begin{algorithm}[H]
     \begin{algorithmic}[1]
     \Procedure{createMorphology(corpus, maxLines=125)}{}
@@ -276,7 +276,7 @@ NC oso fhassuf 3 AQ x
 NV ía fhassuf 2 VMI x
 \end{minted} 
 \section{Lematizador}
-Por último, para el lematizador, se usa un fichero de 576 líneas (\textcolor{SchoolColor}{es-verbs.txt}),público en el repositorio de \textsf{CLiPS}, con las conjugaciones de 576 verbos españoles obtenidos de la web \url{ http://users.ipfw.edu/jehle/verblist.htm}, para crear un diccionario interno al que a cada verbo conjugado se le asocia su forma base(lema). Ésto se explica en la parte de implementación.
+Por último, para el lematizador, se usa un fichero de 576 líneas (\textcolor{SchoolColor}{es-verbs.txt}), público en el repositorio de \textsf{CLiPS}, con las conjugaciones de 576 verbos españoles obtenidos de la web \url{ http://users.ipfw.edu/jehle/verblist.htm}, para crear un diccionario interno al que a cada verbo conjugado se le asocia su forma base (lema). Ésto se explica en la parte de implementación.
 \captionof{listing}*{Algunas líneas de ejemplo de \textcolor{SchoolColor}{es-verbs.txt}}
 \begin{minted}
 [frame=lines,
