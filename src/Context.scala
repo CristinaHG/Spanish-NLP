@@ -54,27 +54,19 @@ class Context {
       if (path.isInstanceOf[String] && Files.exists(Paths.get(path)) ) {
         //from file path
         val f = scala.io.Source.fromFile(path).getLines().foreach(line => context::=line.split(" ").toList)
-        //replace "\" by "" -> codecs.BOMUTF8 not necesary because of codification
-        // f = f.map(line => if (f.indexOf(line) == 0 && line.isInstanceOf[String]) line.replaceAll("\"+$", "") else line)
       }else if(path.isInstanceOf[String]){
         //from String
         val f=scala.io.Source.fromString(path).getLines().map(line => context::=line.split(" ").toList)
-        //      }else{
-        //        //from file or buffer
-        //        val f=scala.io.Source.fromBytes(path.toBuffer.toArray,encoding).getLines().map(line => morphology::=line.split(" ").toList)
       }
     }else throw new IllegalArgumentException("a path must be specified")
     this.contextList=context.reverse
-    //return morphology
   }
 
   //Applies contextual rules to the given list of tokens, where each token is a [word,tag] list.
   def apply(tokensTags:List[(String,String)]):List[(String,String)]={
     val o=List(("STAART", "STAART"),("STAART", "STAART"),("STAART", "STAART")) //empty delimiters for look ahead/back
-
-   var t=o.++(tokensTags).++(o)
-  // var mapped=mutable.MutableList[(String,String)]()
-  var mapped=List[(String,String)]()
+    var t=o.++(tokensTags).++(o)
+    var mapped=List[(String,String)]()
     var cmd=""
     var x=""
     var y=""

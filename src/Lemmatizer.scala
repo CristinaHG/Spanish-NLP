@@ -78,7 +78,6 @@ class Lemmatizer {
 
   //-----returns the infinitive form of the given verb or none
   private def verb_lemma(verb:String):String={
-  //if(dictionary.getOrElse(verb," ")!="") return dictionary(verb).toLowerCase
   val v=verb.toLowerCase
     if( mappedVerbs .keySet.exists(_==v)){
       return this.mappedVerbs(v)

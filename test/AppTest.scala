@@ -20,7 +20,7 @@ import org.junit.Assert.assertArrayEquals
    val string1 = "Los gatos negros son bonitos."
    val string2 = "Nadie podrá vivir eternamente"
    val string3 = "Los ingenieros informáticos son muy inteligentes"
-   val string4 = "Aún no puedo creer que Trump haya ganado las elecciones."
+   val string4 = "Aún no puedo creer que no asistiera a la fiesta."
    val string5 = "El cielo es azul. El agua es transparente y las amapolas son rojas."
    val string6 = "Los lobos aullaban desesperadamente"
    val string7 = "Dijo que lo esperáramos aquí mientras compraba galletas"
@@ -57,7 +57,7 @@ import org.junit.Assert.assertArrayEquals
      assert(tokenizer.find_tokens(string1) == List(List("Los", "gatos", "negros", "son", "bonitos", ".")))
      assert(tokenizer.find_tokens(string2) == List(List("Nadie", "podrá", "vivir", "eternamente")))
      assert(tokenizer.find_tokens(string3) == List(List("Los", "ingenieros", "informáticos", "son", "muy", "inteligentes")))
-     assert(tokenizer.find_tokens(string4) == List(List("Aún", "no", "puedo", "creer", "que", "Trump", "haya", "ganado", "las", "elecciones", ".")))
+     assert(tokenizer.find_tokens(string4) == List(List("Aún", "no", "puedo", "creer", "que", "no", "asistiera", "a", "la", "fiesta", ".")))
      assert(tokenizer.find_tokens(string5) == List(List("El", "cielo", "es", "azul", "."), List("El", "agua", "es", "transparente", "y", "las", "amapolas", "son", "rojas", ".")))
      assert(tokenizer.find_tokens(string6) == List(List("Los", "lobos", "aullaban", "desesperadamente")))
      assert(tokenizer.find_tokens(string7) == List(List("Dijo", "que", "lo", "esperáramos", "aquí", "mientras", "compraba", "galletas")))
@@ -126,20 +126,44 @@ import org.junit.Assert.assertArrayEquals
      assert(tagger.parole2penntreebank("jaula", "NC") == ("jaula", "NN"))
      assert(tagger.parole2penntreebank(".", "Fp") == (".", "."))
    }
-   //testing find tags
-//   test("test find tags"){
-//     val sentence=List("El", "gato","negro", "se", "sentó", "en", "la", "alfombra",".")
-//     val listSol=List(("El","DT"), ("gato","NN"),("negro","JJ"),("se,se"),("sentó,sentar"),("en","en"), ("la","el"),("alfombra","NN"),(".","."))
-//
-//     tagger.find_tags(sentence, Lexicon, morphology,context, List("NCS","NP","Z"), null)
-//   }
 
+
+   // Assert the accuracy of the Spanish tagger.
+   test("test find tags whole corpus"){
+     var wikicorpus=List[List[String]]()
+     var i=0
+     var n=0
+
+     val lexiconSpanish=Lexicon.read("../Spanish_Lematizer/data/es-lexicon.txt","utf-8",";;;")
+     val morphologySpanish=morphology.read("../Spanish_Lematizer/data/es-morphology.txt","utf-8",";;;")
+     val contextSpanish=context.read("../Spanish_Lematizer/data/es-context.txt","utf-8",";;;")
+
+     scala.io.Source.fromFile("../Spanish_Lematizer/corpus/tagged-es-wikicorpus.txt").getLines().foreach(line => wikicorpus ::= line.split(" ").toList)
+     wikicorpus=wikicorpus.reverse
+     wikicorpus.foreach(sentenceList=>{
+       var s1= sentenceList.map(f=>f.split("/"))
+       var s1ToTag=List[String]()
+       s1.foreach(f=> s1ToTag::=f(0))
+       s1ToTag=s1ToTag.reverse
+       val tagged=tagger.find_tags(s1ToTag, Lexicon, morphology,context, List("NCS","NP","Z"), null)
+
+       var j=0
+       s1.foreach(s=>{
+         if(s(1)==tagged(j)._2) i=i+1
+         n=n+1
+         j=j+1
+       })
+     })
+     assert(i.toFloat/n>0.91)
+     print("accuracy tagger:" + i.toFloat/n)
+   }
 
 
    /**
      * Testing Lemmatizer
      */
 
+   //test accuracy of singularize method
    test("singularize") {
      var wordforms = List[List[String]]()
      var testDict = mutable.Map.empty[String, List[String]]
@@ -167,6 +191,7 @@ import org.junit.Assert.assertArrayEquals
      print("singularize accuracy:" + i.toFloat/n )
    }
 
+   //test accuracy of predicative method
    test("predicative") {
      var wordforms = List[List[String]]()
      var testDict = mutable.Map.empty[String, List[String]]
@@ -193,7 +218,7 @@ import org.junit.Assert.assertArrayEquals
      print("predicative accuracy:" + i.toFloat/n  )
    }
 
-
+   //test accuracy of find lemma method
    test("find lemma") {
      var i = 0
      var n = 0
@@ -206,6 +231,8 @@ import org.junit.Assert.assertArrayEquals
       assert(i.toFloat/n > 0.80)
       print("accuracy lematization of verbs: " + i.toFloat/n )
 }
+
+   //test get lemmas general example
    test("test get lemmas"){
      val lemmatas=List(("Los", "DT", "el"),
      ("gatos", "NNS", "gato"),
@@ -220,37 +247,19 @@ import org.junit.Assert.assertArrayEquals
        ("en", "IN"), ("la", "DT"), ("alfombra", "NN")))==lemmatas)
    }
 
-   test("test find tags"){
-     //val sentence="El gato negro se sentó en la alfombra."
-     //val listSol=List("El/DT/el", "gato/NN/gato", "negro/JJ/negro","se/PRP/se","sentó/VB/sentar","en/IN/en", "la/DT/el" ,"alfombra/NN/alfombra","././.")
-     var wikicorpus=List[List[String]]()
-     var i=0
-     var n=0
-    // assert(myParser.parse(sentence, true, true,true,tagger.parole2penntreebank)==listSol.mkString("\n"))
+   /**
+     * Testing Parser
+     */
 
-     // Assert the accuracy of the Spanish tagger.
+//   test("test parse text"){
+//     val listSol1=List("Los/DT/el", "gatos/NNS/gato" ,"negros/JJ/negro", "son/VB/ser", "bonitos/NN/bonitos" ,"././.")
+//     val listSol2=List("Nadie/DT/nadie","podrá/VB/poder","vivir/VB/vivir","eternamente/RB/eternamente")
+//     val listSol3=List("Los/DT/el","ingenieros/NNS/ingeniero","informáticos/JJ/informático","son/VB/ser","muy/RB/muy","inteligentes/JJ/inteligente")
+//     val listSol4=List("Aún/RB/Aún","no/RB/no","puedo/VB/poder","creer/VB/creer","que/IN/que","no/RB/no","asistiera/VB/asistir","a/IN/a","la/DT/el","fiesta/NN/fiesta","././.")
+//     assert(myParser.parse(string1,true,true,true,tagger.parole2penntreebank)== listSol1.mkString("\n"))
+//     assert(myParser.parse(string2,true,true,true,tagger.parole2penntreebank)== listSol2.mkString("\n"))
+//     assert(myParser.parse(string3,true,true,true,tagger.parole2penntreebank)== listSol3.mkString("\n"))
+//     assert(myParser.parse(string4,true,true,true,tagger.parole2penntreebank)== listSol4.mkString("\n"))
+//   }
 
-     val lexiconSpanish=Lexicon.read("../Spanish_Lematizer/data/es-lexicon.txt","utf-8",";;;")
-     val morphologySpanish=morphology.read("../Spanish_Lematizer/data/es-morphology.txt","utf-8",";;;")
-     val contextSpanish=context.read("../Spanish_Lematizer/data/es-context.txt","utf-8",";;;")
-
-     scala.io.Source.fromFile("../Spanish_Lematizer/corpus/tagged-es-wikicorpus.txt").getLines().foreach(line => wikicorpus ::= line.split(" ").toList)
-     wikicorpus=wikicorpus.reverse
-     wikicorpus.foreach(sentenceList=>{
-       var s1= sentenceList.map(f=>f.split("/"))
-       var s1ToTag=List[String]()
-       s1.foreach(f=> s1ToTag::=f(0))
-       s1ToTag=s1ToTag.reverse
-       val tagged=tagger.find_tags(s1ToTag, Lexicon, morphology,context, List("NCS","NP","Z"), null)
-
-       var j=0
-       s1.foreach(s=>{
-         if(s(1)==tagged(j)._2) i=i+1
-         n=n+1
-         j=j+1
-       })
-     })
-     assert(i.toFloat/n>0.91)
-     print("accuracy tagger:" + i.toFloat/n)
-   }
 }

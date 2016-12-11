@@ -63,11 +63,9 @@ def commandLine(comments:String,moduleResult:String)={
         // Tags are separated by slashes.
         // Slashes in words are encoded with &slash;
         var SlashLemmata = for (l <- lemmatas; u <- l) yield (List(u._1.replaceAll("/", "&slash;"), u._2, u._3).mkString("/"))
-        //var SlashLemmata=lemmatas.map(u=>u.map(t=>List(t._1.replaceAll("/", "&slash;"), t._2, t._3).mkString("/")))
         return SlashLemmata.mkString("\n")
       } else if (tags == true) {
         return tagged.mkString
-        //else if(chunks)
         //else return tokens
       } else return s.mkString
       //if no options specified, return introduced text

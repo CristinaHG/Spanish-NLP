@@ -42,18 +42,12 @@ class Morphology {
       if (path.isInstanceOf[String] && Files.exists(Paths.get(path)) ) {
         //from file path
         val f = scala.io.Source.fromFile(path).getLines().foreach(line => morphology::=line.split(" ").toList)
-        //replace "\" by "" -> codecs.BOMUTF8 not necesary because of codification
-        // f = f.map(line => if (f.indexOf(line) == 0 && line.isInstanceOf[String]) line.replaceAll("\"+$", "") else line)
       }else if(path.isInstanceOf[String]){
         //from String
         val f=scala.io.Source.fromString(path).getLines().map(line => morphology::=line.split(" ").toList)
-//      }else{
-//        //from file or buffer
-//        val f=scala.io.Source.fromBytes(path.toBuffer.toArray,encoding).getLines().map(line => morphology::=line.split(" ").toList)
       }
     }else throw new IllegalArgumentException("a path must be specified")
     this.morphologyList=morphology.reverse
-    //return morphology
   }
 
 
