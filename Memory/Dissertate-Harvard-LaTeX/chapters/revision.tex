@@ -84,14 +84,14 @@ OpenNLP incorpora tres tokenizadores que segmentan una entrada de cadena de cara
 \item Tokenizador basado en aprendizaje: tokenizador de máxima entropía que detecta las fronteras de los tokens basándose en un modelo probabilístico.
 \end{itemize}
 \subsubsection{Detokenizador}
-esta herramienta hace justo lo contrario que el tokenizador, es decir, construye el texto original no tokenizado a partir de una secuencia de tokens. La implementación se basa en reglas que definen como los tokens deben añadirse a la cadena de caracteres:  \textsl{MERGE\_TO\_LEFT} añade el token por la izquierda, \textsl{MERGE\_TO\_RIGHT} añade el token por la derecha y \textsl{RIGHT\_LEFT\_MATCHING} añade el token a la derecha d la primera ocurrencia y a la izquierda de la segunda ocurrencia.
+Esta herramienta hace justo lo contrario que el tokenizador, es decir, construye el texto original no tokenizado a partir de una secuencia de tokens. La implementación se basa en reglas que definen como los tokens deben añadirse a la cadena de caracteres:  \textsl{MERGE\_TO\_LEFT} añade el token por la izquierda, \textsl{MERGE\_TO\_RIGHT} añade el token por la derecha y \textsl{RIGHT\_LEFT\_MATCHING} añade el token a la derecha de la primera ocurrencia y a la izquierda de la segunda ocurrencia.
 \subsubsection{Name entity recognition: NER}
 Es la herramienta que se encarga de buscar nombres de entidades y números en el texto. Para ello necesita un modelo que dependerá del lenguaje y el tipo de entidad que se quiera identificar. OpenNLP incluye algunos modelos pre entrenados sobre varios corpus libres disponibles. Para encontrar nombres en filas de texto, el texto debe ser previamente segmentado en frases y tokens.  
 \subsubsection{Categorizador de documento}
 El categorizador de documento de OpenNLP puede clasificar texto dentro de categorías predefinidas. Se basa en un framework de máxima entropía. De nuevo, para clasificar el texto se necesita de un modelo, pero OpenNLP no provee de ninguno pre entrenado, dado que para clasificar se requiere de requisitos específicos. 
 \subsubsection{POS tagger}
 El POS tagger que incorpora OpenNLP marca los tokens con su correspondiente tipo de palabra (según su categoría morfosintáctica) y para ello se basa en información del propio token y del contexto del mismo. Para resolver la ambiguedad que se presenta cuando un token puede tener múltiples etiquetas morfosintácticas, se aplica un modelo de probabilidad para predecir la etiqueta correcta. Para limitar el posible número de etiquetas que puede recibir un token, se emplea un diccionario de etiquetas. \newline
-Un \textsl{diccionario de etiquetas} es un diccionario de palabras donde se especifica qué etiquetas puede tener cada posible token.
+Un \textsf{diccionario de etiquetas} es un diccionario de palabras donde se especifica qué etiquetas puede tener cada posible token.
 \subsubsection{Chunker}
  Esta herramienta separa el texto en sintagmas correlados, como el sujeto y el predicado de la frase, pero no especifica su estructura interna ni su función en la frase principal. 
 \subsubsection{Parseador}
@@ -104,7 +104,7 @@ Para el Inglés incorpora modelos para todas las fases: tokenizador, detección 
 
 \section{Limitaciones}
 En \citet{hirschberg2015advances} dicen que la mayor limitación de los sistemas de PLN actuales es que dan soporte a los lenguajes más hablados y más extendidos, como el Inglés, Francés, Alemán, Español o Chino, pero otros como el Swahili, Bengali o Indonesio hablados por millones de personas no tienen disponible una herramienta de este tipo. \newline
-Sin embargo, aunque el Español está entre los focos de mira de las suites de PLN más usadas actualmente, rara vez hay un pipeline completo para análisis de sentimientos en español que proporcione resltados similares a los que se obtienen para el Inglés. Por ejemplo, en la sección anterior explicábamos \textcolor{SchoolColor}{Apache OpenNLP}, que directamente no incluye herramientas como lematización o análisis de sentimientos para ningún idioma.\newline
+Sin embargo, aunque el Español está entre los focos de mira de las suites de PLN más usadas actualmente, rara vez hay un pipeline completo para análisis de sentimientos en español que proporcione resultados similares a los que se obtienen para el Inglés. Por ejemplo, en la sección anterior explicábamos \textcolor{SchoolColor}{Apache OpenNLP}, que directamente no incluye herramientas como lematización o análisis de sentimientos para ningún idioma.\newline
 Quizá la suite de NLP más conocida en la actualidad y referenciada junto con \textcolor{SchoolColor}{Python NLTK} es \textcolor{SchoolColor}{Stanford CoreNLP}, debido a que es bastante completa, está bien documentada y tiene módulos para muchos de los idiomas más usados:
 \begin{figure}[H]%con el [H] le obligamos a situar aquí la figura
 \centering
@@ -113,6 +113,6 @@ Quizá la suite de NLP más conocida en la actualidad y referenciada junto con \
 \caption{Disponibilidad de herramientas e idiomas en Stanford CoreNLP}   
 \end{figure}
 Pero de nuevo vemos que sólo está completo para Inglés, faltando métodos como la lematización o el análisis de sentimientos para Español. Otro paquete menos conocido que incluye funcionalidad para minería web, procesamiento del lenguaje natural y machine learning es  \textcolor{SchoolColor}{Pattern} \citet{smedt2012pattern}  implementada en Python, que según el benchmark de métodos de análisis de sentimientos que hicieron \citet{ribeiro2016sentibench} da mejores resultados en media que Stanford CoreNLP, aunque el benchmark solo hace comparaciones para el Inglés. \newline
-\textcolor{SchoolColor}{Pattern} incluye una serie de herramientas para Español, pero esta tampoco incluye análisis de sentimientos para este lenguaje. \newline
+\textcolor{SchoolColor}{Pattern} incluye una serie de herramientas para Español, pero ésta tampoco incluye análisis de sentimientos para este lenguaje. \newline
 Ante estas limitaciones el proyecto desarrollado en este trabajo se centra en implementar las tres primeras etapas  del pipeline de un software NLP para análisis de sentimientos en español: tokenizador, lematizador y POS tagger.\newline
 Teniendo como finalidad a largo plazo construir un software que haga como etapa final análisis de sentimientos en Español. 

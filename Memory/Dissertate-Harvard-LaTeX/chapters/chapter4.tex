@@ -184,7 +184,7 @@ breaklines=true
 
 \subsection*{Obtención de reglas contextuales}
 Para obtener las reglas que tienen en cuenta los alrededores de la palabra a etiquetar (el contexto), se usa el léxico obtenido en el apartado anterior y el algoritmo de Brill, ya descrito también anteriormente. \newline
-El procedimiento a seguir es el siguiente: en primer lugar, se anonimizan los nombres propios presentes en el corpus, ya que la intención es aprender reglas generales del tipo "un nombre va seguido de un adjetivo" , y no "Granada va seguido de un adjetivo". Este proceso de describe en pseudocódigo como:
+El procedimiento a seguir es el siguiente: en primer lugar, se anonimizan los nombres propios presentes en el corpus, ya que la intención es aprender reglas generales del tipo "un nombre va seguido de un adjetivo" , y no "Granada va seguido de un adjetivo". Este proceso se describe en pseudocódigo como:
 \begin{algorithm}[H]
     \begin{algorithmic}[1]
     \Procedure{Anonimize(corpus)}{}
@@ -227,7 +227,7 @@ RG SP CURWD según
 \subsection*{Obtención de reglas morfológicas}
 Las reglas morfológicas son aquellas basadas en los prefijos y sufijos de las palabras. Por ejemplo, 
 palabras acabadas en \textsf{-mente} son advervios en Español. En \textcolor{SchoolColor}{Pattern.es} se propone su uso para mejorar la precisión del algoritmo de Pos etiquetado, concretamente, para las palabras desconocidas que se etiquetan como nombres por defecto.\\[\baselineskip]
-El primer paso es detectar los sufijos y contar su ocurrencia en las palabras que no estén etiquetados como nombres propios. Para detectar si es un sufijo, se toman las 5 últimas letras de la palabra, y se comprueba si son menos letras que las de la palabra original. Por ejemplo: dada la palabra "flor" sabremos que no es un sufijo porque sus últimas 5 letras (y 4) son "flor", y eso mide igual que la palabra inicial. Dicho de otra forma, la palabra en sí no puede ser un sufijo.\newline
+El primer paso es detectar los sufijos y contar su ocurrencia en las palabras que no estén etiquetadas como nombres propios. Para detectar si es un sufijo, se toman las 5 últimas letras de la palabra, y se comprueba si son menos letras que las de la palabra original. Por ejemplo: dada la palabra "flor" sabremos que no es un sufijo porque sus últimas 5 letras (y 4) son "flor", y eso mide igual que la \newline palabra inicial. Dicho de otra forma, la palabra en sí no puede ser un sufijo.\newline
 Una vez tenemos los sufijos, el segundo paso es calcular la frecuencia de la etiqueta que más aparece con el mismo, creando una nueva regla. Por último, se filtran las reglas, descartando las que no casen al menos con 10 palabras y las que tengan como etiqueta más frecuente una que no se dé al menos en un 80\%. También se descartan aquellas cuya etiqueta sea \textsf{"NCS"} (nombre común singular). A continuación se presenta un pseudocódigo del proceso. El código en python se puede consultar en la web de \textcolor{SchoolColor}{CLiPS}.
 \begin{algorithm}[H]
     \begin{algorithmic}[1]

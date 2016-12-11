@@ -7,7 +7,7 @@ A continuación se dan unas pautas para probar las herramientas implementadas si
 Para probar la funcionalidad, hay que ejecutar \textcolor{SchoolColor}{ScalaApp.scala} especificando las siguientes opciones:
 \begin{itemize}
 \item Texto que se desea parsear, sin poner comillas, pues ya las pone el programa por el usuario.
-\item Opciones que se desean aplicar separadas por comas. Es decir, si se quiere hacer hasta la lematización, se especificaría \textsf{true,true,true}. Si por el contrario se desea tokenizar y etiquetar pero no lemtizar, se especificaría  \textsf{true,true,false}. Si se especifican menos de tres opciones, el programa toma las restantes como false atomáticamente.
+\item Opciones que se desean aplicar separadas por comas. Es decir, si se quiere hacer hasta la lematización, se especificaría \textsf{true,true,true}. Si por el contrario se desea tokenizar y etiquetar pero no lematizar, se especificaría  \textsf{true,true,false}. Si se especifican menos de tres opciones, el programa toma las restantes como false atomáticamente.
 \item Seleccionar la notación que queremos para las etiquetas. Hay que introducir un número entre 1 y 3, donde 1 representa el tagset parole, 2 representa el tagset penntreebank y 3 representa el tagset universal. Si se introduce otro número, lanzará una excepción con un mensaje: \texttt{"Introduzca un número válido [1-3]"}. 
 \end{itemize}
 
@@ -36,5 +36,5 @@ A continuación se representan los resultados finales obtenidos por los algoritm
 \end{tabular}
 \end{table}
 
-Por lo general los resultados son muy similares, obteniendo exactamente el mismo resultado para el algoritmo de singularización y prácticamente el mismo para el algoritmo de lematización de verbos y etiquetado,siendo el de este trabajo algo muy levemente superior. \newline
+Por lo general los resultados son muy similares, obteniendo exactamente el mismo resultado para el algoritmo de singularización y prácticamente el mismo para el algoritmo de etiquetado y lematización de verbos, siendo éste último implementado en este trabajo algo muy levemente superior. \newline
 Quizá la mayor diferencia esté en el algoritmo predicativo, aunque tampoco es una diferencia alarmante, y en este caso, es a favor de nuestro trabajo. Ésta diferencia se debe casi con toda seguridad a que se ha decidido etiquetar inicialmente las palabras desconocidas que no sean nombre propios ni números como \texttt{"NCS"} (nombre común en singular) en lugar de \texttt{"NN"} como hace \textsf{Pattern.es}.     
