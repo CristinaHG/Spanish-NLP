@@ -298,7 +298,7 @@
     \begin{spacing}{\dnormalspacing}
     	\input{frontmatter/abstractEn}
 	\vspace*{5pt}
-	\textcolor{SchoolColor}{Keywords:} \text{Natural language processing, Scala, tokenizer, pos tagger, lematizer}
+	\textcolor{SchoolColor}{Keywords:} \text{Natural language processing, Scala, tokenizer, pos tagger, lemmatizer}
     \end{spacing}
 	\vspace*{\fill}
 	\newpage \lhead{} \rhead{}
