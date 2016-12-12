@@ -38,7 +38,7 @@ import org.junit.Assert.assertArrayEquals
    val morphologyPath="../Spanish_Lematizer/data/es-morphology.txt"
    val contextPath="../Spanish_Lematizer/data/es-context.txt"
    //needed objects
-   val myParser=new Parser(lexiconPath,morphologyPath,contextPath,verbsPath,List("NCS","NP","Z"),"utf-8",";;;")
+   val myParser=new Parser(lexiconPath,morphologyPath,contextPath,verbsPath,List("NC","NP","Z"),"utf-8",";;;")
    val tokenizer = new Tokenizer
    val tagger = new PosTagger
    val lemmatizer = new Lemmatizer
@@ -145,7 +145,7 @@ import org.junit.Assert.assertArrayEquals
        var s1ToTag=List[String]()
        s1.foreach(f=> s1ToTag::=f(0))
        s1ToTag=s1ToTag.reverse
-       val tagged=tagger.find_tags(s1ToTag, Lexicon, morphology,context, List("NCS","NP","Z"), null)
+       val tagged=tagger.find_tags(s1ToTag, Lexicon, morphology,context, List("NC","NP","Z"), null)
 
        var j=0
        s1.foreach(s=>{

@@ -59,6 +59,8 @@ ladra/\textcolor{red}{NN}/\textcolor{red}{ladra}\newline
 ././.\newline
 }
 \noindent\rule{14cm}{0.4pt}\newline
+
+Se observa que se comete un fallo de lematización, ya que aunque etiqueta \texttt{muerde} correctamente como un verbo, lo lematiza como \texttt{\textcolor{red}{muerder}}, palabra que no existe. Esto se debe a que dentro del algoritmo de lematización, intenta aplicar una regla para formas acabadas en \texttt{"-e"} con inflexiones \newline regulares (\texttt{"comes","vive","ejerce","corre"...}), que consiste en quitar la última letra y añadir \texttt{"-er"} a la palabra, si ésta sin prefijo no es mayor que dos o no contiene una \texttt{"-i"} en antepenúltimo lugar. Otro error presente en la frase es etiquetar \texttt{ladra} como \texttt{\textcolor{red}{NN}}, lo que deriva en una lematización incorrecta de ésta palabra. \texttt{Ladra} inicialmente es desconocida (no está en el diccionario), pero lo que se etiqueta inicialmente como tal. Posteriormente, el algoritmo aplica reglas morfológicas, pero no encuentra ninguna que encaje, por lo que la etiqueta con la etiqueta por defecto que le hemos dicho, y eso es \texttt{NCS}, que en formato penntreebank es \texttt{NN}.
 \subsection*{Ejemplo 2}
 Para la frase de entrada \texttt{"Los mosquitos tienen la mala costumbre de querer contarnos secretos al oído."} se obtiene la salida: \newline
 \noindent\rule{14cm}{0.4pt}\newline
