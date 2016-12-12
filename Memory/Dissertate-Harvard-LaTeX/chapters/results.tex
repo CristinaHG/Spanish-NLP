@@ -79,6 +79,7 @@ oído/\textcolor{red}{VBN}/\textcolor{red}{oir}\newline
 ././.\newline
 }
 \noindent\rule{14cm}{0.4pt}\newline
+En este caso encontramos tres errores: el primero en el POS etiquetado, al etiquetar la palabra \texttt{mosquitos} como nombre simple, derivando en error también en la lematización, pues se considera que si una palabra es un nombre singular, ésta está en su forma base. El segundo es etiquetar \texttt{contarnos} como \texttt{\textcolor{red}{NN}} en lugar de \texttt{VB}, debido a que es desconocida, por lo que se etiqueta por defecto, pero luego no encuentra regla morfológica o contextual que la empareje. El último error es etiquetar \texttt{oído} como \texttt{\textcolor{red}{VBN}}, lematizándolo como tal, cuando realiza la función de sustantivo. Debido al léxico, esta palabra se etiqueta inicialmente como \texttt{VMP}, por lo que no se le aplican reglas morfológicas \newline después ni encuentra reglas contextuales que cambien su etiqueta, quedándose finalmente como \texttt{VBN} al mapear a formato penntreebank. 
 \subsection*{Ejemplo 3}
 Para la frase de entrada \texttt{"En navidad siempre se juntan la abuela con la botella de anís, los niños correteando y el perro ladrando."} se obtiene la salida: \newline
 \noindent\rule{14cm}{0.4pt}\newline
