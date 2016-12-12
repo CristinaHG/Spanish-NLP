@@ -37,4 +37,69 @@ A continuación se representan los resultados finales obtenidos por los algoritm
 \end{table}
 
 Por lo general los resultados son muy similares, obteniendo exactamente el mismo resultado para el algoritmo de singularización y prácticamente el mismo para el algoritmo de etiquetado y lematización de verbos, siendo éste último implementado en este trabajo algo levemente superior. \newline
-Quizá la mayor diferencia esté en el algoritmo predicativo, aunque tampoco es una diferencia alarmante, y en este caso, es a favor de nuestro trabajo. Esta diferencia se debe casi con toda seguridad a que se ha decidido etiquetar inicialmente las palabras desconocidas que no sean nombre propios ni números como \texttt{"NCS"} (nombre común en singular) en lugar de \texttt{"NN"} como hace \textsf{Pattern.es}.     
+Quizá la mayor diferencia esté en el algoritmo predicativo, aunque tampoco es una diferencia alarmante, y en este caso, es a favor de nuestro trabajo. Esta diferencia se debe casi con toda seguridad a que se ha decidido etiquetar inicialmente las palabras desconocidas que no sean nombre propios ni números como \texttt{"NCS"} (nombre común en singular) en lugar de \texttt{"NN"} como hace \textsf{Pattern.es}. Cabe mencionar, que estos resultados se miden a nivel de palabra bien etiquetada, y no a nivel de oración, pues de esta forma se reduciría el acierto en los resultados casi a la mitad. El estado del arte en pos etiquetado y lematización está actualmente entre el 96\%-98\%, pero si se midiera como porcentaje de frases completas bien etiquetadas, quedaría entre un 50\%-57\%, por lo que realmente el problema está lejos de estar resuelto. 
+
+\section{Ejemplos de errores}
+A continuación se exponen algunos ejemplos de errores en el Pos etiquetado y lematización de \newline algunas oraciones: 
+\subsection*{Ejemplo 1}
+Para la frase de entrada \texttt{"Perro con hueso en la boca, ni muerde ni ladra."} se obtiene la salida: \newline
+
+\noindent\rule{14cm}{0.4pt}\newline
+\texttt{Perro/NN/Perro\newline
+con/IN/con\newline
+hueso/NN/hueso\newline
+en/IN/en\newline
+la/DT/el\newline
+boca/NN/boca\newline
+,/,/,\newline
+ni/CC/ni\newline
+muerde/VB/\textcolor{red}{muerder}\newline
+ni/CC/ni\newline
+ladra/\textcolor{red}{NN}/\textcolor{red}{ladra}\newline
+././.\newline
+}
+\noindent\rule{14cm}{0.4pt}\newline
+\subsection*{Ejemplo 2}
+Para la frase de entrada \texttt{"Los mosquitos tienen la mala costumbre de querer contarnos secretos al oído."} se obtiene la salida: \newline
+\noindent\rule{14cm}{0.4pt}\newline
+\texttt{Los/DT/el\newline
+mosquitos/\textcolor{red}{NN}/\textcolor{red}{mosquitos}\newline
+tienen/VB/tener\newline
+la/DT/el\newline
+mala/JJ/malo\newline
+costumbre/NN/costumbre\newline
+de/IN/de\newline
+querer/VB/querer\newline
+contarnos/\textcolor{red}{NN}/\textcolor{red}{contarnos}\newline
+secretos/NNS/secreto\newline
+al/NN/al\newline
+oído/\textcolor{red}{VBN}/\textcolor{red}{oir}\newline
+././.\newline
+}
+\noindent\rule{14cm}{0.4pt}\newline
+\subsection*{Ejemplo 3}
+Para la frase de entrada \texttt{"En navidad siempre se juntan la abuela con la botella de anís, los niños correteando y el perro ladrando."} se obtiene la salida: \newline
+\noindent\rule{14cm}{0.4pt}\newline
+\texttt{En/IN/En\newline
+navidad/NN/navidad\newline
+siempre/RB/siempre\newline
+se/PRP/se\newline
+juntan/VB/juntar\newline
+la/DT/el\newline
+abuela/NN/abuela\newline
+con/IN/con\newline
+la/DT/el\newline
+botella/NN/botella\newline
+de/IN/de\newline
+anís/NN/anís\newline
+,/,/,\newline
+los/DT/el\newline
+niños/NNS/niño\newline
+correteando/\textcolor{red}{NN}/\textcolor{red}{correteando}\newline
+y/CC/y\newline
+el/DT/el\newline
+perro/NN/perro\newline
+ladrando/\textcolor{red}{NN}/\textcolor{red}{ladrando}\newline
+././.\newline
+}
+\noindent\rule{14cm}{0.4pt}\newline

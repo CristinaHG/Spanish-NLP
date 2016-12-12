@@ -201,7 +201,7 @@
 % http://isites.harvard.edu/icb/icb.do?keyword=k75408&pageid=icb.page392732
 \definecolor{SchoolColor}{rgb}{0.6471, 0.1098, 0.1882} % Crimson
 \definecolor{chaptergrey}{rgb}{0.6471, 0.1098, 0.1882} % for chapter numbers
-
+\definecolor{red}{rgb}{1,0,0}
 \hypersetup{
     colorlinks,
     citecolor=SchoolColor,
