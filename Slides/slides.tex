@@ -91,6 +91,11 @@
 \deftranslation[to=Spanish]{Example}{Ejemplo}
 
 %comands
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\def\BState{\State\hskip-\ALG@thistlm}
+\def\BSState{\State\hskip\hskip-\ALG@thistlm}
+\newcommand*{\escape}[1]{\texttt{\textbackslash#1}}
 
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
@@ -281,35 +286,61 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ul
 %-------------Diagramas------------------- 
 \begin{frame}
 \frametitle{¿Diagrama de las clases?}
-\begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
-
-\column{.45\textwidth} % Left column and width
-\textbf{Razones para aprender Scala}
-\begin{enumerate}
-\item Es Scalable
-\item Paradigma mixto
-\item Sistema amplio de tipos
-\item Herramientas y librería de Java
-\item Estáticamente tipado
-\item Sintaxis concisa, elegante, flexible
-\end{enumerate}
-
-\column{.5\textwidth} % Right column and width
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
-
-\end{columns}
 \end{frame}
 %---------------material---------------------
 \subsection{Material empleado}
+\begin{frame}
+\frametitle{Material empleado: POS tagger}
+\textbf{¿Pongo lectura de Wikicorpus o solo lo menciono?}
+\end{frame}
 
-
-
+%---------------obtención del léxico-----------
+\begin{frame}[fragile]
+\frametitle{POS tagger - Obtención del léxico}
+\begin{columns}[t] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
+\column{.40\textwidth} % Left column and width
+\textbf{Pasos:}
+\begin{enumerate}
+\item Contar ocurrencia de cada palabra en corpus
+\item Contar ocurrencia de las etiquetas. Hay palabras que
+pueden tener varias etiquetas
+\item Construir diccionario tomando las palabras más frecuentes y su etiqueta más frecuente
+\end{enumerate}
+\column{.55\textwidth} % Left column and width
+\begin{algorithm}[H]
+    \begin{algorithmic}[1]
+    \algrenewcommand\alglinenumber[1]{\tiny #1:}
+    \Procedure{createLexicon(corpus, maxLines=100000)}{}
+    \State $\text{Lexicon} \gets$ \o
+    \State $\text{top} \gets$ \o
+    \For{$\text{sentence in corpus}$}
+            \For{$\text{w, tag in sentence}$}
+            \State $\text{increase ocurrences of Lexicon(w, tag)} $
+            \EndFor
+    \EndFor        
+    \For{$\text{w, tags in Lexicon}$} 
+            \State $\text{freq} \gets \text{$\sum$ all ocurrences of tags for w}$
+             \State $\text{tag} \gets \text{the tag with bigger ocurrence for w}$
+             \State $\text{top} \gets \text{top + (freq,w,tag) }$
+            \EndFor
+            
+     \State $\text{get the maxLines with bigger ocurrency}$ 
+     \State $\text{write to file}$      
+        \EndProcedure
+    \end{algorithmic}
+    \label{alg:rAP}
+    \caption{Obtención del Léxico}
+\end{algorithm}
+\end{columns}
+\end{frame}
 %--------------Algoritmos implementados-------
 \subsection{Algoritmos implementados}
-
+\begin{frame}
+\frametitle{Tokenizador}
+\end{frame}
 
 %--------------Resultados----------------
-\subsection{Algoritmos implementados}
+\subsection{Resultados}
 
 
 
