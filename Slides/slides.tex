@@ -128,6 +128,10 @@ Trabajo fin de grado en Ingeniería informática \\ % Your institution for the t
 
 \subsection{Subsection Example} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
 
+
+%\-----------------------------
+%\  Introducción al PLN
+%\-----------------------------
 \begin{frame}
 \frametitle{Introducción al PLN}
 \begin{block}{Definición}
@@ -151,34 +155,69 @@ Contar ocurrencias de las palabras para detectar estilo de escritura, asistentes
 \end{frame}
 
 %------------------------------------------------
-
+%\  Análisis de sentimientos- estado del arte
+%\-----------------------------------------------
 \begin{frame}
-\frametitle{Bullet Points}
+\frametitle{Análisis de sentimientos-Estado del arte}
 \begin{itemize}
-\item Lorem ipsum dolor sit amet, consectetur adipiscing elit
-\item Aliquam blandit faucibus nisi, sit amet dapibus enim tempus eu
-\item Nulla commodo, erat quis gravida posuere, elit lacus lobortis est, quis porttitor odio mauris at libero
-\item Nam cursus est eget velit posuere pellentesque
-\item Vestibulum faucibus velit a augue condimentum quis convallis nulla gravida
+\item A nivel de documento
+\item A nivel de oración
+\item A nivel de aspecto
+%\item Nam cursus est eget velit posuere pellentesque
+%\item Vestibulum faucibus velit a augue condimentum quis convallis nulla gravida
 \end{itemize}
 \end{frame}
 
 %------------------------------------------------
-
+%\  Introducción al problema (motivación)
+%\-----------------------------------------------
 \begin{frame}
-\frametitle{Blocks of Highlighted Text}
-\begin{block}{Block 1}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
-\end{block}
+\frametitle{Introducción al problema}
+El objetivo final de toda suite PLN es tener un conjunto de herramientas para realizar finalmente análisis de sentimientos o alguna extracción de información.
+\\~\\
+\textbf{Procesado del texto}
+\begin{enumerate}
+\item Tokenización
+\item Detección de límites de oraciones
+\item Lematización
+\item Stemming
+\item POS tagging
+\item Parseo sintáctico
+\end{enumerate}
 
-\begin{block}{Block 2}
-Pellentesque sed tellus purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum quis magna at risus dictum tempor eu vitae velit.
-\end{block}
+%\end{columns}
+%\begin{block}{Block 1}
+%Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, p%orttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
+%\end{block}
 
-\begin{block}{Block 3}
-Suspendisse tincidunt sagittis gravida. Curabitur condimentum, enim sed venenatis rutrum, ipsum neque consectetur orci, sed blandit justo nisi ac lacus.
-\end{block}
+%\begin{block}{Block 2}
+%Pellentesque sed tellus purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos %himenaeos. Vestibulum quis magna at risus dictum tempor eu vitae velit.
+%\end{block}
+
+%\begin{block}{Block 3}
+%Suspendisse tincidunt sagittis gravida. Curabitur condimentum, enim sed venenatis rutrum, ipsum neque consectetur %orci, sed blandit justo nisi ac lacus.
+%\end{block}
 \end{frame}
+
+%------------------------------------------------
+%\  tokenización
+%\-----------------------------------------------
+\begin{frame}
+\frametitle{Introducción al problema: Tokenización}
+\begin{block}{Definición}
+Proceso que separa el texto en uniades atómicas, los tokens(palabras, números, símbolos).
+\end{block}
+
+\begin{block}{Técnicas}
+Freeling, Apache OpenNLP ,NLTK, StandfordNLP
+\end{block}
+
+%\begin{block}{Block 3}
+%Suspendisse tincidunt sagittis gravida. Curabitur condimentum, enim sed venenatis rutrum, ipsum neque consectetur %orci, sed blandit justo nisi ac lacus.
+%\end{block}
+\end{frame}
+
+
 
 %------------------------------------------------
 
