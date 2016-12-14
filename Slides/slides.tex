@@ -132,8 +132,6 @@ Trabajo fin de grado en Ingeniería informática \\ % Your institution for the t
 %------------------------------------------------
 
 
-
-
 %\-----------------------------
 %\  Introducción al PLN
 %\-----------------------------
@@ -160,48 +158,29 @@ Contar ocurrencias de las palabras para detectar estilo de escritura, asistentes
 \end{frame}
 
 %------------------------------------------------
-%\  Análisis de sentimientos- estado del arte
-%\-----------------------------------------------
-\begin{frame}
-\frametitle{Análisis de sentimientos-Estado del arte}
-\begin{itemize}
-\item A nivel de documento
-\item A nivel de oración
-\item A nivel de aspecto
-%\item Nam cursus est eget velit posuere pellentesque
-%\item Vestibulum faucibus velit a augue condimentum quis convallis nulla gravida
-\end{itemize}
-\end{frame}
-\subsection{El pipeline} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
-%------------------------------------------------
 %\  Introducción al problema (motivación)
 %\-----------------------------------------------
 \begin{frame}
 \frametitle{Introducción al problema}
 El objetivo final de toda suite PLN es tener un conjunto de herramientas para realizar finalmente análisis de sentimientos o alguna extracción de información.
-\\~\\
-\textbf{Procesado del texto}
 \begin{enumerate}
+\item \textbf{Obtención de datos}
+\item \textbf{Procesado del texto:}
+\end{enumerate}
+\begin{columns}[c]
+\column{.45\textwidth}
+\begin{itemize}
 \item Tokenización
 \item Detección de límites de oraciones
 \item Lematización
+\end{itemize}
+\column{.45\textwidth}
+\begin{itemize}
 \item Stemming
 \item POS tagging
 \item Parseo sintáctico
-\end{enumerate}
-
-%\end{columns}
-%\begin{block}{Block 1}
-%Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, p%orttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
-%\end{block}
-
-%\begin{block}{Block 2}
-%Pellentesque sed tellus purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos %himenaeos. Vestibulum quis magna at risus dictum tempor eu vitae velit.
-%\end{block}
-
-%\begin{block}{Block 3}
-%Suspendisse tincidunt sagittis gravida. Curabitur condimentum, enim sed venenatis rutrum, ipsum neque consectetur %orci, sed blandit justo nisi ac lacus.
-%\end{block}
+\end{itemize}
+\end{columns}
 \end{frame}
 
 %------------------------------------------------
@@ -212,14 +191,108 @@ El objetivo final de toda suite PLN es tener un conjunto de herramientas para re
 \begin{block}{Definición}
 Proceso que separa el texto en uniades atómicas, los tokens(palabras, números, símbolos).
 \end{block}
-
-\begin{block}{Técnicas}
-Freeling, Apache OpenNLP ,NLTK, StandfordNLP
+\begin{block}{Dificultades}
+Lenguajes sin espacios entre palabras (Chino, Árabe...)
 \end{block}
+\begin{block}{Técnicas}
+Freeling, Apache OpenNLP ,NLTK, StanfordNLP, Stanford Word Segmenter
+\end{block}
+\end{frame}
 
-%\begin{block}{Block 3}
-%Suspendisse tincidunt sagittis gravida. Curabitur condimentum, enim sed venenatis rutrum, ipsum neque consectetur %orci, sed blandit justo nisi ac lacus.
-%\end{block}
+%------------------------------------------------
+%\  detección de oraciones
+%\-----------------------------------------------
+\begin{frame}
+\frametitle{Introducción al problema: Detección de oraciones}
+\begin{block}{Definición}
+Proceso que establece los límites de las oraciones del texto.
+\end{block}
+\begin{block}{Dificultades}
+Las marcas de final de oración son ambiguas. (final de oración, abreviaciones, decimales...)
+\end{block}
+\begin{block}{Técnicas}
+Punkt, iSentenizer
+\end{block}
+\end{frame}
+
+%------------------------------------------------
+%\  lematización
+%\-----------------------------------------------
+\begin{frame}
+\frametitle{Introducción al problema: Lematización}
+\begin{block}{Definición}
+Proceso que determina el lema (forma base o de diccionario) de una palabra. 
+\end{block}
+\begin{block}{Relevancia}
+Acorta la complejidad computacional del problema.
+\end{block}
+\begin{block}{Dificultades}
+Lenguajes con más formas inflexivas (Español, Alemán).
+\end{block}
+\begin{block}{Técnicas}
+Patern.es, lemming, lemagen
+\end{block}
+\end{frame}
+
+%------------------------------------------------
+%\  Stemming
+%\-----------------------------------------------
+\begin{frame}
+\frametitle{Introducción al problema: Stemming}
+\begin{block}{Definición}
+Proceso que reduce la palabra a su forma base eliminando sus sufijos. 
+\end{block}
+\begin{block}{Relevancia}
+Puede usarse en lugar de la lematización, como complemento o no usarse.
+\end{block}
+\begin{block}{Dificultades}
+Lenguajes con muchas formas inflexivas (Español, Alemán).
+\end{block}
+\begin{block}{Técnicas}
+NLTK, Snowball
+\end{block}
+\end{frame}
+
+%------------------------------------------------
+%\  POS tagging
+%\-----------------------------------------------
+\begin{frame}
+\frametitle{Introducción al problema: Pos Tagging}
+\begin{block}{Definición}
+Proceso que etiqueta cada palabra con su categgoría morfosintáctica (POS). 
+\end{block}
+\begin{block}{Relevancia}
+Es muy importante, se utiliza en otros procesos PLN.
+\end{block}
+\begin{block}{Dificultades}
+Tratar ambiguedad: palabras con varias funciones, asignar etiqueta a palabras desconocidas
+\end{block}
+\begin{block}{Técnicas}
+Standford POS Tagger, SVMTool, TreeTagger
+\end{block}
+\end{frame}
+
+%------------------------------------------------
+%\  Parseo de dependencias
+%\-----------------------------------------------
+\begin{frame}
+\frametitle{Introducción al problema: Parseo sintáctico}
+\begin{block}{Definición}
+Proceso que analiza las oraciones para producir estructuras que reflejen como se organizan las palabras en las frases. Formalismos: Constituyente y de dependencia.
+\end{block}
+\begin{columns}[c]
+\column{.45\textwidth}
+\begin{figure}
+\includegraphics[width=0.80\linewidth]{../Memory/Dissertate-Harvard-LaTeX/constituency.png}
+\end{figure}
+\column{.45\textwidth}
+\begin{figure}
+\includegraphics[width=0.80\linewidth]{../Memory/Dissertate-Harvard-LaTeX/dependency.png}
+\end{figure}
+\end{columns}
+\begin{block}{Técnicas}
+StanfordParser , MaltParser, TurboParser
+\end{block}
 \end{frame}
 
 %------------------------------------------------
@@ -491,6 +564,11 @@ tagger      & 0.9279443  & 0.9199328 \\
 %\end{frame}
 
 %------------------------------------------------
+% añadir resumen,conclusiones ,trabajo futuro
+% añadir planificacion, diagramas de clases
+%  focusky
+% github
+%-------------------------------------------------
 
 \begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
 \frametitle{Citation}
