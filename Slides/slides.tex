@@ -291,7 +291,7 @@ Proceso que analiza las oraciones para producir estructuras que reflejen como se
 \end{figure}
 \end{columns}
 \begin{block}{Técnicas}
-StanfordParser , MaltParser, TurboParser
+StanfordParser, MaltParser, TurboParser
 \end{block}
 \end{frame}
 
@@ -314,7 +314,7 @@ StanfordParser , MaltParser, TurboParser
 %------------------------------------------------
 \subsection{Metodología}
 %-------------Scala--------------------------
-\begin{frame}
+\begin{frame}[fragile]
 \frametitle{Un lenguaje de programación: Scala}
 \begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
 
@@ -330,9 +330,28 @@ StanfordParser , MaltParser, TurboParser
 \item Scala en concurrencia y big data
 \end{enumerate}
 
-\column{.5\textwidth} % Right column and width
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
+\column{.6\textwidth} % Right column and width
+%\frametitle{Verbatim}
+\begin{example}[Código JAVA]
+\begin{tiny}
+\begin{verbatim}
 
+public List<Product> getProducts() {
+    List<Product> products = new ArrayList<Product>();
+    for (Order order : orders) {
+        products.addAll(order.getProducts());
+    }
+    return products;
+}
+\\~\\
+\end{verbatim}\end{tiny}
+\end{example}
+\begin{example}[Código Scala]
+\begin{tiny}
+\begin{verbatim}
+def products = orders.flatMap(o => o.products)
+\end{verbatim}\end{tiny}
+\end{example}
 \end{columns}
 \end{frame}
 %------------------transparencia TDD---------
