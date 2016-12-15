@@ -118,13 +118,13 @@ Aunque en este ejemplo no se aprecia, algunas líneas de estos ficheros son meta
             \ElsIf{$\text{tag starts with("V")}$} $\text{tag=3 first characters of tag}$
             \ElsIf{$\text{tag starts with("NC")}$}  $\text{tag=2 first characters of tag + $3^{\circ}$ character of tag}$
              \Else $\text{tag=2 first characters of tag}$ \EndIf
-            \EndFor
-            \For{$\text{w in split tag by ("\_")}$} 
+	    \For{$\text{w in split w by ("\_")}$} 
             \State $\text{S} \gets \text{S+(w,tag)}$
              \State $ \text{i} \gets \text{i+1}$
             \EndFor
-            \If{\text{tag $==$ "Fp" and w $==$ "."} } \text{$S \gets S+[]$} \EndIf
+	    \If{\text{tag $==$ "Fp" and w $==$ "."} } \text{$S \gets S+[]$} \EndIf
             \If{$i \geq \text{words}$} \Return S \EndIf
+            \EndFor
         \EndFor
         \EndProcedure
     \end{algorithmic}
