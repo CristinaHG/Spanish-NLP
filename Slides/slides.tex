@@ -91,6 +91,9 @@
 \deftranslation[to=Spanish]{Example}{Ejemplo}
 
 %comands
+\usepackage{tikz}
+\usepackage{tikz-uml} 
+\usepackage{pgfgantt}
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
 \def\BState{\State\hskip-\ALG@thistlm}
@@ -427,7 +430,7 @@ class WordCount(args : Args) extends Job(args) {
 
 %\column{.90\textwidth} % Right column and width
 \begin{example}[Funsuite test]
-\begin{scriptsize}
+\begin{tiny}\fontsize{7}{8}\selectfont
 \begin{verbatim}
 package org.scalatest.examples.funsuite
 
@@ -445,14 +448,85 @@ class SetSuite extends FunSuite {
     }
   }
 }
-\end{verbatim}\end{scriptsize}
+\end{verbatim}\end{tiny}
 \end{example}
 %\end{columns}
 \end{frame}
-
+%-------------PLanificación------------------- 
+\begin{frame}
+\frametitle{Planificación del proyecto}
+\setganttlinklabel{f-s}{FINISH-TO-START}
+\begin{figure}[H]
+ \makebox[\textwidth][c]{ \resizebox{.9999\textwidth}{!}{
+\begin{ganttchart}[ vgrid,x unit=0.4cm,
+            y unit title=0.7cm,
+            y unit chart=0.9cm,
+            canvas/.append style={rounded corners=1mm, draw=none, fill=orange!9},
+            bar/.append style={fill=orange!40,rounded corners=1.5mm, draw=none},
+            milestone/.append style={fill=orange!90,rounded corners=0mm, draw=none},
+            link/.append style={-to,black!70},
+            title/.style={fill=orange!60, draw=none, rounded corners=2mm},
+title label font=\color{white}\bfseries,
+title left shift=-.1,
+title right shift=-.1,
+title top shift=.05,
+title height=.75
+]{1}{30}
+\gantttitle{2016}{30} \\
+%\gantttitlelist{1,...,6}{5} \\
+\gantttitle{Julio}{5}
+\gantttitle{Agosto}{5}
+\gantttitle{Septiembre}{5}
+\gantttitle{Octubre}{5}
+\gantttitle{Noviembre}{5}
+\gantttitle{Diciembre}{5} \\
+%\ganttgroup{Group 1}{1}{7} \\
+\ganttbar{Revisión bibliográfica y documentación}{3}{9} \\
+\ganttmilestone{Fin de bibliografía}{9} \ganttnewline
+\ganttlinkedbar[link type=f-s]{Análisis de requisitos y diseño}{10}{10}\\
+\ganttlinkedbar[link type=f-s]{Implementación y eval. Del Tokenizador}{11}{15}\\
+\ganttlinkedbar[link type=f-s]{Implementación y eval. Del POS Tagger}{16}{20}\\
+\ganttlinkedbar[link type=f-s]{Implementación y eval. Del Lematizador}{21}{25}\\
+\ganttmilestone{Fin de código}{25} \ganttnewline
+\ganttlinkedbar{Memoria}{26}{27}\\
+%\ganttlinkedbar[link type=f-s]{Interfaz gráfica}{19}{23}\\
+%\ganttmilestone{Informe trimestral 2}{24} \ganttnewline
+%\ganttlinkedbar{Interfaz gráfica}{23}{29}\\
+%\ganttlinkedbar{Entrega final}{29}{30}\\
+\ganttlink{elem0}{elem1}
+\ganttlink{elem5}{elem6}
+\end{ganttchart}}}
+\end{figure} 
+\end{frame}
 %-------------Diagramas------------------- 
 \begin{frame}
-\frametitle{¿Diagrama de las clases?}
+\frametitle{Diagrama de las clases}
+\begin{figure}[h!]
+\resizebox{.700\textwidth}{!}{
+\begin{tikzpicture}
+
+\umlemptyclass{Context}
+\umlemptyclass[x=5]{Lemmatizer}
+\umlemptyclass[x=9]{Tokenizer}
+\umlemptyclass[x=5,y=-7]{Parser}
+\umlemptyclass[x=12,y=-7]{AppTest}
+\umlemptyclass[x=-1.8,y=-7]{Lexicon}
+\umlemptyclass[x=-2,y=-13]{PosTagger}
+\umlemptyclass[x=5,y=-13]{Morphology}
+\umlemptyclass[x=12]{Funsuite}
+\umluniassoc[geometry=-|,mult1=1,pos1=1.9,anchor1=30,mult2=*, pos2=0.33]{Parser}{Context}
+\umluniassoc[geometry=--,mult1=1,pos1=0.9,mult2=*, pos2=0.1]{Parser}{Lemmatizer}
+\umluniassoc[geometry=-|-,mult1=1,pos1=1.9,anchor1=30, mult2=*, pos2=0.8]{Parser}{Tokenizer}
+\umluniassoc[geometry=--,mult2=1..*, pos2=0.95]{AppTest}{Parser}
+\umluniassoc[geometry=--,mult1=1,pos1=0.9,mult2=*, pos2=0.1]{Parser}{Lexicon}
+\umluniassoc[geometry=--,mult1=1,pos1=0.9,mult2=*, pos2=0.1]{Parser}{Morphology}
+\umluniassoc[geometry=|-|,mult1=1,anchor1=130,anchor2=50, pos1=2.7,mult2=*, pos2=0.5]{Parser}{PosTagger}
+\umldep[geometry=--]{PosTagger}{Morphology}
+\umldep[geometry=--]{PosTagger}{Lexicon}
+\umldep[geometry=|-, anchor1=-220]{PosTagger}{Context}
+\umlinherit[geometry=--]{AppTest}{Funsuite}
+\end{tikzpicture}}
+\end{figure}
 \end{frame}
 %---------------material---------------------
 \subsection{Material empleado}
