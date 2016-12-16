@@ -756,8 +756,8 @@ pueden tener varias etiquetas
 %---apply context and morphology
 \begin{frame}[fragile]
 \frametitle{Aplicación de morfología y contexto}
-\begin{columns}
-\column{.60\textwidth} % Left column and width
+\begin{columns}[t]
+\column{.50\textwidth} % Left column and width
 \textbf{Morfología}
 \begin{example}[reglas morfológicas]
 \begin{tiny}
@@ -774,18 +774,22 @@ NN s fhassuf 1 NNS x
 "hassuf", // Word end with x.
 "addpref", // x + word is in lexicon.
 "addsuf", // Word + x is in lexicon.
-"deletepref", // Word without x at the start is in lexicon.
-"deletesuf", // Word without x at the end is in lexicon.
+"deletepref",//Word without x at the start is
+// in lexicon.
+"deletesuf", //Word without x at the end 
+//is in lexicon.
 "goodleft", // Word preceded by word x.
 "goodright"// Word followed by word x.
 \end{verbatim}\end{block}\end{tiny}
 
-\column{.50\textwidth} % Left column and width
+\column{.56\textwidth} % Left column and width
 \textbf{Contexto}
 \begin{example}[reglas morfológicas]
 \begin{tiny}
 \begin{verbatim}
 VBD VB PREVTAG IN
+PR CS PREV1OR2TAG RG
+Z W PREVWD año
 \end{verbatim}\end{tiny}
 \end{example}
 \begin{tiny}\begin{block}{comandos reglas}
@@ -796,9 +800,10 @@ VBD VB PREVTAG IN
 "next2tag", // Word 2 after is tagged x.
 "prev1or2tag", // One of 2 preceding words is tagged x.
 "next1or2tag", // One of 2 following words is tagged x.
-"prev1or2or3tag", // One of 3 preceding words is tagged x.
-"next1or2or3tag", // One of 3 following words is tagged x.
-"surroundtag", // Preceding word is tagged x and following word is tagged y.
+"prev1or2or3tag", //1 of 3 preceding words is tagged x.
+"next1or2or3tag", //1 of 3 following words is tagged x.
+"surroundtag", // Preceding word is tagged x and 
+//following word is tagged y.
 "curwd", // Current word is x.
 "prevwd", // Preceding word is x.
 "nextwd", // Following word is x.
@@ -807,18 +812,58 @@ VBD VB PREVTAG IN
 "next1or2or3wd", // One of 3 preceding words is x.
 "prev1or2or3wd", // One of 3 following words is x.
 \end{verbatim}\end{block}\end{tiny}
-
 \end{columns}
 \end{frame}
-
-
-
 
 
 %---lematizador
 \begin{frame}
 \frametitle{Lematizador}
-\textbf{¿Aquí explico mi algoritmo en código, pseudocódigo, enumerando los pasos?}
+\begin{algorithm}[H]
+\begin{scriptsize}
+    \begin{algorithmic}[1]
+    %\algrenewcommand\alglinenumber[1]{\tiny #1:}
+    \Procedure{get\_lemmas(tokens,tags)}{}
+    \State $\text{lemmas} \gets$ \o
+	 \For{$\text{each token,tag in (tokens,tags)}$}
+	 	\If{$\text{tag startsWith DT}$} $\text{lemmas} \gets$ $\text{lemmas + singularize(token,tag)}$ \EndIf 
+	 	\If{$\text{tag startsWith JJ}$} $\text{lemmas} \gets$ $\text{lemmas + predicative(token)}$ \EndIf
+	 	\If{$\text{tag startsWith NNS}$} $\text{lemmas} \gets$ $\text{lemmas + singularize(token,tag)}$ \EndIf 
+	 	\If{$\text{tag startsWith VB or MD}$} $\text{lemmas} \gets$ $\text{lemmas+verb\_lemma(token)}$ \EndIf 
+            \EndFor
+            \State \Return $\text{lemmas}$   
+        \EndProcedure
+    \end{algorithmic}
+    \label{alg:rAP}
+    \caption{POS tagger}
+    \end{scriptsize}
+\end{algorithm}
+\end{frame}
+
+%---lematizador- singularize
+\begin{frame}
+\frametitle{Lematizador}
+\begin{algorithm}[H]
+\begin{scriptsize}
+    \begin{algorithmic}[1]
+    %\algrenewcommand\alglinenumber[1]{\tiny #1:}
+    \Procedure{singularize(token,tag)}{}
+    \State $\text{irregular\_endings} \gets \text{List(anes,án),(ones,ón),(unes,ún)...}$
+	 	\If{$\text{tag == DT}$}
+	 	\If{$\text{token in (la,las,los)}$} $\text{\Return el}$ \EndIf
+	 	\If{$\text{token in (una,unas,unos)}$} $\text{\Return un}$ \EndIf \EndIf
+	\If{$\text{token endsWith -es and token without 2 last chars endsWith (br,i,j,t,zn)}$} \State $\text{\Return word without its last char}$ \EndIf
+	  \If{$\text{token endsWith irregular\_endings}$} \State $\text{\Return apply irregular\_endings to token }$ \EndIf
+	  \If{$\text{token endsWith (osis,esis,isis)}$} \State $\text{\Return token }$ \EndIf
+	  \If{$\text{token endsWith -ces}$} \State $\text{\Return token without 3 last chars+ z }$ \EndIf
+	  \If{$\text{token endsWith -es}$} \State $\text{\Return token without 2last char}$ \EndIf
+	  \If{$\text{token endsWith -s}$} \State $\text{\Return token without 1 last char}$ \EndIf
+        \EndProcedure
+    \end{algorithmic}
+    \label{alg:rAP}
+    \caption{Singularize}
+    \end{scriptsize}
+\end{algorithm}
 \end{frame}
 
 %--------------Resultados----------------
