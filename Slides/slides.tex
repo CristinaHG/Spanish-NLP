@@ -706,8 +706,28 @@ pueden tener varias etiquetas
 \subsection{Algoritmos implementados}
 \begin{frame}
 \frametitle{Tokenizador}
-\textbf{¿Aquí explico mi algoritmo en código, pseudocódigo, enumerando los pasos?}
+%\textbf{¿Aquí explico mi algoritmo en código, pseudocódigo, enumerando los pasos?}
+\begin{enumerate}
+\item Preprocesado del String: manejo de comillas (simples y dobles), espacios en blanco, retornos de carro, saltos de línea.
+\item Obtención de los tokens: 
+\begin{itemize}\fontsize{8}{8}\selectfont
+\item buscar secuencias de caracteres $\neq$ espacio en blanco + espacio en blanco
+\item sobre cada coincidencia anterior: \begin{itemize}\fontsize{8}{7}\selectfont
+	\item eliminar espacio en blanco final 
+	\item comprobar si la primera letra es un signo de puntuación $\neq$ punto. Si lo es se elimina y añade a la lista de tokens, repitiendo hasta que la primera letra no sea un signo de puntuación.
+	\item comprobar que si la última letra es un signo de puntuación: 
+\item Si son puntos suspensivos $\Rightarrow$ eliminar los tres puntos  y añadirlos a una lista para ser añadidos después de la palabra a la lista de tokens
+\item Si el final de la palabra es un signo de puntuación $\neq$ punto $\Rightarrow$ se quita y se añade a una lista para ser añadido después de la palabra a la lista de tokens
+\item Si la palabra acaba en punto $\Rightarrow$ comprobar si es una abreviación. Si lo es, añadir tal cual a la lista de tokens. Sino, separar palabra del punto y añadir primero la palabra y luego el punto.
+\end{itemize}
+\end{itemize}
+\item Separación de frases
+\end{enumerate}
 \end{frame}
+
+
+
+
 %---pos tagger
 \begin{frame}
 \frametitle{POS tagger}
