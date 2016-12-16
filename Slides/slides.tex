@@ -890,18 +890,31 @@ Z W PREVWD año
 \begin{frame}
 \frametitle{Lematizador}
 \begin{algorithm}[H]
-\begin{scriptsize}
+\begin{scriptsize}\fontsize{6.5}{1}\selectfont
+
     \begin{algorithmic}[1]
     %\algrenewcommand\alglinenumber[1]{\tiny #1:}
-    \Procedure{predicative(token)}{}
-	 	\If{$\text{token endsWith (os, as)}$} $\text{token} \gets \text{remove last from token}$ \EndIf
-	 	\If{$\text{token ends With (a)}$} $\text{token} \gets \text{remove last from token + o}$ \EndIf 
-	\If{$\text{token ends With -es and length(token) >4 and $3^{\circ}$,$4^{\circ}$ by the tail are consonants}$} \State $\text{token} \gets \text{remove last char from token}$ \Else $\text{ token} \gets \text{remove 2 last chars from token}$ \EndIf
+    \Procedure{VerbsLemmatizer(token)}{}
+    \State $\text{irregular\_inflections} \gets \text{(yéramos,ir),(cisteis,cer)....}$
+     \State $\text{present\_plural\_inflections} \gets \text{(amos,áis),(emos,éis),(imos,ís)....}$
+	 	\If{$\text{token endsWith (ar,er,ir)}$} $\Return \text{ token}$ \EndIf
+	 	\If{$\text{token endsWith irregular\_inflections}$} $\text{token} \gets \text{apply(irregular\_inflections)}$ \EndIf 
+	\If{$\text{token constains (zco,zca,zcá)}$} $\text{token} \gets \text{replace by -ce}$ \EndIf
+	\If{$\text{token constains (ldr,ndr)}$} $\text{token} \gets \text{replace by -er from dr to end}$\EndIf
+	\If{$\text{token is regular inflection from -ar}$} $\text{token} \gets \text{replace inflection by ar}$ \EndIf
+	\If{$\text{token is regular inflection from -er and length(word without inflection)>2 and penultimate }$ \newline $\text{ from word without inflection} \neq \text{(i)}$} $\text{token} \gets \text{replace inflection by ir}$ \Else $\text{ replace inflection by -er}$ \EndIf
+	\If{$\text{token is regular inflection from -ir}$} $\text{token} \gets \text{replace inflection by ir}$\EndIf
+	\If{$\text{token ends with (a,o,as,an)}$} $\text{token} \gets \text{replace (a,o,as,an) by -ar}$ \EndIf
+	\If{$\text{token is present singular $3^{\circ}$ person ending with -er }$} 
+	\If{$\text{length(token without inflection)>2 and antepenultimate token without inflection is (i) }$} $\text{remove -e and add -ir}$ \Else $\text{ remove -e and add -er}$ \EndIf \EndIf
+	\If{$\text{token ends with (er,es)}$}  $\text{similar to last two teps}$\EndIf
+	\If{$\text{token endsWith present\_plural\_inflections}$} $\text{token} \gets \text{apply(present\_plural\_inflections)}$\EndIf
+	
 	\State \Return $\text{token}$
         \EndProcedure
     \end{algorithmic}
     \label{alg:rAP}
-    \caption{Predicative}
+    \caption{Verbs lemmatizer}
     \end{scriptsize}
 \end{algorithm}
 \end{frame}
