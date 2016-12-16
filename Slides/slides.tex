@@ -727,12 +727,37 @@ pueden tener varias etiquetas
 
 
 
-
 %---pos tagger
 \begin{frame}
 \frametitle{POS tagger}
-\textbf{¿Aquí explico mi algoritmo en código, pseudocódigo, enumerando los pasos?}
+\begin{algorithm}[H]
+\begin{scriptsize}
+    \begin{algorithmic}[1]
+    %\algrenewcommand\alglinenumber[1]{\tiny #1:}
+    \Procedure{findTags(tokens,Lexicon,Morphology,Context,default(NCS,NP,Z),mapToTagset)}{}
+	 \For{$\text{t in tokens}$}
+	 	\If{$\text{Lexicon contains token}$} $\text{tag(t)} \gets \text{Lexicon(token)}$ \Else $\text{ tag(t)}  \gets \text{None}$ \EndIf 
+            \EndFor   
+     \For{$\text{t in tokens with tag == None}$}
+     \If{$\text{t startsWith capital}$} $\text{tag(t)} \gets \text{NP}$ \ElsIf{\text{t is digit,symbol or both}} $\text{tag(t)} \gets \text{Z}$ \ElsIf{\text{Morphology}} $\text{tag(t)} \gets \text{Apply(Morphology,t)}$ 
+     \Else $ \text{ tag(t)} \gets \text{NCS}$ \EndIf 
+    \EndFor 
+     \If{$\text{Context}$} $\text{foreach t in tokens, tag(t)} \gets \text{Apply(Context)}$ \EndIf  
+     \If{$\text{mapToTagset}$} $\text{foreach t in tokens, tag(t)} \gets \text{mapToTagset(tag(t))}$ \EndIf       
+        \EndProcedure
+    \end{algorithmic}
+    \label{alg:rAP}
+    \caption{POS tagger}
+    \end{scriptsize}
+\end{algorithm}
 \end{frame}
+
+
+
+
+
+
+
 %---lematizador
 \begin{frame}
 \frametitle{Lematizador}
