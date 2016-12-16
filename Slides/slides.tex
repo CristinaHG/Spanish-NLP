@@ -611,16 +611,17 @@ pueden tener varias etiquetas
 \begin{frame}[fragile]
 \frametitle{POS tagger - Obtención del Contexto}
 \begin{columns}[t] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
-\column{.30\textwidth} % Left column and width
+\column{.25\textwidth} % Left column and width
 \textbf{Pasos:}
 \begin{enumerate}
 \item Anonimizar nombres propios en el corpus
 \item Entrenar algoritmo de Brill
 \end{enumerate}
-\column{.70\textwidth} % Left column and width
+\column{.99\textwidth} % Left column and width
 \begin{algorithm}[H]
+\begin{tiny}\fontsize{7}{8}\selectfont
     \begin{algorithmic}[1]
-    \algrenewcommand\alglinenumber[1]{\tiny #1:}
+    %\algrenewcommand\alglinenumber[1]{\tiny #1:}
     \Procedure{BrillTagger(corpus,lexicon,rate\_error,rulesTlist)}{}
     \State $\text{$C_{i}$} \gets \text{initial tagging of corpus}$
 \State $\text{errors} \gets \text{compute errors of $C_{i}$}$
@@ -631,7 +632,8 @@ pueden tener varias etiquetas
 \While{$\text{nErrors} $>$ \text{rate\_error}$} 
         \For{$\text{each error in errors}$ }
             \For{$\text{each rule in instances(rulesTlist) }$}
-            \State $\text{score(rule)} \gets \text{good corrections of rule - bad corrections of rule}$ \text{ in $C_{i}$}
+            \State $\text{score(rule)} \gets \text{good corrections of rule -
+             bad corrections of rule}$ \text{ in $C_{i}$}
             \EndFor
         \EndFor
         \State $\text{best} \gets \text{rule with best score}$
@@ -644,6 +646,7 @@ pueden tener varias etiquetas
     \end{algorithmic}
     \label{alg:rAP}
     \caption{Algoritmo de Brill}
+    \end{tiny}
 \end{algorithm}
 \end{columns}
 \end{frame}
@@ -653,43 +656,47 @@ pueden tener varias etiquetas
 \begin{frame}[fragile]
 \frametitle{POS tagger - Obtención de la Morfología}
 \begin{columns}[t] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
-\column{.50\textwidth} % Left column and width
+\column{.30\textwidth} % Left column and width
 \textbf{Pasos:}
 \begin{enumerate}
+\begin{scriptsize}
 \item Detectar sufijos y contar su ocurrencia en palabras que no sean NP
 \item Calcular freq de la etiqueta que más aparece
 \item Filtrar: si emparejan menos de 10 palabras, su etiqueta más freq no se da un 80\% o NCS
+\end{scriptsize}
 \end{enumerate}
-\column{.50\textwidth} % Left column and width
-%\begin{algorithm}[H]
- %   \begin{algorithmic}[1]
-  %  \Procedure{createMorphology(corpus, maxLines=125)}{}
-   % \State $\text{suffix} \gets$ \o
-    %\State $\text{f1} \gets$ \o
-    %\State $\text{f2} \gets$ \o 
-    %\For{$\text{sentence in corpus}$}
-     %       \For{$\text{w, tag in sentence}$}
-      %      \State $\text{x} \gets \text{last 5 words of w}$
-       %     \If{$\text{length(x) < length(w) and tag $\neq$ "NP" }$} \State $\text{increase occurrences of suffix(x,tag)}$ \EndIf
-        %    \EndFor
-    %\EndFor        
-    %\For{$\text{x, tags in suffix}$} 
-   % 		\State $\text{tag} \gets \text{the tag with bigger ocurrence for x}$
-    %        \State $\text{f1} \gets \text{$\sum$ all ocurrences of tags for words ending in x}$
-     %       \State $\text{f2} \gets \text{ (number of ocurrences of tag)/f1}$ 
-      %      \State $\text{top} \gets \text{top + (f1,f2,x,tag) }$
-    %\EndFor
+\column{.80\textwidth} % Left column and width
+   \begin{algorithm}[H]
+   \begin{scriptsize}\fontsize{8}{8}\selectfont
+    \begin{algorithmic}[1]
+    \Procedure{createMorphology(corpus, maxLines=125)}{}
+    \State $\text{suffix} \gets$ \o
+    \State $\text{f1} \gets$ \o
+    \State $\text{f2} \gets$ \o 
+    \For{$\text{sentence in corpus}$}
+            \For{$\text{w, tag in sentence}$}
+            \State $\text{x} \gets \text{last 5 words of w}$
+            \If{\text{length(x) < length(w) and tag $\neq$ NP}} \State $\text{increase occurrences of suffix(x,tag)}$ \EndIf
+            \EndFor
+    \EndFor        
+    \For{$\text{x, tags in suffix}$} 
+    		\State $\text{tag} \gets \text{the tag with bigger ocurrence for x}$
+            \State $\text{f1} \gets \text{$\sum$ all ocurrences of tags for words ending in x}$
+            \State $\text{f2} \gets \text{ (number of ocurrences of tag)/f1}$ 
+            \State $\text{top} \gets \text{top + (f1,f2,x,tag) }$
+    \EndFor
             
-     %\State $\text{top} \gets \text{order rules by descendent ocurrency}$
-     %\State $\text{top} \gets \text{filter (f1,f2,x,tag) which f1 $\geq$ 10 and f2 > 0.8 }$
-     %\State $\text{top} \gets \text{get the top maxLines rules}$
-     %\State $\text{top} \gets \text{format top}$
-     %\State $\text{write to file}$     
-      %  \EndProcedure
-    %\end{algorithmic}
-  %  \label{alg:rAP}
- %   \caption{Obtención de las reglas morfológicas}
-%\end{algorithm}       
+     \State $\text{top} \gets \text{order rules by descendent ocurrency}$
+     \State $\text{top} \gets \text{filter (f1,f2,x,tag) which f1 $\geq$ 10 and f2 > 0.8 }$
+     \State $\text{top} \gets \text{get the top maxLines rules}$
+     \State $\text{top} \gets \text{format top}$
+     \State $\text{write to file}$     
+        \EndProcedure
+    \end{algorithmic}
+    \label{alg:rAP}
+    \caption{Obtención de las reglas morfológicas}
+    \end{scriptsize}
+\end{algorithm}    
 \end{columns}
 \end{frame}
 
