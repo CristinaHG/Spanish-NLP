@@ -753,6 +753,63 @@ pueden tener varias etiquetas
 \end{frame}
 
 
+%---apply context and morphology
+\begin{frame}[fragile]
+\frametitle{Aplicación de morfología y contexto}
+\begin{columns}
+\column{.60\textwidth} % Left column and width
+\textbf{Morfología}
+\begin{example}[reglas morfológicas]
+\begin{tiny}
+\begin{verbatim}
+ly hassuf 2 RB x
+NN s fhassuf 1 NNS x
+\end{verbatim}\end{tiny}
+\end{example}
+\begin{tiny}\begin{block}{comandos reglas}
+\begin{verbatim}
+"word", // Word is x.
+"char", // Word contains x.
+"haspref", // Word starts with x.
+"hassuf", // Word end with x.
+"addpref", // x + word is in lexicon.
+"addsuf", // Word + x is in lexicon.
+"deletepref", // Word without x at the start is in lexicon.
+"deletesuf", // Word without x at the end is in lexicon.
+"goodleft", // Word preceded by word x.
+"goodright"// Word followed by word x.
+\end{verbatim}\end{block}\end{tiny}
+
+\column{.50\textwidth} % Left column and width
+\textbf{Contexto}
+\begin{example}[reglas morfológicas]
+\begin{tiny}
+\begin{verbatim}
+VBD VB PREVTAG IN
+\end{verbatim}\end{tiny}
+\end{example}
+\begin{tiny}\begin{block}{comandos reglas}
+\begin{verbatim}
+"prevtag", // Preceding word is tagged x.
+"nexttag", // Following word is tagged x.
+"prev2tag", // Word 2 before is tagged x.
+"next2tag", // Word 2 after is tagged x.
+"prev1or2tag", // One of 2 preceding words is tagged x.
+"next1or2tag", // One of 2 following words is tagged x.
+"prev1or2or3tag", // One of 3 preceding words is tagged x.
+"next1or2or3tag", // One of 3 following words is tagged x.
+"surroundtag", // Preceding word is tagged x and following word is tagged y.
+"curwd", // Current word is x.
+"prevwd", // Preceding word is x.
+"nextwd", // Following word is x.
+"prev1or2wd", // One of 2 preceding words is x.
+"next1or2wd", // One of 2 following words is x.
+"next1or2or3wd", // One of 3 preceding words is x.
+"prev1or2or3wd", // One of 3 following words is x.
+\end{verbatim}\end{block}\end{tiny}
+
+\end{columns}
+\end{frame}
 
 
 
