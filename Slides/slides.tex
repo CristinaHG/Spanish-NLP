@@ -866,6 +866,45 @@ Z W PREVWD año
 \end{algorithm}
 \end{frame}
 
+%---lematizador- predicative
+\begin{frame}
+\frametitle{Lematizador}
+\begin{algorithm}[H]
+\begin{scriptsize}
+    \begin{algorithmic}[1]
+    %\algrenewcommand\alglinenumber[1]{\tiny #1:}
+    \Procedure{predicative(token)}{}
+	 	\If{$\text{token endsWith (os, as)}$} $\text{token} \gets \text{remove last from token}$ \EndIf
+	 	\If{$\text{token ends With (a)}$} $\text{token} \gets \text{remove last from token + o}$ \EndIf 
+	\If{$\text{token ends With -es and length(token) >4 and $3^{\circ}$,$4^{\circ}$ by the tail are consonants}$} \State $\text{token} \gets \text{remove last char from token}$ \Else $\text{ token} \gets \text{remove 2 last chars from token}$ \EndIf
+	\State \Return $\text{token}$
+        \EndProcedure
+    \end{algorithmic}
+    \label{alg:rAP}
+    \caption{Predicative}
+    \end{scriptsize}
+\end{algorithm}
+\end{frame}
+
+%---lematizador- verb lemma
+\begin{frame}
+\frametitle{Lematizador}
+\begin{algorithm}[H]
+\begin{scriptsize}
+    \begin{algorithmic}[1]
+    %\algrenewcommand\alglinenumber[1]{\tiny #1:}
+    \Procedure{predicative(token)}{}
+	 	\If{$\text{token endsWith (os, as)}$} $\text{token} \gets \text{remove last from token}$ \EndIf
+	 	\If{$\text{token ends With (a)}$} $\text{token} \gets \text{remove last from token + o}$ \EndIf 
+	\If{$\text{token ends With -es and length(token) >4 and $3^{\circ}$,$4^{\circ}$ by the tail are consonants}$} \State $\text{token} \gets \text{remove last char from token}$ \Else $\text{ token} \gets \text{remove 2 last chars from token}$ \EndIf
+	\State \Return $\text{token}$
+        \EndProcedure
+    \end{algorithmic}
+    \label{alg:rAP}
+    \caption{Predicative}
+    \end{scriptsize}
+\end{algorithm}
+\end{frame}
 %--------------Resultados----------------
 \section{Resultados}
 \subsection{Resultados obtenidos}
