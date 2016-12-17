@@ -81,6 +81,7 @@
 %\usepackage[utf8]{inputenc} %Codificacion utf-8
 %\newtheorem{example}{ejemplo}
 \usepackage[T1]{fontenc}
+%\usepackage{fontspec}
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel} %Definir idioma español
 \uselanguage{Spanish}
@@ -96,10 +97,12 @@
 \usepackage{pgfgantt}
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
+\usepackage{fontawesome}
 \def\BState{\State\hskip-\ALG@thistlm}
 \def\BSState{\State\hskip\hskip-\ALG@thistlm}
 \newcommand*{\escape}[1]{\texttt{\textbackslash#1}}
 \definecolor{red}{rgb}{1,0,0}
+ 
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
@@ -1015,6 +1018,19 @@ oído/\textcolor{red}{VBN}/\textcolor{red}{oir}\newline
 
 \begin{frame}
 \frametitle{Conclusiones y vías futuras}
+\textbf{Conclusiones}
+\begin{itemize}
+\item No es necesario emplear el algoritmo más complejo para dar resultados atractivos.
+\item Imposible crear reglas para cubrir todos los casos $\Rightarrow$ más comunes. 
+\item Son tareas aún no resueltas.
+\end{itemize}
+\textbf{Vías futuras}
+\begin{itemize}
+\item Implementar léxico, morfología y contexto $\Rightarrow$ implementar algoritmo de Brill.
+\item Comparar algoritmos.
+\item Añadir manejo de emoticonos. 
+\item Hacer código inmutable.
+\end{itemize}
 \end{frame}
 %------------------------------------------------
 
@@ -1072,6 +1088,8 @@ oído/\textcolor{red}{VBN}/\textcolor{red}{oir}\newline
 
 \begin{frame}
 \Huge{\centerline{Gracias por su atención}}
+\vspace{\baselineskip}
+\large{\centerline{github \faicon{github} : CristinaHG/Spanish-NLP}}
 \end{frame}
 
 %----------------------------------------------------------------------------------------
