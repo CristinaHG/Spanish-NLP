@@ -109,7 +109,8 @@
 
 \title[Tokenizador, Pos tagger y lematizador]{Algoritmos para el procesamiento del lenguaje natural en Español: Tokenizador, POS tagger y lematizador} % The short title appears at the bottom of every slide, the full title is only on the title page
 
-\author{Cristina Heredia} % Your name
+%\author{Cristina Heredia} 
+\author[Cristina Heredia]{Cristina Heredia\\{\normalsize Dirigido por: Salvador García}}
 \institute[UGR] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
 {
 Trabajo fin de grado en Ingeniería informática \\ % Your institution for the title page
@@ -159,7 +160,7 @@ Contar ocurrencias de las palabras para detectar estilo de escritura, asistentes
 \item Sistemas de reconocimiento del habla
 \item Lectura automática
 \item Minería de datos en RRSS
-\item Análisis de sentimientos
+%\item Análisis de sentimientos
 \end{itemize}
 \end{scriptsize}
 \end{block}
@@ -202,7 +203,7 @@ Proceso que separa el texto en uniades atómicas, los tokens(palabras, números,
 \begin{block}{Dificultades}
 Lenguajes sin espacios entre palabras (Chino, Árabe...)
 \end{block}
-\begin{block}{Técnicas}
+\begin{block}{Herramientas}
 Freeling, Apache OpenNLP ,NLTK, StanfordNLP, Stanford Word Segmenter
 \end{block}
 \end{frame}
@@ -218,7 +219,7 @@ Proceso que establece los límites de las oraciones del texto.
 \begin{block}{Dificultades}
 Las marcas de final de oración son ambiguas. (final de oración, abreviaciones, decimales...)
 \end{block}
-\begin{block}{Técnicas}
+\begin{block}{Herramientas}
 Punkt, iSentenizer
 \end{block}
 \end{frame}
@@ -237,7 +238,7 @@ Acorta la complejidad computacional del problema.
 \begin{block}{Dificultades}
 Lenguajes con más formas inflexivas (Español, Alemán).
 \end{block}
-\begin{block}{Técnicas}
+\begin{block}{Herramientas}
 Patern.es, lemming, lemagen
 \end{block}
 \end{frame}
@@ -256,7 +257,7 @@ Puede usarse en lugar de la lematización, como complemento o no usarse.
 \begin{block}{Dificultades}
 Lenguajes con muchas formas inflexivas (Español, Alemán).
 \end{block}
-\begin{block}{Técnicas}
+\begin{block}{Herramientas}
 NLTK, Snowball
 \end{block}
 \end{frame}
@@ -267,7 +268,7 @@ NLTK, Snowball
 \begin{frame}
 \frametitle{Introducción al problema: Pos Tagging}
 \begin{block}{Definición}
-Proceso que etiqueta cada palabra con su categgoría morfosintáctica (POS). 
+Proceso que etiqueta cada palabra con su categoría morfosintáctica (Part-Of-Speech). 
 \end{block}
 \begin{block}{Relevancia}
 Es muy importante, se utiliza en otros procesos PLN.
@@ -275,7 +276,7 @@ Es muy importante, se utiliza en otros procesos PLN.
 \begin{block}{Dificultades}
 Tratar ambiguedad: palabras con varias funciones, asignar etiqueta a palabras desconocidas
 \end{block}
-\begin{block}{Técnicas}
+\begin{block}{Herramientas}
 Standford POS Tagger, SVMTool, TreeTagger
 \end{block}
 \end{frame}
@@ -298,7 +299,7 @@ Proceso que analiza las oraciones para producir estructuras que reflejen como se
 \includegraphics[width=0.80\linewidth]{../Memory/Dissertate-Harvard-LaTeX/dependency.png}
 \end{figure}
 \end{columns}
-\begin{block}{Técnicas}
+\begin{block}{Herramientas}
 StanfordParser, MaltParser, TurboParser
 \end{block}
 \end{frame}
@@ -320,7 +321,7 @@ StanfordParser, MaltParser, TurboParser
 %------------------------------------------------
 \section{Resolución del trabajo}
 %------------------------------------------------
-\subsection{Metodología}
+\subsection{Metodología, planificación y diseño}
 %-------------Scala--------------------------
 \begin{frame}[fragile]
 \frametitle{Un lenguaje de programación: Scala}
@@ -538,7 +539,7 @@ title height=.75
 \begin{frame}[fragile]
 \frametitle{Material empleado: POS tagger}
 \textbf{Wikicorpus}
-\begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
+\begin{columns}[t] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
 \column{.42\textwidth} % Left column and width
 \begin{itemize}\fontsize{7}{8}\selectfont
 \item versión en Español
@@ -559,126 +560,137 @@ como como CS 0
 delantero delantero NCMS000 00466114
 \end{verbatim}\end{tiny}
 \end{example}
-\column{.65\textwidth} % Left column and width
-\begin{normalsize}
+\column{.67\textwidth} % Left column and width
+\begin{example}[tagged Wikicorpus]
+\begin{tiny}\fontsize{6}{8}\selectfont
+\begin{verbatim}
+El/DA sedentarismo/NCS físico/AQ es/VSI la/DA carencia/NCS
+de/SP actividad/NCS física/AQ fuerte/AQ como/CS el/DA 
+deporte/NCS ,/Fc lo/DA que/PR por/RG lo/RG general/RG pone/VMI a/SP
+el/DA organismo/NCS humano/AQ en/SP situación/NCS vulnerable/AQ 
+ante/SP enfermedades/NCP especialmente/RG cardiacas/AQ ./Fp
+El/DA sedentarismo/NCS físico/AQ se/P0 presenta/VMI con/SP mayor/AQ
+frecuencia/NCS en/SP la/DA vida/NCS moderna/AQ urbana/AQ ,/Fc en/SP
+sociedades/NCP altamente/RG tecnificadas/VMP en/SP donde/PR todo/PI
+está/VAI pensado/VMP para/SP evitar/VMN grandes/AQ esfuerzos/NCP 
+físicos/AQ ,/Fc en/SP las/DA clases/NCP altas/AQ y/CC en/SP los/DA
+círculos/NCP intelectuales/AQ en/SP donde/PR las/DA personas/NCP
+se/P0 dedican/VMI más/RG a/SP actividades/NCP cerebrales/AQ ./Fp
+\end{verbatim}\end{tiny}
+\end{example}
+%\begin{normalsize}
 %\begin{figure}
 %\includegraphics[width=0.99\linewidth]{wikicorpus.png}
 %\end{figure}
-\text{Para cada línea: }
-\begin{scriptsize}
-\begin{enumerate}
-\item Ignorar metadatos
-\item Separar palabra,lema y etiqueta
-\item Si la etiqueta empieza por FP $\Rightarrow$ tomar los dos primeros caracteres
-\item Si empieza por V tomar los 3 primeros
-\item Si empieza por NC tomar los 2 primeros + $3^{\circ}$ caracter
-\item En otro caso: tomar los dos primeros caracteres
-\item Separar palabras con guión bajo
-\end{enumerate}
-\end{scriptsize}
-\end{normalsize}
+%\text{Para cada línea: }
+%\begin{scriptsize}
+%\begin{enumerate}
+%\item Ignorar metadatos
+%\item Separar palabra,lema y etiqueta
+%\item Si la etiqueta empieza por FP $\Rightarrow$ tomar los dos primeros caracteres
+%\item Si empieza por V tomar los 3 primeros
+%\item Si empieza por NC tomar los 2 primeros + $3^{\circ}$ caracter
+%\item En otro caso: tomar los dos primeros caracteres
+%\item Separar palabras con guión bajo
+%\end{enumerate}
+%\end{scriptsize}
+%\end{normalsize}
 \end{columns}
 \end{frame}
 
 %---------------obtención del léxico-----------
 \begin{frame}[fragile]
 \frametitle{POS tagger - Obtención del léxico}
-\begin{columns}[t] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
-\column{.30\textwidth} % Left column and width
-\textbf{Pasos:}
 \begin{scriptsize}
-\begin{enumerate}
-\item Contar ocurrencia de cada palabra en corpus
-\item Contar ocurrencia de las etiquetas. Hay palabras que
-pueden tener varias etiquetas
-\item Construir diccionario tomando las palabras más frecuentes y su etiqueta más frecuente
-\end{enumerate}
-\end{scriptsize}
-\column{.80\textwidth} % Left column and width
-%\fontsize{0.3}{0.3}\selectfont
-\begin{algorithm}[H]
-\begin{scriptsize}
-    \begin{algorithmic}[1]
-    %\algrenewcommand\alglinenumber[1]{\tiny #1:}
-    \Procedure{createLexicon(corpus, maxLines=100000)}{}
-    \State $\text{Lexicon} \gets$ \o
-    \State $\text{top} \gets$ \o
-    \For{$\text{sentence in corpus}$}
-            \For{$\text{w, tag in sentence}$}
-            \State $\text{increase ocurrences of Lexicon(w, tag)} $
-            \EndFor
-    \EndFor        
-    \For{$\text{w, tags in Lexicon}$} 
-            \State $\text{freq} \gets \text{$\sum$ all ocurrences of tags for w}$
-             \State $\text{tag} \gets \text{the tag with bigger ocurrence for w}$
-             \State $\text{top} \gets \text{top + (freq,w,tag) }$
-            \EndFor
-            
-     \State $\text{get the maxLines with bigger ocurrency}$ 
-     \State $\text{write to file}$      
-        \EndProcedure
-    \end{algorithmic}
-    \label{alg:rAP}
-    \caption{Obtención del Léxico}
-    \end{scriptsize}
-\end{algorithm}
 
-\end{columns}
+
+\text{Tomar 100.000 palabras que más aparecen con la etiqueta que más aparecen}
+\begin{example}[Léxico]
+
+\begin{verbatim}
+óseos AQ
+ósmosis NC
+óxido NCS
+óxido-reducción NCS
+óxidos NCP
+ö Fz
+úlceras NCP
+última AO
+últimamente RG
+últimas AO
+último AO
+últimos AO
+única AQ
+únicamente RG
+\end{verbatim}
+\end{example}
+\end{scriptsize}
+%\begin{columns}[t] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
+%\column{.30\textwidth} % Left column and width
+%\textbf{Pasos:}
+%\begin{scriptsize}
+%\begin{enumerate}
+%\item Contar ocurrencia de cada palabra en corpus
+%\item Contar ocurrencia de las etiquetas. Hay palabras que
+%pueden tener varias etiquetas
+%\item Construir diccionario tomando las palabras más frecuentes y su etiqueta más frecuente
+%\end{enumerate}
+%\end{scriptsize}
+%\column{.80\textwidth} % Left column and width
+%\fontsize{0.3}{0.3}\selectfont
+%\begin{algorithm}[H]
+%\begin{scriptsize}
+ %   \begin{algorithmic}[1]
+    %\algrenewcommand\alglinenumber[1]{\tiny #1:}
+  %  \Procedure{createLexicon(corpus, maxLines=100000)}{}
+   % \State $\text{Lexicon} \gets$ \o
+    %\State $\text{top} \gets$ \o
+    %\For{$\text{sentence in corpus}$}
+     %       \For{$\text{w, tag in sentence}$}
+      %      \State $\text{increase ocurrences of Lexicon(w, tag)} $
+       %     \EndFor
+    %\EndFor        
+    %\For{$\text{w, tags in Lexicon}$} 
+     %       \State $\text{freq} \gets \text{$\sum$ all ocurrences of tags for w}$
+      %       \State $\text{tag} \gets \text{the tag with bigger ocurrence for w}$
+       %      \State $\text{top} \gets \text{top + (freq,w,tag) }$
+        %    \EndFor
+            
+   %  \State $\text{get the maxLines with bigger ocurrency}$ 
+    % \State $\text{write to file}$      
+     %   \EndProcedure
+    %\end{algorithmic}
+    %\label{alg:rAP}
+    %\caption{Obtención del Léxico}
+    %\end{scriptsize}
+%\end{algorithm}
+
+%\end{columns}
 \end{frame}
 
 %------------obtención de Contexto
 \begin{frame}[fragile]
-\frametitle{POS tagger - Obtención del Contexto}
+\frametitle{POS tagger - Obtención del Contexto y Morfología}
 \begin{columns}[t] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
-\column{.20\textwidth} % Left column and width
-\textbf{Pasos:}
+\column{.52\textwidth} % Left column and width
+\textbf{Reglas contextuales}
 \begin{scriptsize}
 \begin{enumerate}
 \item Anonimizar nombres propios en el corpus
 \item Entrenar algoritmo de Brill
 \end{enumerate}
 \end{scriptsize}
-\column{.93\textwidth} % Left column and width
-\begin{algorithm}[H]
-\begin{tiny}\fontsize{7.3}{8}\selectfont
-    \begin{algorithmic}[1]
-    %\algrenewcommand\alglinenumber[1]{\tiny #1:}
-    \Procedure{BrillTagger(corpus,lexicon,rate\_error,rulesTlist)}{}
-    \State $\text{$C_{i}$} \gets \text{initial tagging of corpus}$
-\State $\text{errors} \gets \text{compute errors of $C_{i}$}$
-\State $\text{Result} \gets$ \o
-\State $\text{i} \gets 0$
-\State $\text{nErrors} \gets \text{number of errors}$
-\State $\text{best}  \gets$ \o
-\While{$\text{nErrors} $>$ \text{rate\_error}$} 
-        \For{$\text{each error in errors}$ }
-            \For{$\text{each rule in instances(rulesTlist) }$}
-            \State $\text{score(rule)} \gets \text{good corrections of rule -
-             bad corrections of rule}$ \text{ in $C_{i}$}
-            \EndFor
-        \EndFor
-        \State $\text{best} \gets \text{rule with best score}$
-		\State $\text{$C_{i+1}$} \gets \text{Apply(best, $C_{i}$ )}$
-		\State $\text{Results} \gets \text{Results+best}$
-		\State $\text{i} \gets \text{i+1}$
-        \EndWhile
-        \EndProcedure
-        \State \Return Results
-    \end{algorithmic}
-    \label{alg:rAP}
-    \caption{Algoritmo de Brill}
-    \end{tiny}
-\end{algorithm}
-\end{columns}
-\end{frame}
-
-
-%--------------Obtención de la morfología
-\begin{frame}[fragile]
-\frametitle{POS tagger - Obtención de la Morfología}
-\begin{columns}[t] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
-\column{.30\textwidth} % Left column and width
-\textbf{Pasos:}
+\begin{example}[reglas contextuales]
+\begin{scriptsize}
+\begin{verbatim}
+VBD VB PREVTAG IN
+PR CS PREV1OR2TAG RG
+Z W PREVWD año
+\end{verbatim}
+\end{scriptsize}
+\end{example}
+\column{.52\textwidth} % Left column and width
+\textbf{Reglas morfológicas}
 \begin{enumerate}
 \begin{scriptsize}
 \item Detectar sufijos y contar su ocurrencia en palabras que no sean NP
@@ -686,40 +698,102 @@ pueden tener varias etiquetas
 \item Filtrar: si emparejan menos de 10 palabras, su etiqueta más freq no se da un 80\% o NCS
 \end{scriptsize}
 \end{enumerate}
-\column{.80\textwidth} % Left column and width
-   \begin{algorithm}[H]
-   \begin{scriptsize}\fontsize{8}{8}\selectfont
-    \begin{algorithmic}[1]
-    \Procedure{createMorphology(corpus, maxLines=125)}{}
-    \State $\text{suffix} \gets$ \o
-    \State $\text{f1} \gets$ \o
-    \State $\text{f2} \gets$ \o 
-    \For{$\text{sentence in corpus}$}
-            \For{$\text{w, tag in sentence}$}
-            \State $\text{x} \gets \text{last 5 words of w}$
-            \If{\text{length(x) < length(w) and tag $\neq$ NP}} \State $\text{increase occurrences of suffix(x,tag)}$ \EndIf
-            \EndFor
-    \EndFor        
-    \For{$\text{x, tags in suffix}$} 
-    		\State $\text{tag} \gets \text{the tag with bigger ocurrence for x}$
-            \State $\text{f1} \gets \text{$\sum$ all ocurrences of tags for words ending in x}$
-            \State $\text{f2} \gets \text{ (number of ocurrences of tag)/f1}$ 
-            \State $\text{top} \gets \text{top + (f1,f2,x,tag) }$
-    \EndFor
-            
-     \State $\text{top} \gets \text{order rules by descendent ocurrency}$
-     \State $\text{top} \gets \text{filter (f1,f2,x,tag) which f1 $\geq$ 10 and f2 > 0.8 }$
-     \State $\text{top} \gets \text{get the top maxLines rules}$
-     \State $\text{top} \gets \text{format top}$
-     \State $\text{write to file}$     
-        \EndProcedure
-    \end{algorithmic}
-    \label{alg:rAP}
-    \caption{Obtención de las reglas morfológicas}
-    \end{scriptsize}
-\end{algorithm}    
+\begin{example}[reglas morfológicas]
+\begin{scriptsize}
+\begin{verbatim}
+ly hassuf 2 RB x
+NN s fhassuf 1 NNS x
+\end{verbatim}\end{scriptsize}
+\end{example}
+%\textbf{Pasos:}
+%\begin{scriptsize}
+%\begin{enumerate}
+%\item Anonimizar nombres propios en el corpus
+%\item Entrenar algoritmo de Brill
+%\end{enumerate}
+%\end{scriptsize}
+%\column{.93\textwidth} % Left column and width
+%\begin{algorithm}[H]
+%\begin{tiny}\fontsize{7.3}{8}\selectfont
+ %   \begin{algorithmic}[1]
+    %\algrenewcommand\alglinenumber[1]{\tiny #1:}
+  %  \Procedure{BrillTagger(corpus,lexicon,rate\_error,rulesTlist)}{}
+   % \State $\text{$C_{i}$} \gets \text{initial tagging of corpus}$
+%\State $\text{errors} \gets \text{compute errors of $C_{i}$}$
+%\State $\text{Result} \gets$ \o
+%\State $\text{i} \gets 0$
+%\State $\text{nErrors} \gets \text{number of errors}$
+%\State $\text{best}  \gets$ \o
+%\While{$\text{nErrors} $>$ \text{rate\_error}$} 
+  %      \For{$\text{each error in errors}$ }
+   %         \For{$\text{each rule in instances(rulesTlist) }$}
+    %        \State $\text{score(rule)} \gets \text{good corrections of rule -
+     %        bad corrections of rule}$ \text{ in $C_{i}$}
+      %      \EndFor
+       % \EndFor
+        %\State $\text{best} \gets \text{rule with best score}$
+		%\State $\text{$C_{i+1}$} \gets \text{Apply(best, $C_{i}$ )}$
+		%\State $\text{Results} \gets \text{Results+best}$
+		%\State $\text{i} \gets \text{i+1}$
+        %\EndWhile
+        %\EndProcedure
+        %\State \Return Results
+    %\end{algorithmic}
+    %\label{alg:rAP}
+    %\caption{Algoritmo de Brill}
+    %\end{tiny}
+%\end{algorithm}
 \end{columns}
 \end{frame}
+
+
+%--------------Obtención de la morfología
+%\begin{frame}[fragile]
+%\frametitle{POS tagger - Obtención de la Morfología}
+%\begin{columns}[t] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
+%\column{.30\textwidth} % Left column and width
+%\textbf{Pasos:}
+%\begin{enumerate}
+%\begin{scriptsize}
+%\item Detectar sufijos y contar su ocurrencia en palabras que no sean NP
+%\item Calcular freq de la etiqueta que más aparece
+%\item Filtrar: si emparejan menos de 10 palabras, su etiqueta más freq no se da un 80\% o NCS
+%\end{scriptsize}
+%\end{enumerate}
+%\column{.80\textwidth} % Left column and width
+ %  \begin{algorithm}[H]
+  % \begin{scriptsize}\fontsize{8}{8}\selectfont
+   % \begin{algorithmic}[1]
+    %\Procedure{createMorphology(corpus, maxLines=125)}{}
+    %\State $\text{suffix} \gets$ \o
+    %\State $\text{f1} \gets$ \o
+    %\State $\text{f2} \gets$ \o 
+    %\For{$\text{sentence in corpus}$}
+    %        \For{$\text{w, tag in sentence}$}
+    %        \State $\text{x} \gets \text{last 5 words of w}$
+    %        \If{\text{length(x) < length(w) and tag $\neq$ NP}} \State $\text{increase occurrences of suffix(x,tag)}$ \EndIf
+    %        \EndFor
+    %\EndFor        
+    %\For{$\text{x, tags in suffix}$} 
+   % 		\State $\text{tag} \gets \text{the tag with bigger ocurrence for x}$
+    %        \State $\text{f1} \gets \text{$\sum$ all ocurrences of tags for words ending in x}$
+     %       \State $\text{f2} \gets \text{ (number of ocurrences of tag)/f1}$ 
+      %      \State $\text{top} \gets \text{top + (f1,f2,x,tag) }$
+    %\EndFor
+            
+     %\State $\text{top} \gets \text{order rules by descendent ocurrency}$
+     %\State $\text{top} \gets \text{filter (f1,f2,x,tag) which f1 $\geq$ 10 and f2 > 0.8 }$
+     %\State $\text{top} \gets \text{get the top maxLines rules}$
+     %\State $\text{top} \gets \text{format top}$
+     %\State $\text{write to file}$     
+     %   \EndProcedure
+    %\end{algorithmic}
+    %\label{alg:rAP}
+    %\caption{Obtención de las reglas morfológicas}
+    %\end{scriptsize}
+%\end{algorithm}    
+%\end{columns}
+%\end{frame}
 
 
 %--------------Algoritmos implementados-------
@@ -806,7 +880,7 @@ NN s fhassuf 1 NNS x
 
 \column{.56\textwidth} % Left column and width
 \textbf{Contexto}
-\begin{example}[reglas morfológicas]
+\begin{example}[reglas contextuales]
 \begin{scriptsize}
 \begin{verbatim}
 VBD VB PREVTAG IN
