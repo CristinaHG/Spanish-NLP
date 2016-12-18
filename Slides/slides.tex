@@ -782,11 +782,11 @@ pueden tener varias etiquetas
 \column{.50\textwidth} % Left column and width
 \textbf{Morfología}
 \begin{example}[reglas morfológicas]
-\begin{tiny}
+\begin{scriptsize}
 \begin{verbatim}
 ly hassuf 2 RB x
 NN s fhassuf 1 NNS x
-\end{verbatim}\end{tiny}
+\end{verbatim}\end{scriptsize}
 \end{example}
 \begin{tiny}\begin{block}{comandos reglas}
 \begin{verbatim}
@@ -807,12 +807,13 @@ NN s fhassuf 1 NNS x
 \column{.56\textwidth} % Left column and width
 \textbf{Contexto}
 \begin{example}[reglas morfológicas]
-\begin{tiny}
+\begin{scriptsize}
 \begin{verbatim}
 VBD VB PREVTAG IN
 PR CS PREV1OR2TAG RG
 Z W PREVWD año
-\end{verbatim}\end{tiny}
+\end{verbatim}
+\end{scriptsize}
 \end{example}
 \begin{tiny}\begin{block}{comandos reglas}
 \begin{verbatim}
@@ -832,7 +833,6 @@ Z W PREVWD año
 "prev1or2wd", // One of 2 preceding words is x.
 "next1or2wd", // One of 2 following words is x.
 "next1or2or3wd", // One of 3 preceding words is x.
-"prev1or2or3wd", // One of 3 following words is x.
 \end{verbatim}\end{block}\end{tiny}
 \end{columns}
 \end{frame}
@@ -878,7 +878,7 @@ Z W PREVWD año
 	  \If{$\text{token endsWith irregular\_endings}$} \State $\text{\Return apply irregular\_endings to token }$ \EndIf
 	  \If{$\text{token endsWith (osis,esis,isis)}$} \State $\text{\Return token }$ \EndIf
 	  \If{$\text{token endsWith -ces}$} \State $\text{\Return token without 3 last chars+ z }$ \EndIf
-	  \If{$\text{token endsWith -es}$} \State $\text{\Return token without 2last char}$ \EndIf
+	  \If{$\text{token endsWith -es}$} \State $\text{\Return token without 2 last char}$ \EndIf
 	  \If{$\text{token endsWith -s}$} \State $\text{\Return token without 1 last char}$ \EndIf
         \EndProcedure
     \end{algorithmic}
