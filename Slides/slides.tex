@@ -153,6 +153,7 @@ Contar ocurrencias de las palabras para detectar estilo de escritura, asistentes
 \end{example}
 
 \begin{block}{Áreas de aplicación del PLN}
+\begin{scriptsize}
 \begin{itemize}
 \item Traducción automática
 \item Sistemas de reconocimiento del habla
@@ -160,6 +161,7 @@ Contar ocurrencias de las palabras para detectar estilo de escritura, asistentes
 \item Minería de datos en RRSS
 \item Análisis de sentimientos
 \end{itemize}
+\end{scriptsize}
 \end{block}
 \end{frame}
 
@@ -370,7 +372,7 @@ def products = orders.flatMap(o => o.products)
 \column{.60\textwidth} % Left column and width
 \textbf{Ejemplo word count}
 \begin{example}[Código Hadoop]
-\begin{tiny}\fontsize{1}{1}\selectfont
+\begin{small}\fontsize{5}{1}\selectfont
 \begin{verbatim}
 ...
 class WordCountMapper extends MapReduceBase
@@ -398,12 +400,12 @@ int totalCount = 0;
 while (counts.hasNext) {
    totalCount += counts.next.get;
 }
-\end{verbatim}\end{tiny}
+\end{verbatim}\end{small}
 \end{example}
 \column{.47\textwidth} % Right column and width
 %\frametitle{Verbatim}
 \begin{example}[Código Scalding]
-\begin{tiny}\fontsize{1}{1}\selectfont
+\begin{small}\fontsize{5}{1}\selectfont
 \begin{verbatim}
 
 import com.twitter.scalding._
@@ -417,7 +419,7 @@ class WordCount(args : Args) extends Job(args) {
   .write(Tsv(args("output")))
 }
 
-\end{verbatim}\end{tiny}
+\end{verbatim}\end{small}
 \end{example}
 \end{columns}
 \end{frame}
@@ -537,7 +539,7 @@ title height=.75
 \frametitle{Material empleado: POS tagger}
 \textbf{Wikicorpus}
 \begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
-\column{.30\textwidth} % Left column and width
+\column{.42\textwidth} % Left column and width
 \begin{itemize}\fontsize{7}{8}\selectfont
 \item versión en Español
 \item 120 millones de palabras
@@ -545,7 +547,7 @@ title height=.75
 \item 1000 líneas
 \end{itemize}
 \begin{example}[Wikicorpus]
-\begin{tiny}\fontsize{5}{8}\selectfont
+\begin{tiny}\fontsize{7}{8}\selectfont
 \begin{verbatim}
 es ser VSIP3S0 01775973
 un uno DI0MS0 0
@@ -557,11 +559,23 @@ como como CS 0
 delantero delantero NCMS000 00466114
 \end{verbatim}\end{tiny}
 \end{example}
-\column{.85\textwidth} % Left column and width
+\column{.65\textwidth} % Left column and width
 \begin{normalsize}
-\begin{figure}
-\includegraphics[width=0.99\linewidth]{wikicorpus.png}
-\end{figure}
+%\begin{figure}
+%\includegraphics[width=0.99\linewidth]{wikicorpus.png}
+%\end{figure}
+\text{Para cada línea: }
+\begin{scriptsize}
+\begin{enumerate}
+\item Ignorar metadatos
+\item Separar palabra,lema y etiqueta
+\item Si la etiqueta empieza por FP $\Rightarrow$ tomar los dos primeros caracteres
+\item Si empieza por V tomar los 3 primeros
+\item Si empieza por NC tomar los 2 primeros + $3^{\circ}$ caracter
+\item En otro caso: tomar los dos primeros caracteres
+\item Separar palabras con guión bajo
+\end{enumerate}
+\end{scriptsize}
 \end{normalsize}
 \end{columns}
 \end{frame}
@@ -570,15 +584,17 @@ delantero delantero NCMS000 00466114
 \begin{frame}[fragile]
 \frametitle{POS tagger - Obtención del léxico}
 \begin{columns}[t] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
-\column{.40\textwidth} % Left column and width
+\column{.30\textwidth} % Left column and width
 \textbf{Pasos:}
+\begin{scriptsize}
 \begin{enumerate}
 \item Contar ocurrencia de cada palabra en corpus
 \item Contar ocurrencia de las etiquetas. Hay palabras que
 pueden tener varias etiquetas
 \item Construir diccionario tomando las palabras más frecuentes y su etiqueta más frecuente
 \end{enumerate}
-\column{.70\textwidth} % Left column and width
+\end{scriptsize}
+\column{.80\textwidth} % Left column and width
 %\fontsize{0.3}{0.3}\selectfont
 \begin{algorithm}[H]
 \begin{scriptsize}
@@ -614,15 +630,17 @@ pueden tener varias etiquetas
 \begin{frame}[fragile]
 \frametitle{POS tagger - Obtención del Contexto}
 \begin{columns}[t] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
-\column{.25\textwidth} % Left column and width
+\column{.20\textwidth} % Left column and width
 \textbf{Pasos:}
+\begin{scriptsize}
 \begin{enumerate}
 \item Anonimizar nombres propios en el corpus
 \item Entrenar algoritmo de Brill
 \end{enumerate}
-\column{.99\textwidth} % Left column and width
+\end{scriptsize}
+\column{.93\textwidth} % Left column and width
 \begin{algorithm}[H]
-\begin{tiny}\fontsize{7}{8}\selectfont
+\begin{tiny}\fontsize{7.3}{8}\selectfont
     \begin{algorithmic}[1]
     %\algrenewcommand\alglinenumber[1]{\tiny #1:}
     \Procedure{BrillTagger(corpus,lexicon,rate\_error,rulesTlist)}{}
@@ -713,16 +731,17 @@ pueden tener varias etiquetas
 \begin{enumerate}
 \item Preprocesado del String: manejo de comillas (simples y dobles), espacios en blanco, retornos de carro, saltos de línea.
 \item Obtención de los tokens: 
-\begin{itemize}\fontsize{8}{8}\selectfont
+\begin{itemize}
 \item buscar secuencias de caracteres $\neq$ espacio en blanco + espacio en blanco
-\item sobre cada coincidencia anterior: \begin{itemize}\fontsize{8}{7}\selectfont
-	\item eliminar espacio en blanco final 
-	\item comprobar si la primera letra es un signo de puntuación $\neq$ punto. Si lo es se elimina y añade a la lista de tokens, repitiendo hasta que la primera letra no sea un signo de puntuación.
-	\item comprobar que si la última letra es un signo de puntuación: 
-\item Si son puntos suspensivos $\Rightarrow$ eliminar los tres puntos  y añadirlos a una lista para ser añadidos después de la palabra a la lista de tokens
-\item Si el final de la palabra es un signo de puntuación $\neq$ punto $\Rightarrow$ se quita y se añade a una lista para ser añadido después de la palabra a la lista de tokens
-\item Si la palabra acaba en punto $\Rightarrow$ comprobar si es una abreviación. Si lo es, añadir tal cual a la lista de tokens. Sino, separar palabra del punto y añadir primero la palabra y luego el punto.
-\end{itemize}
+\item sobre cada coincidencia anterior buscar y separar los tokens
+%: \begin{itemize}\fontsize{8}{7}\selectfont
+%	\item eliminar espacio en blanco final 
+%	\item comprobar si la primera letra es un signo de puntuación $\neq$ punto. Si lo es se elimina y añade a la lista de tokens, repitiendo hasta que la primera letra no sea un signo de puntuación.
+%	\item comprobar que si la última letra es un signo de puntuación: 
+%\item Si son puntos suspensivos $\Rightarrow$ eliminar los tres puntos  y añadirlos a una lista para ser añadidos después de la palabra a la lista de tokens
+%\item Si el final de la palabra es un signo de puntuación $\neq$ punto $\Rightarrow$ se quita y se añade a una lista para ser añadido después de la palabra a la lista de tokens
+%\item Si la palabra acaba en punto $\Rightarrow$ comprobar si es una abreviación. Si lo es, añadir tal cual a la lista de tokens. Sino, separar palabra del punto y añadir primero la palabra y luego el punto.
+%\end{itemize}
 \end{itemize}
 \item Separación de frases
 \end{enumerate}
@@ -734,7 +753,7 @@ pueden tener varias etiquetas
 \begin{frame}
 \frametitle{POS tagger}
 \begin{algorithm}[H]
-\begin{scriptsize}
+\begin{scriptsize}\fontsize{7}{8}\selectfont
     \begin{algorithmic}[1]
     %\algrenewcommand\alglinenumber[1]{\tiny #1:}
     \Procedure{findTags(tokens,Lexicon,Morphology,Context,default(NCS,NP,Z),mapToTagset)}{}
