@@ -330,7 +330,7 @@ StanfordParser, MaltParser, TurboParser
 \column{.45\textwidth} % Left column and width
 \textbf{Razones para aprender Scala}
 \begin{enumerate}
-\item Es Scalable
+\item Es escalable
 \item Paradigma mixto
 \item Sistema amplio de tipos
 \item Herramientas y librería de Java
@@ -819,6 +819,11 @@ NN s fhassuf 1 NNS x
 \end{itemize}
 \item Separación de frases
 \end{enumerate}
+\begin{example}[encontrar posibles secuencias de tokens]
+\begin{scriptsize}
+\texttt{"\ \underline{Antes } \underline{vivíamos } \underline{en } \underline{esa } \underline{casa. }"}
+\end{scriptsize}
+\end{example}
 \end{frame}
 
 
@@ -1001,9 +1006,9 @@ Z W PREVWD año
 	\If{$\text{token is regular inflection from -er and length(word without inflection)>2 and penultimate }$ \newline $\text{ from word without inflection} \neq \text{(i)}$} $\text{token} \gets \text{replace inflection by ir}$ \Else $\text{ replace inflection by -er}$ \EndIf
 	\If{$\text{token is regular inflection from -ir}$} $\text{token} \gets \text{replace inflection by ir}$\EndIf
 	\If{$\text{token ends with (a,o,as,an)}$} $\text{token} \gets \text{replace (a,o,as,an) by -ar}$ \EndIf
-	\If{$\text{token is present singular $3^{\circ}$ person ending with -er }$} 
+	\If{$\text{token is present singular $3^{\circ}$ person ending with -e }$} 
 	\If{$\text{length(token without inflection)>2 and antepenultimate token without inflection is (i) }$} $\text{remove -e and add -ir}$ \Else $\text{ remove -e and add -er}$ \EndIf \EndIf
-	\If{$\text{token ends with (er,es)}$}  $\text{similar to last two teps}$\EndIf
+	\If{$\text{token ends with (en,es)}$}  $\text{similar to last two teps}$\EndIf
 	\If{$\text{token endsWith present\_plural\_inflections}$} $\text{token} \gets \text{apply(present\_plural\_inflections)}$\EndIf
 	
 	\State \Return $\text{token}$
